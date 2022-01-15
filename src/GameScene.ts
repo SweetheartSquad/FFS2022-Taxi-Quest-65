@@ -14,7 +14,7 @@ function depthCompare(a: DisplayObject, b: DisplayObject): number {
 	return a.y - b.y;
 }
 
-export class GameScene {
+export class GameScene extends GameObject {
 	container = new Container();
 
 	graphics = new Graphics();
@@ -30,6 +30,7 @@ export class GameScene {
 	border: Border;
 
 	constructor() {
+		super();
 		this.container.addChildAt(this.graphics, 0);
 
 		this.strand = new StrandE({
@@ -95,6 +96,7 @@ export class GameScene {
 		this.container.destroy({
 			children: true,
 		});
+		super.destroy();
 	}
 
 	update(): void {
@@ -133,7 +135,12 @@ export class GameScene {
 		// test bg
 		g.clear();
 
+		const u = this.update;
+		// @ts-ignore
+		this.update = () => {};
 		GameObject.update();
+		this.update = u;
+		super.update();
 		TweenManager.update();
 	}
 }
