@@ -140,10 +140,15 @@ export class UIDialogue extends GameObject {
 		this.display.container.addChild(this.containerChoices);
 
 		this.sprBg.alpha = 0;
-		this.sprBg.y = this.openY();
+		this.textText.alpha = 0;
+		this.sprBg.y = this.closeY();
 
 		this.transform.x = size.x / 2 - this.sprBg.width / 2;
 		this.transform.y = -size.y / 2 - this.height() / 2;
+		this.sprScrim.x = -this.transform.x;
+		this.sprScrim.y = -this.transform.y;
+		this.toggler.container.x = -this.transform.x + size.x / 2;
+		this.toggler.container.y = -this.transform.y + size.y / 2;
 
 		this.init();
 	}
@@ -301,6 +306,7 @@ export class UIDialogue extends GameObject {
 			this.tweens.length = 0;
 			this.tweens.push(
 				TweenManager.tween(this.sprBg, 'alpha', 1, 500),
+				TweenManager.tween(this.textText, 'alpha', 1, 500),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
@@ -321,6 +327,8 @@ export class UIDialogue extends GameObject {
 			this.tweens.length = 0;
 			this.tweens.push(
 				TweenManager.tween(this.sprBg, 'alpha', 0, 500),
+				TweenManager.tween(this.textText, 'alpha', 0, 500),
+				TweenManager.tween(this.containerChoices, 'alpha', 0, 500),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
