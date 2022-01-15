@@ -1,5 +1,6 @@
 import { Container, DisplayObject, Graphics, LoaderResource } from 'pixi.js';
 import {
+	Camera as Camera3D,
 	CameraOrbitControl,
 	glTFAsset,
 	Light,
@@ -31,6 +32,8 @@ export class GameScene extends GameObject {
 	graphics = new Graphics();
 
 	camera = new Camera();
+
+	camera3d: Camera3D;
 
 	dialogue: UIDialogue;
 
@@ -113,6 +116,7 @@ export class GameScene extends GameObject {
 		);
 
 		const control = new CameraOrbitControl(game.app.view);
+		this.camera3d = control.camera;
 
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);
