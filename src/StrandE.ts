@@ -107,9 +107,7 @@ export class StrandE extends Strand {
 	}
 
 	restart() {
-		const p = this.scene.screenFilter.targetPalette;
 		const newScene = new GameScene();
-		newScene.screenFilter.targetPalette = p;
 		setScene(newScene);
 	}
 

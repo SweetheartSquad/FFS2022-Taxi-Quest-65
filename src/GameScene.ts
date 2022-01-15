@@ -6,7 +6,6 @@ import { DEBUG } from './debug';
 import { game, resources } from './Game';
 import { GameObject } from './GameObject';
 import { getInput } from './main';
-import { ScreenFilter } from './ScreenFilter';
 import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
@@ -26,8 +25,6 @@ export class GameScene extends GameObject {
 	camera = new Camera();
 
 	dialogue: UIDialogue;
-
-	screenFilter: ScreenFilter;
 
 	strand: StrandE;
 
@@ -103,9 +100,6 @@ export class GameScene extends GameObject {
 		game.app.stage.addChild(this.dialogue.display.container);
 		game.app.stage.addChild(this.border.display.container);
 
-		this.screenFilter = new ScreenFilter();
-		game.app.stage.filters = [this.screenFilter];
-
 		this.strand.history.push('close');
 		this.strand.goto('start');
 	}
@@ -131,11 +125,6 @@ export class GameScene extends GameObject {
 		}
 
 		const curTime = game.app.ticker.lastTime;
-		this.screenFilter.uniforms.curTime = curTime;
-		this.screenFilter.uniforms.camPos = [
-			this.camera.display.container.pivot.x,
-			-this.camera.display.container.pivot.y,
-		];
 
 		// depth sort
 		this.container.children.sort(depthCompare);
@@ -145,8 +134,6 @@ export class GameScene extends GameObject {
 		const p = this.dialogue.progress();
 		this.camera.display.container.scale.x =
 			this.camera.display.container.scale.y = 1 + p * 0.1;
-
-		this.screenFilter.update();
 
 		const g = this.graphics;
 
