@@ -1,5 +1,12 @@
-import { Container, DisplayObject, Graphics } from 'pixi.js';
-import { Light, LightingEnvironment, Mesh3D } from 'pixi3d';
+import { Container, DisplayObject, Graphics, LoaderResource } from 'pixi.js';
+import {
+	CameraOrbitControl,
+	glTFAsset,
+	Light,
+	LightingEnvironment,
+	Model,
+	Sprite3D,
+} from 'pixi3d';
 import { Border } from './Border';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
@@ -10,6 +17,7 @@ import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
+import { tex } from './utils';
 
 function depthCompare(a: DisplayObject, b: DisplayObject): number {
 	return a.y - b.y;
@@ -84,17 +92,23 @@ export class GameScene extends GameObject {
 
 		this.camera.display.container.addChild(this.container);
 
-		const cube = Mesh3D.createCube();
+		const bus = Model.from(
+			(resources.bus as LoaderResource & { gltf: glTFAsset }).gltf
+		);
 		this.scripts.push(
 			new Updater(this, () => {
-				cube.rotationQuaternion.setEulerAngles(0, Date.now() / 100, 0);
+				// bus.rotationQuaternion.setEulerAngles(0, Date.now() / 25, 0);
 			})
 		);
-		this.container3d.addChild(cube);
+		this.container3d.addChild(bus);
+		const passenger = new Sprite3D(tex('passenger'));
+		this.container3d.addChild(passenger);
 
 		LightingEnvironment.main.lights.push(
 			Object.assign(new Light(), { x: -1, z: 3 })
 		);
+
+		const control = new CameraOrbitControl(game.app.view);
 
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);
