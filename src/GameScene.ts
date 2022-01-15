@@ -101,6 +101,7 @@ export class GameScene extends GameObject {
 
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);
+		game.app.stage.addChild(this.border.display.container);
 
 		this.screenFilter = new ScreenFilter();
 		game.app.stage.filters = [this.screenFilter];
