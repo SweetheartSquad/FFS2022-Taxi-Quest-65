@@ -95,6 +95,10 @@ export class GameScene extends GameObject {
 		const bus = Model.from(
 			(resources.bus as LoaderResource & { gltf: glTFAsset }).gltf
 		);
+		bus.meshes.forEach((mesh) => {
+			// @ts-ignore
+			mesh.material.baseColorTexture = tex('palette');
+		});
 		this.scripts.push(
 			new Updater(this, () => {
 				// bus.rotationQuaternion.setEulerAngles(0, Date.now() / 25, 0);

@@ -9,4 +9,5 @@ audio/bgm.mp3
 audio/voiceDefault.mp3
 
 bus.gltf
+textures/palette.png
 textures/passenger.png
