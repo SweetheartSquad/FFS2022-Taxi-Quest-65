@@ -64,7 +64,7 @@ class Game {
 					}
 					return i;
 				})
-				.filter((i) => i)
+				.filter((i) => i && !i.startsWith('//'))
 				.map((i) => ({
 					url: i.startsWith('http') ? i : `assets/${i}`,
 					name: i.split('/').pop()?.split('.').slice(0, -1).join('.') || i,
