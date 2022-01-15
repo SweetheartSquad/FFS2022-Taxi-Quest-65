@@ -1,4 +1,5 @@
 import { Container, DisplayObject, Graphics } from 'pixi.js';
+import { Light, LightingEnvironment, Mesh3D } from 'pixi3d';
 import { Border } from './Border';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
@@ -6,6 +7,7 @@ import { game, resources } from './Game';
 import { GameObject } from './GameObject';
 import { getInput } from './main';
 import { ScreenFilter } from './ScreenFilter';
+import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
@@ -16,6 +18,8 @@ function depthCompare(a: DisplayObject, b: DisplayObject): number {
 
 export class GameScene extends GameObject {
 	container = new Container();
+
+	container3d = new Container();
 
 	graphics = new Graphics();
 
@@ -76,19 +80,32 @@ export class GameScene extends GameObject {
 		this.strand.scene = this;
 		this.strand.debug = DEBUG;
 		this.dialogue = new UIDialogue(this.strand);
-		game.app.stage.addChild(this.dialogue.display.container);
 
 		this.border = new Border();
 		this.border.init();
+		this.border.display.container.alpha = 0;
+
+		this.camera.display.container.addChild(this.container);
+
+		const cube = Mesh3D.createCube();
+		this.scripts.push(
+			new Updater(this, () => {
+				cube.rotationQuaternion.setEulerAngles(0, Date.now() / 100, 0);
+			})
+		);
+		this.container3d.addChild(cube);
+
+		LightingEnvironment.main.lights.push(
+			Object.assign(new Light(), { x: -1, z: 3 })
+		);
+
+		game.app.stage.addChild(this.container3d);
+		game.app.stage.addChild(this.dialogue.display.container);
 
 		this.screenFilter = new ScreenFilter();
 		game.app.stage.filters = [this.screenFilter];
 
-		this.camera.display.container.addChild(this.container);
-
 		this.strand.history.push('close');
-
-		this.border.display.container.alpha = 0;
 		this.strand.goto('start');
 	}
 
