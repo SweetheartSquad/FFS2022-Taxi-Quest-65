@@ -66,7 +66,7 @@ class Game {
 				})
 				.filter((i) => i)
 				.map((i) => ({
-					url: `assets/${i}`,
+					url: i.startsWith('http') ? i : `assets/${i}`,
 					name: i.split('/').pop()?.split('.').slice(0, -1).join('.') || i,
 				}));
 			this.app.loader.reset();
