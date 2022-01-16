@@ -21,7 +21,7 @@ const padding = {
 	left: 8,
 	right: 8,
 };
-const scrimDefault = 0.25;
+const scrimDefault = 0;
 export class UIDialogue extends GameObject {
 	sprScrim: Sprite;
 
