@@ -23,8 +23,8 @@ export function setScene(scene?: GameScene): void {
 export function getInput() {
 	const res = {
 		look: {
-			x: gamepads.getAxis(Axes.RSTICK_H),
-			y: gamepads.getAxis(Axes.RSTICK_V),
+			x: gamepads.getAxis(Axes.RSTICK_H) * 2,
+			y: gamepads.getAxis(Axes.RSTICK_V) * 2,
 		},
 		move: {
 			x: gamepads.getAxis(Axes.LSTICK_H),
