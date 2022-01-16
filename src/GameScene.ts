@@ -95,12 +95,14 @@ export class GameScene extends GameObject {
 
 		this.camera.display.container.addChild(this.container);
 
+		const matBus = new StandardMaterial();
+		matBus.baseColorTexture = tex('palette');
+		matBus.unlit = true;
 		const bus = Model.from(
 			(resources.bus as LoaderResource & { gltf: glTFAsset }).gltf
 		);
 		bus.meshes.forEach((mesh) => {
-			// @ts-ignore
-			mesh.material.baseColorTexture = tex('palette');
+			mesh.material = matBus;
 		});
 		this.camera3d = Camera3D.main;
 		let x = 0;
@@ -117,9 +119,6 @@ export class GameScene extends GameObject {
 		const passenger = new Sprite3D(tex('passenger'));
 		this.container3d.addChild(passenger);
 
-		LightingEnvironment.main.lights.push(
-			Object.assign(new Light(), { x: -1, z: 3 })
-		);
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);
 		game.app.stage.addChild(this.border.display.container);
