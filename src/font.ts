@@ -2,10 +2,10 @@ import type { ITextStyle } from 'pixi.js';
 
 export const fontDialogue: Partial<ITextStyle> = {
 	fontFamily: 'font',
-	fontSize: 24,
+	fontSize: 18,
 	fill: 0,
 	align: 'left',
-	lineHeight: 26,
+	lineHeight: 20,
 	letterSpacing: 0,
 	padding: 2,
 	dropShadow: true,
