@@ -22,6 +22,10 @@ export function setScene(scene?: GameScene): void {
 
 export function getInput() {
 	const res = {
+		look: {
+			x: gamepads.getAxis(Axes.RSTICK_H),
+			y: gamepads.getAxis(Axes.RSTICK_V),
+		},
 		move: {
 			x: gamepads.getAxis(Axes.LSTICK_H),
 			y: gamepads.getAxis(Axes.LSTICK_V),
@@ -109,6 +113,9 @@ export function getInput() {
 		}
 	}
 
+	res.look.x += (mouse.delta.x / Math.max(size.x, size.y)) * 80;
+	res.look.y += (mouse.delta.y / Math.max(size.x, size.y)) * 80;
+
 	res.move.x = clamp(-1.0, res.move.x, 1.0);
 	res.move.y = clamp(-1.0, res.move.y, 1.0);
 
@@ -148,7 +155,7 @@ export function init(): void {
 			KEYS.ENTER,
 		],
 	});
-	mouse = new Mouse(game.app.view, false);
+	mouse = new Mouse(game.app.view, true);
 
 	const fill = new Sprite(Texture.WHITE);
 	fill.tint = 0x000000;
