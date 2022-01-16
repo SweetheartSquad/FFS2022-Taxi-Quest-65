@@ -41,8 +41,10 @@ this should never render
 
 ::scenario-1
 You ever kill someone?
-[[Yes>bad]]
-[[No>good]]
+>
+You ever kill someone?
+[[yes>bad]]
+[[no>good]]
 
 ::bad
 It's not your fault, yeah?
@@ -73,8 +75,10 @@ If you're not careful it'll change you, too.
 
 ::scenario-2
 Hey, can you pull over for a bit?
-[[Yes>nice]]
-[[No>mean]]
+>
+Hey, can you pull over for a bit?
+[[yes>nice]]
+[[no>mean]]
 
 ::nice
 Thanks.
@@ -114,8 +118,10 @@ When you get a chance, though, let me know, yeah?
 
 ::scenario-3
 You ever been in love?
-[[Yes>love]]
-[[No>none]]
+>
+You ever been in love?
+[[yes>love]]
+[[no>none]]
 
 ::love
 I think I was.
@@ -133,8 +139,10 @@ I guess we won't speak for many more.
 Just feels like he's still somewhere out there, ignoring me.
 >
 Did you like being in love?
-[[Yes>love2]]
-[[No>love3]]
+>
+Did you like being in love?
+[[yes>love2]]
+[[no>love3]]
 
 ::love2
 I wish it were that clear for me.
@@ -167,9 +175,10 @@ Sorry.
 
 ::scenario-4
 Did you catch the stash game while you were in town?
-
-[[Yes>cool]]
-[[No>lame]]
+>
+Did you catch the stash game while you were in town?
+[[yes>cool]]
+[[no>lame]]
 
 ::cool
 Man, Hardy was really having a go out there, wasn't he?
@@ -208,8 +217,10 @@ She was barely 17. Worked for a research lab.
 She told me that what I did tonight doomed us all.
 >
 You think that's true?
-[[Yes>true]]
-[[No>false]]
+>
+You think that's true?
+[[yes>true]]
+[[no>false]]
 
 ::true
 I think so, too.

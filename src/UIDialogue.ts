@@ -2,7 +2,6 @@ import type { EventEmitter } from '@pixi/utils';
 import { cubicIn, cubicOut } from 'eases';
 import { Container, Sprite, Text, TextMetrics, Texture } from 'pixi.js';
 import Strand from 'strand-core';
-import { sfx } from './Audio';
 import { fontDialogue, fontPrompt } from './font';
 import { game } from './Game';
 import { GameObject } from './GameObject';
@@ -176,24 +175,17 @@ export class UIDialogue extends GameObject {
 
 		if (this.isOpen && this.choices.length) {
 			if (this.containerChoices.alpha > 0.5) {
-				if (this.choices.length === 1 && input.interact) {
+				if (
+					this.choices.length === 1 &&
+					(input.interact || input.justMoved.x)
+				) {
 					this.choices[0].emit('click');
-				} else if (input.justMoved.y) {
-					if (this.selected !== undefined) {
-						this.choices[this.selected].alpha = 1;
+				} else if (input.justMoved.x) {
+					if (input.justMoved.x > 0) {
+						this.choices[1].emit('click');
+					} else if (input.justMoved.x < 0) {
+						this.choices[0].emit('click');
 					}
-					if (this.selected === undefined) {
-						this.selected = 0;
-					} else if (input.justMoved.y > 0) {
-						this.selected =
-							this.selected < this.choices.length - 1 ? this.selected + 1 : 0;
-					} else if (input.justMoved.y < 0) {
-						this.selected =
-							this.selected > 0 ? this.selected - 1 : this.choices.length - 1;
-					}
-					this.choices[this.selected].alpha = 0.75;
-				} else if (input.interact && this.selected !== undefined) {
-					this.choices[this.selected].emit('click');
 				} else if (input.interact) {
 					this.complete();
 				} else {
@@ -221,12 +213,6 @@ export class UIDialogue extends GameObject {
 			this.posTime -= this.posDelay;
 		}
 		if (prevPos !== this.pos) {
-			const letter = this.strText?.[this.pos]?.replace(/[^\w]/, '');
-			if (this.pos % 2 && letter && this.voice !== 'None') {
-				sfx(`voice${this.voice}`, {
-					rate: (letter.charCodeAt(0) % 30) / 30 + 0.5,
-				});
-			}
 			this.textText.text = this.strText.substring(0, this.pos);
 		}
 	}
@@ -245,7 +231,7 @@ export class UIDialogue extends GameObject {
 		this.display.container.accessibleHint = text;
 		this.choices.forEach((i) => i.destroy());
 		this.choices = (actions || []).map((i, idx, a) => {
-			const strText = a.length > 1 ? `${idx + 1}. ${i.text}` : i.text;
+			const strText = i.text;
 			const t = new Text(strText, {
 				...this.textText.style,
 				wordWrapWidth: (this.textText.style.wordWrapWidth || 0) - 2,
@@ -270,16 +256,19 @@ export class UIDialogue extends GameObject {
 				}
 			});
 			t.anchor.x = 0;
-			t.y +=
-				this.containerChoices.height - (t.style.padding || 0) * (idx ? 2 : 0);
 			this.containerChoices.addChild(t);
 			return t;
 		});
+		if (this.choices[1]) {
+			this.choices[1].anchor.x = 1.0;
+			this.choices[1].x = this.sprBg.width - padding.right - padding.left;
+		}
 		this.containerChoices.y = -this.containerChoices.height - padding.bottom;
 		this.containerChoices.alpha = 0.0;
 		this.open();
 		this.pos = 0;
 		this.posTime = 0;
+		this.complete();
 	}
 
 	show(...args: Parameters<Toggler['show']>) {
