@@ -15,7 +15,7 @@ import { TweenManager } from './Tweens';
 import { chunks, shuffle } from './utils';
 
 let autolink = 0;
-const promptDefault = '( • )';
+const promptDefault = ' ';
 export class StrandE extends Strand {
 	public scene!: GameScene;
 
