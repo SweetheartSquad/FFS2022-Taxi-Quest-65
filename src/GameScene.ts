@@ -1,12 +1,19 @@
-import { Container, DisplayObject, Graphics, LoaderResource } from 'pixi.js';
+import {
+	Container,
+	DisplayObject,
+	Graphics,
+	LoaderResource,
+	MIPMAP_MODES,
+	SCALE_MODES,
+} from 'pixi.js';
 import {
 	Camera as Camera3D,
-	CameraOrbitControl,
 	glTFAsset,
-	Light,
-	LightingEnvironment,
+	Mesh3D,
 	Model,
-	Sprite3D,
+	Quat,
+	StandardMaterial,
+	StandardMaterialAlphaMode,
 } from 'pixi3d';
 import { Border } from './Border';
 import { Camera } from './Camera';
