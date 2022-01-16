@@ -104,7 +104,20 @@ export class GameScene extends GameObject {
 		bus.meshes.forEach((mesh) => {
 			mesh.material = matBus;
 		});
+		const matPassenger = new StandardMaterial();
+		matPassenger.baseColorTexture = tex('palette');
+		matPassenger.unlit = true;
+		matPassenger.alphaMode = StandardMaterialAlphaMode.blend;
+		const passenger = Mesh3D.createQuad(matPassenger);
+		matPassenger.baseColorTexture = tex('passenger');
+		matPassenger.baseColorTexture.baseTexture.mipmap = MIPMAP_MODES.ON;
+		matPassenger.baseColorTexture.baseTexture.scaleMode = SCALE_MODES.LINEAR;
+
 		this.camera3d = Camera3D.main;
+		passenger.position.set(-9.5, 4.4, 7.1);
+		passenger.scale.set(8, 8, 8);
+		passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
+
 		let x = 0;
 		let y = 10;
 		this.scripts.push(
@@ -115,8 +128,8 @@ export class GameScene extends GameObject {
 				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
 			})
 		);
+
 		this.container3d.addChild(bus);
-		const passenger = new Sprite3D(tex('passenger'));
 		this.container3d.addChild(passenger);
 
 		game.app.stage.addChild(this.container3d);
