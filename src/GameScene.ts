@@ -114,6 +114,8 @@ export class GameScene extends GameObject {
 		matPassenger.baseColorTexture.baseTexture.scaleMode = SCALE_MODES.LINEAR;
 
 		this.camera3d = Camera3D.main;
+		this.camera3d.y = 7;
+		this.camera3d.position.set(1.475, 9.508, 4.506);
 		passenger.position.set(-9.5, 4.4, 7.1);
 		passenger.scale.set(8, 8, 8);
 		passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
