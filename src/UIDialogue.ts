@@ -21,6 +21,7 @@ const padding = {
 	left: 8,
 	right: 8,
 };
+const scrimDefault = 0.25;
 export class UIDialogue extends GameObject {
 	sprScrim: Sprite;
 
@@ -301,7 +302,7 @@ export class UIDialogue extends GameObject {
 	private open() {
 		if (!this.isOpen) {
 			this.isOpen = true;
-			this.scrim(0.25, 500);
+			this.scrim(scrimDefault, 500);
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
