@@ -176,7 +176,9 @@ export class UIDialogue extends GameObject {
 
 		if (this.isOpen && this.choices.length) {
 			if (this.containerChoices.alpha > 0.5) {
-				if (input.justMoved.y) {
+				if (this.choices.length === 1 && input.interact) {
+					this.choices[0].emit('click');
+				} else if (input.justMoved.y) {
 					if (this.selected !== undefined) {
 						this.choices[this.selected].alpha = 1;
 					}
