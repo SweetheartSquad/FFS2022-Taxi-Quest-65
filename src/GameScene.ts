@@ -25,7 +25,7 @@ import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
-import { tex } from './utils';
+import { lerp, tex } from './utils';
 
 function depthCompare(a: DisplayObject, b: DisplayObject): number {
 	return a.y - b.y;
@@ -134,6 +134,16 @@ export class GameScene extends GameObject {
 				const input = getInput();
 				x += input.look.x;
 				y += input.look.y;
+				if (x < -130) {
+					x = lerp(x, -130, 0.1);
+				} else if (x > 130) {
+					x = lerp(x, 130, 0.1);
+				}
+				if (y < -70) {
+					y = lerp(y, -70, 0.1);
+				} else if (y > 70) {
+					y = lerp(y, 70, 0.1);
+				}
 				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
 			})
 		);
