@@ -18,7 +18,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
           CHANNEL: web
-          ITCH_GAME: taxi-quest-65
+          ITCH_GAME: taxi-quest-64
           ITCH_USER: sweetheartsquad
           PACKAGE: dist
           VERSION: ${{ steps.package-version.outputs.current-version}}
