@@ -102,9 +102,15 @@ export class GameScene extends GameObject {
 			// @ts-ignore
 			mesh.material.baseColorTexture = tex('palette');
 		});
+		this.camera3d = Camera3D.main;
+		let x = 0;
+		let y = 10;
 		this.scripts.push(
 			new Updater(this, () => {
-				// bus.rotationQuaternion.setEulerAngles(0, Date.now() / 25, 0);
+				const input = getInput();
+				x += input.look.x;
+				y += input.look.y;
+				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
 			})
 		);
 		this.container3d.addChild(bus);
@@ -114,10 +120,6 @@ export class GameScene extends GameObject {
 		LightingEnvironment.main.lights.push(
 			Object.assign(new Light(), { x: -1, z: 3 })
 		);
-
-		const control = new CameraOrbitControl(game.app.view);
-		this.camera3d = control.camera;
-
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);
 		game.app.stage.addChild(this.border.display.container);
