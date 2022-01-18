@@ -198,11 +198,7 @@ export class UIDialogue extends GameObject {
 			}
 		}
 
-		this.containerChoices.alpha = lerp(
-			this.containerChoices.alpha,
-			this.pos > this.strText.length ? 1 : 0,
-			0.1
-		);
+		this.containerChoices.alpha = this.pos > this.strText.length ? 1 : 0;
 
 		// early return (animation complete)
 		if (this.pos > this.strText.length) return;
@@ -293,17 +289,17 @@ export class UIDialogue extends GameObject {
 	private open() {
 		if (!this.isOpen) {
 			this.isOpen = true;
-			this.scrim(scrimDefault, 500);
+			this.scrim(scrimDefault, 0);
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
-				TweenManager.tween(this.sprBg, 'alpha', 1, 500),
-				TweenManager.tween(this.textText, 'alpha', 1, 500),
+				TweenManager.tween(this.sprBg, 'alpha', 1, 0),
+				TweenManager.tween(this.textText, 'alpha', 1, 0),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
 					this.openY(),
-					500,
+					0,
 					undefined,
 					cubicOut
 				)
@@ -318,14 +314,14 @@ export class UIDialogue extends GameObject {
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
-				TweenManager.tween(this.sprBg, 'alpha', 0, 500),
-				TweenManager.tween(this.textText, 'alpha', 0, 500),
-				TweenManager.tween(this.containerChoices, 'alpha', 0, 500),
+				TweenManager.tween(this.sprBg, 'alpha', 0, 0),
+				TweenManager.tween(this.textText, 'alpha', 0, 0),
+				TweenManager.tween(this.containerChoices, 'alpha', 0, 0),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
 					this.closeY(),
-					500,
+					0,
 					undefined,
 					cubicIn
 				)
