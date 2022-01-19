@@ -8,6 +8,6 @@ textures/dialogueBg.x6.png
 audio/bgm.mp3
 audio/voiceDefault.mp3
 
-bus.gltf
+models/bus.gltf
 textures/palette.png
 textures/passenger.png
