@@ -32,11 +32,44 @@
 this should never render
 
 ::debug menu
+debug menu
+
 [[passage select>passage select]]
 [[close]]
 [[back|this.back()]]
 
 ::main
+test
+[[test1]]
+
+::test1
+test
+[[test1]]
+[[test2]]
+
+::test2
+test
+[[test1]]
+[[test2]]
+[[test3]]
+
+::test3
+test
+[[test1]]
+[[test2]]
+[[test3]]
+[[test4]]
+
+::test4
+test
+[[test1]]
+[[test2]]
+[[test3]]
+[[test4]]
+[[main]]
+
+
+::bleh
 <<do this.goto('close');this.gotod(this.scenarios.pop(), (Math.random()*10+12)*1000);>>
 
 ::scenario-1
