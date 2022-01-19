@@ -40,6 +40,7 @@ debug menu
 
 ::main
 test
+<<do this.scrim(0)>>
 [[test1]]
 
 ::test1
