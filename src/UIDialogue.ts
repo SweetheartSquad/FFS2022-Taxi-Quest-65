@@ -165,8 +165,8 @@ export class UIDialogue extends GameObject {
 
 		this.graphics = new Graphics();
 		this.display.container.addChild(this.sprScrim);
-		this.display.container.addChild(this.sprBg);
 		this.display.container.addChild(this.graphics);
+		this.display.container.addChild(this.sprBg);
 		this.display.container.addChild(this.toggler.container);
 		this.sprBg.addChild(this.textText);
 		this.sprBg.addChild(this.containerChoices);
