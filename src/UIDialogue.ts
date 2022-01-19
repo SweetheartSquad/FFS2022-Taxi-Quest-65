@@ -1,3 +1,4 @@
+import { AlphaFilter } from '@pixi/filter-alpha';
 import type { EventEmitter } from '@pixi/utils';
 import { cubicIn, cubicOut } from 'eases';
 import {
@@ -117,6 +118,7 @@ export class UIDialogue extends GameObject {
 		this.scripts.push((this.transform = new Transform(this)));
 		this.scripts.push((this.display = new Display(this)));
 		this.display.container.interactiveChildren = true;
+		this.display.container.filters = [new AlphaFilter()];
 		this.sprScrim = new Sprite(Texture.WHITE);
 		this.sprScrim.tint = 0x000000;
 		this.sprScrim.width = size.x + 2;
@@ -170,7 +172,6 @@ export class UIDialogue extends GameObject {
 		this.sprBg.addChild(this.textText);
 		this.sprBg.addChild(this.containerChoices);
 
-		this.sprBg.alpha = 0;
 		this.sprBg.y = this.closeY();
 
 		this.sprBg.x = size.x / 2;
@@ -474,7 +475,8 @@ export class UIDialogue extends GameObject {
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
-				TweenManager.tween(this.sprBg, 'alpha', 1, 500),
+				// @ts-ignore
+				TweenManager.tween(this.display.container.filters[0], 'alpha', 1, 500),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
@@ -494,7 +496,8 @@ export class UIDialogue extends GameObject {
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
-				TweenManager.tween(this.sprBg, 'alpha', 0, 500),
+				// @ts-ignore
+				TweenManager.tween(this.display.container.filters[0], 'alpha', 0, 500),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
