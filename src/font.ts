@@ -8,8 +8,6 @@ export const fontDialogue: Partial<ITextStyle> = {
 	lineHeight: 20,
 	letterSpacing: 0,
 	padding: 2,
-	dropShadow: true,
-	dropShadowDistance: 0,
 	stroke: 0xffffff,
 	strokeThickness: 2,
 	lineJoin: 'round',
