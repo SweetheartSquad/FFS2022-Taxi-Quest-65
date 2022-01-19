@@ -182,3 +182,11 @@ export function pointOnRect(
 	if (x === midX && y === midY) return { x, y };
 	return undefined;
 }
+
+export function splitFirst(str: string, separator: string) {
+	const idx = str.indexOf(separator);
+	return [
+		str.substring(0, idx),
+		str.substring(idx + separator.length),
+	] as const;
+}
