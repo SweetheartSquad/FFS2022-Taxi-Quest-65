@@ -17,6 +17,13 @@ import { size } from './size';
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
 settings.ROUND_PIXELS = true;
 
+function cacheBust(url: string) {
+	const urlObj = new URL(url, window.location.href);
+	// @ts-ignore
+	urlObj.searchParams.set('t', process.env.HASH);
+	return urlObj.toString();
+}
+
 class Game {
 	app: Application;
 
@@ -49,7 +56,7 @@ class Game {
 		onError: (error: Error) => void;
 	}): void {
 		this.app.loader.onError.add(onError);
-		this.app.loader.add({ name: 'assets', url: assets });
+		this.app.loader.add({ name: 'assets', url: cacheBust(assets) });
 		this.app.loader.onComplete.once(() => {
 			const assetResources = (this.app.loader.resources.assets.data as string)
 				.trim()
@@ -65,12 +72,12 @@ class Game {
 				})
 				.filter((i) => i && !i.startsWith('//'))
 				.map((i) => ({
-					url: i.startsWith('http') ? i : `assets/${i}`,
+					url: cacheBust(i.startsWith('http') ? i : `assets/${i}`),
 					name: i.split('/').pop()?.split('.').slice(0, -1).join('.') || i,
 				}));
 			this.app.loader.reset();
 			this.app.loader.add(assetResources);
-			this.app.loader.add({ name: 'main', url: main });
+			this.app.loader.add({ name: 'main', url: cacheBust(main) });
 			this.app.loader.onLoad.add(onLoad);
 			this.app.loader.onComplete.once(onComplete);
 			this.app.loader.onComplete.once(init);
