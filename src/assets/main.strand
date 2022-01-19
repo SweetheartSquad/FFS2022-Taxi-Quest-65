@@ -6,7 +6,7 @@
 	this.goto = (passage) => {
 		window.clearTimeout(this.auto);
 		this.auto = 0;
-		this.gotoo(passage);
+		return this.gotoo(passage);
 	};
 	this.gotod = (passage, delay) => {
 		window.clearTimeout(this.auto);
