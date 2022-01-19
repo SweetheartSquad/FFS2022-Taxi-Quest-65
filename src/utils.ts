@@ -149,3 +149,36 @@ export async function toggleFullscreen(element?: HTMLElement) {
 		: element.requestFullscreen());
 	return !!document.fullscreenElement;
 }
+
+// based on https://stackoverflow.com/a/31254199
+export function pointOnRect(
+	x: number,
+	y: number,
+	minX: number,
+	minY: number,
+	maxX: number,
+	maxY: number
+) {
+	if (minX < x && x < maxX && minY < y && y < maxY) return undefined;
+	const midX = (minX + maxX) / 2;
+	const midY = (minY + maxY) / 2;
+	const m = (midY - y) / (midX - x);
+	if (x <= midX) {
+		const minXy = m * (minX - x) + y;
+		if (minY <= minXy && minXy <= maxY) return { x: minX, y: minXy };
+	}
+	if (x >= midX) {
+		const maxXy = m * (maxX - x) + y;
+		if (minY <= maxXy && maxXy <= maxY) return { x: maxX, y: maxXy };
+	}
+	if (y <= midY) {
+		const minYx = (minY - y) / m + x;
+		if (minX <= minYx && minYx <= maxX) return { x: minYx, y: minY };
+	}
+	if (y >= midY) {
+		const maxYx = (maxY - y) / m + x;
+		if (minX <= maxYx && maxYx <= maxX) return { x: maxYx, y: maxY };
+	}
+	if (x === midX && y === midY) return { x, y };
+	return undefined;
+}

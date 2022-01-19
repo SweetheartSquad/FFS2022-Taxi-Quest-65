@@ -48,6 +48,10 @@ export class GameScene extends GameObject {
 
 	border: Border;
 
+	passenger: Mesh3D;
+
+	pointDialogue: Mesh3D;
+
 	constructor() {
 		super();
 		this.container.addChildAt(this.graphics, 0);
@@ -115,17 +119,23 @@ export class GameScene extends GameObject {
 		matPassenger.baseColorTexture = tex('palette');
 		matPassenger.unlit = true;
 		matPassenger.alphaMode = StandardMaterialAlphaMode.blend;
-		const passenger = Mesh3D.createQuad(matPassenger);
+		this.passenger = Mesh3D.createQuad(matPassenger);
 		matPassenger.baseColorTexture = tex('passenger');
 		matPassenger.baseColorTexture.baseTexture.mipmap = MIPMAP_MODES.ON;
 		matPassenger.baseColorTexture.baseTexture.scaleMode = SCALE_MODES.LINEAR;
 
+		this.pointDialogue = Mesh3D.createCube(matBus);
+		this.pointDialogue.position.set(-9.5, 4.4, 7.1);
+		this.pointDialogue.position.z -= 1;
+		this.pointDialogue.position.y += 4;
+		this.pointDialogue.visible = false;
+
 		this.camera3d = Camera3D.main;
 		this.camera3d.y = 7;
 		this.camera3d.position.set(1.475, 9.508, 4.506);
-		passenger.position.set(-9.5, 4.4, 7.1);
-		passenger.scale.set(8, 8, 8);
-		passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
+		this.passenger.position.set(-9.5, 4.4, 7.1);
+		this.passenger.scale.set(8, 8, 8);
+		this.passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
 
 		let x = 0;
 		let y = 10;
@@ -149,7 +159,8 @@ export class GameScene extends GameObject {
 		);
 
 		this.container3d.addChild(bus);
-		this.container3d.addChild(passenger);
+		this.container3d.addChild(this.passenger);
+		this.container3d.addChild(this.pointDialogue);
 
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);

@@ -3,7 +3,7 @@ textures/black.png
 textures/white.png
 textures/blank.png
 textures/border.png
-textures/dialogueBg.x3.png
+textures/dialogueBg.x6.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3

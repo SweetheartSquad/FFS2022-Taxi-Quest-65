@@ -1,6 +1,14 @@
 import type { EventEmitter } from '@pixi/utils';
 import { cubicIn, cubicOut } from 'eases';
-import { Container, Sprite, Text, TextMetrics, Texture } from 'pixi.js';
+import {
+	Container,
+	Graphics,
+	Sprite,
+	Text,
+	TextMetrics,
+	Texture,
+} from 'pixi.js';
+import { Camera, Mesh3D, ObservablePoint3D, Vec3 } from 'pixi3d';
 import Strand from 'strand-core';
 import { sfx } from './Audio';
 import { fontDialogue, fontPrompt } from './font';
@@ -14,15 +22,27 @@ import { Toggler } from './Scripts/Toggler';
 import { Transform } from './Scripts/Transform';
 import { size } from './size';
 import { Tween, TweenManager } from './Tweens';
-import { lerp, tex } from './utils';
+import { clamp, lerp, pointOnRect } from './utils';
+import { V } from './VMath';
 
 const padding = {
-	top: 4,
-	bottom: 4,
-	left: 8,
-	right: 8,
+	top: 8,
+	bottom: 8,
+	left: 16,
+	right: 16,
 };
 const scrimDefault = 0;
+
+function formatLabel(str: string, idx: number, length: number) {
+	if (length === 1) return str;
+	if (length > 4) return `${idx + 1}. ${str}`;
+	if (idx === 0) return `< ${str} <`;
+	if (idx === 1) return `> ${str} >`;
+	if (idx === 2) return `^ ${str} ^`;
+	if (idx === 3) return `v ${str} v`;
+	return str;
+}
+
 export class UIDialogue extends GameObject {
 	sprScrim: Sprite;
 
@@ -33,6 +53,8 @@ export class UIDialogue extends GameObject {
 	sprBg: Sprite;
 
 	animatorBg: Animator;
+
+	graphics: Graphics;
 
 	transform: Transform;
 
@@ -73,11 +95,11 @@ export class UIDialogue extends GameObject {
 	}
 
 	openY() {
-		return size.y;
+		return size.y * 0.25;
 	}
 
 	closeY() {
-		return size.y + this.height();
+		return this.openY() + this.height();
 	}
 
 	progress() {
@@ -97,19 +119,19 @@ export class UIDialogue extends GameObject {
 		this.display.container.interactiveChildren = true;
 		this.sprScrim = new Sprite(Texture.WHITE);
 		this.sprScrim.tint = 0x000000;
-		this.sprScrim.width = size.x;
-		this.sprScrim.height = size.y;
+		this.sprScrim.width = size.x + 2;
+		this.sprScrim.height = size.y + 2;
 		this.sprScrim.alpha = 1;
 		this.sprBg = new Sprite(Texture.WHITE);
 		this.scripts.push(
-			(this.animatorBg = new Animator(this, { spr: this.sprBg }))
+			(this.animatorBg = new Animator(this, { spr: this.sprBg, freq: 1 / 100 }))
 		);
 		this.animatorBg.setAnimation('dialogueBg');
+		this.sprBg.anchor.y = 0.5;
+		this.sprBg.anchor.x = 0.5;
 		this.transform.x = 0;
 
 		this.scripts.push((this.toggler = new Toggler(this)));
-		this.toggler.container.x += size.x / 2;
-		this.toggler.container.y = size.y / 2 - this.sprBg.height / 2;
 
 		this.strText = '';
 		this.strPrompt = '';
@@ -134,38 +156,130 @@ export class UIDialogue extends GameObject {
 		this.choices = [];
 		// @ts-ignore
 		window.text = this.textText;
-		this.textText.y = -this.sprBg.height + padding.top;
-		this.textText.x = padding.left;
+		this.containerChoices.x = this.textText.x =
+			-this.sprBg.width / 2 + padding.left;
+		this.textText.y = -this.sprBg.height / 2 + padding.top;
 		this.textText.style.wordWrap = true;
 		this.textText.style.wordWrapWidth =
 			this.sprBg.width - padding.left - padding.right;
 
+		this.graphics = new Graphics();
 		this.display.container.addChild(this.sprScrim);
 		this.display.container.addChild(this.sprBg);
+		this.display.container.addChild(this.graphics);
 		this.display.container.addChild(this.toggler.container);
-		this.display.container.addChild(this.textText);
-		this.display.container.addChild(this.containerChoices);
+		this.sprBg.addChild(this.textText);
+		this.sprBg.addChild(this.containerChoices);
 
 		this.sprBg.alpha = 0;
-		this.textText.alpha = 0;
 		this.sprBg.y = this.closeY();
 
-		this.transform.x = size.x / 2 - this.sprBg.width / 2;
-		this.transform.y = -size.y / 2 - this.height() / 2;
-		this.sprScrim.x = -this.transform.x;
-		this.sprScrim.y = -this.transform.y;
+		this.sprBg.x = size.x / 2;
+		this.sprScrim.x = -this.transform.x - 1;
+		this.sprScrim.y = -this.transform.y - 1;
 		this.toggler.container.x = -this.transform.x + size.x / 2;
 		this.toggler.container.y = -this.transform.y + size.y / 2;
 
 		this.init();
 	}
 
+	arrowStart: V = { x: 0, y: 0 };
+
+	arrowEnd: V = { x: 0, y: 0 };
+
 	update(): void {
 		super.update();
-		this.textText.pivot.x = -this.sprBg.x;
-		this.textText.pivot.y = -this.sprBg.y;
-		this.containerChoices.pivot.x = -this.sprBg.x;
-		this.containerChoices.pivot.y = -this.sprBg.y;
+
+		// @ts-ignore
+		const pointDialogue = window.scene.pointDialogue as Mesh3D;
+		// @ts-ignore
+		const camera3d = window.scene.camera3d as Camera;
+
+		const min = this.graphics.toLocal({ x: size.x * 0.05, y: size.y * 0.05 });
+		const max = this.graphics.toLocal({ x: size.x * 0.95, y: size.y * 0.95 });
+
+		const pos3d = pointDialogue.position;
+		let pos = camera3d.worldToScreen(pos3d.x, pos3d.y, pos3d.z);
+		const pos3d2a = camera3d.screenToWorld(
+			pos.x,
+			pos.y,
+			1
+		) as ObservablePoint3D;
+		const pos3d2b = camera3d.screenToWorld(
+			pos.x,
+			pos.y,
+			-1
+		) as ObservablePoint3D;
+		if (
+			// looking away
+			Vec3.squaredDistance(pos3d2a.array, pos3d.array) >
+			Vec3.squaredDistance(pos3d2b.array, pos3d.array)
+		) {
+			pos.x = max.x;
+			pos.y = lerp(min.y, max.y, 0.25);
+		} else {
+			pos = this.graphics.toLocal(pos);
+		}
+
+		const arrowSize = 20;
+		const clampedPos = pointOnRect(pos.x, pos.y, min.x, min.y, max.x, max.y);
+		if (clampedPos) {
+			pos.x = clampedPos.x;
+			pos.y = clampedPos.y;
+		}
+
+		if (this.animatorBg.frameChanged) {
+			this.arrowEnd.x = lerp(
+				this.arrowEnd.x,
+				pos.x + (Math.random() - 0.5) * arrowSize * 0.5,
+				0.8
+			);
+			this.arrowEnd.y = lerp(
+				this.arrowEnd.y,
+				pos.y + (Math.random() - 0.5) * arrowSize * 0.5,
+				0.8
+			);
+			this.sprBg.pivot.x = lerp(0, -pos.x + size.x / 2, 0.1);
+			this.sprBg.pivot.y = lerp(0, -pos.y + size.y / 2, 0.1);
+		}
+
+		const angle = Math.atan2(pos.y - this.sprBg.y, pos.x - this.sprBg.x);
+		const start = this.graphics.toLocal(
+			{
+				x: (this.sprBg.width - arrowSize * 2) * (Math.cos(angle) * 0.4),
+				y: (this.sprBg.height - arrowSize * 2) * (Math.sin(angle) * 0.4),
+			},
+			this.sprBg
+		);
+		start.x = clamp(min.x, start.x, max.x);
+		start.y = clamp(min.y, start.y, max.y);
+		if (this.animatorBg.frameChanged) {
+			this.arrowStart.x = lerp(this.arrowStart.x, start.x, 0.9);
+			this.arrowStart.y = lerp(this.arrowStart.y, start.y, 0.9);
+		}
+
+		this.graphics.clear();
+		this.graphics.beginFill(0xffffff);
+
+		this.graphics.drawPolygon([
+			this.arrowStart.x,
+			this.arrowStart.y + arrowSize,
+			this.arrowStart.x,
+			this.arrowStart.y - arrowSize,
+			this.arrowEnd.x,
+			this.arrowEnd.y,
+		]);
+		this.graphics.drawPolygon([
+			this.arrowStart.x + arrowSize,
+			this.arrowStart.y,
+			this.arrowStart.x - arrowSize,
+			this.arrowStart.y,
+			this.arrowEnd.x,
+			this.arrowEnd.y,
+		]);
+
+		this.graphics.endFill();
+
 		this.textPrompt.alpha = lerp(
 			this.textPrompt.alpha,
 			!this.isOpen && this.fnPrompt ? 1 : 0,
@@ -251,7 +365,7 @@ export class UIDialogue extends GameObject {
 		this.display.container.accessibleHint = text;
 		this.choices.forEach((i) => i.destroy());
 		this.choices = (actions || []).map((i, idx, a) => {
-			const strText = a.length > 1 ? `${idx + 1}. ${i.text}` : i.text;
+			const strText = formatLabel(i.text, idx, a.length);
 			const t = new Text(strText, {
 				...this.textText.style,
 				wordWrapWidth: (this.textText.style.wordWrapWidth || 0) - 2,
@@ -275,13 +389,39 @@ export class UIDialogue extends GameObject {
 					i.action();
 				}
 			});
-			t.anchor.x = 0;
-			t.y +=
-				this.containerChoices.height - (t.style.padding || 0) * (idx ? 2 : 0);
+			t.anchor.x = 0.5;
+			t.anchor.y = 0.5;
 			this.containerChoices.addChild(t);
 			return t;
 		});
-		this.containerChoices.y = -this.containerChoices.height - padding.bottom;
+		this.containerChoices.y = 0;
+		if (this.choices.length === 1) {
+			this.choices[0].x = this.sprBg.width / 2;
+		} else if (this.choices.length && this.choices.length <= 4) {
+			this.choices[0].x = padding.right;
+			this.choices[0].anchor.x = 0;
+			this.choices[1].x = this.sprBg.width - padding.left - padding.right;
+			this.choices[1].anchor.x = 1;
+			if (this.choices.length > 2) {
+				this.choices[2].y = -Math.max(...this.choices.map((i) => i.height));
+				this.choices[2].x = this.sprBg.width / 2;
+			}
+			if (this.choices.length > 3) {
+				this.choices[3].y = Math.max(...this.choices.map((i) => i.height));
+				this.choices[3].x = this.sprBg.width / 2;
+			}
+		} else {
+			// fallback for debug and etc
+			this.choices.forEach((i, idx) => {
+				i.anchor.x = 0;
+				i.y +=
+					(this.choices[idx - 1]?.y ?? 0) +
+					(this.choices[idx - 1]?.height ?? 0) -
+					(i.style.padding || 0) * (idx ? 2 : 0);
+			});
+		}
+		this.containerChoices.y =
+			this.sprBg.height / 2 + this.containerChoices.height;
 		this.containerChoices.alpha = 0.0;
 		this.open();
 		this.pos = 0;
@@ -315,7 +455,6 @@ export class UIDialogue extends GameObject {
 			this.tweens.length = 0;
 			this.tweens.push(
 				TweenManager.tween(this.sprBg, 'alpha', 1, 500),
-				TweenManager.tween(this.textText, 'alpha', 1, 500),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
@@ -336,8 +475,6 @@ export class UIDialogue extends GameObject {
 			this.tweens.length = 0;
 			this.tweens.push(
 				TweenManager.tween(this.sprBg, 'alpha', 0, 500),
-				TweenManager.tween(this.textText, 'alpha', 0, 500),
-				TweenManager.tween(this.containerChoices, 'alpha', 0, 500),
 				TweenManager.tween(
 					this.sprBg,
 					'y',
