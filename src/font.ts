@@ -10,6 +10,9 @@ export const fontDialogue: Partial<ITextStyle> = {
 	padding: 2,
 	dropShadow: true,
 	dropShadowDistance: 0,
+	stroke: 0xffffff,
+	strokeThickness: 2,
+	lineJoin: 'round',
 };
 export const fontPrompt: Partial<ITextStyle> = {
 	fontFamily: 'font',
