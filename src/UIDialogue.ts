@@ -152,7 +152,6 @@ export class UIDialogue extends GameObject {
 			this.complete();
 		});
 		this.containerChoices = new Container();
-		this.containerChoices.x = padding.left;
 		this.choices = [];
 		// @ts-ignore
 		window.text = this.textText;
@@ -422,11 +421,14 @@ export class UIDialogue extends GameObject {
 			this.choices[1].x = this.sprBg.width - padding.left - padding.right;
 			this.choices[1].anchor.x = 1;
 			if (this.choices.length > 2) {
-				this.choices[2].y = -Math.max(...this.choices.map((i) => i.height));
 				this.choices[2].x = this.sprBg.width / 2;
+				this.choices[0].y += this.choices[2].height;
+				this.choices[1].y += this.choices[2].height;
 			}
 			if (this.choices.length > 3) {
-				this.choices[3].y = Math.max(...this.choices.map((i) => i.height));
+				this.choices[3].y = Math.max(
+					...this.choices.slice(0, 2).map((i) => i.y + i.height)
+				);
 				this.choices[3].x = this.sprBg.width / 2;
 			}
 		} else {
@@ -439,8 +441,7 @@ export class UIDialogue extends GameObject {
 					(i.style.padding || 0) * (idx ? 2 : 0);
 			});
 		}
-		this.containerChoices.y =
-			this.sprBg.height / 2 + this.containerChoices.height;
+		this.containerChoices.y = this.sprBg.height / 2;
 		this.containerChoices.alpha = 0.0;
 		this.open();
 		this.pos = 0;
