@@ -294,17 +294,43 @@ export class UIDialogue extends GameObject {
 		// early return (still opening)
 		if (this.progress() < 0.9) return;
 
+		// interaction
 		if (this.isOpen && this.choices.length) {
+			if (input.interact) {
+				this.complete();
+			}
 			if (this.containerChoices.alpha > 0.5) {
-				if (this.choices.length === 1 && input.interact) {
+				if (
+					this.choices.length === 1 &&
+					(input.choiceLeft ||
+						input.choiceRight ||
+						input.choiceUp ||
+						input.choiceDown)
+				) {
 					this.choices[0].emit('click');
-				} else if (input.justMoved.y) {
-					if (this.selected !== undefined) {
-						this.choices[this.selected].alpha = 1;
+				} else if (this.choices.length > 0 && this.choices.length <= 4) {
+					if (input.choiceLeft) {
+						this.choices[0].emit('click');
+					} else if (input.choiceRight) {
+						this.choices[1].emit('click');
+					} else if (this.choices[2] && input.choiceUp) {
+						this.choices[2].emit('click');
+					} else if (this.choices[3] && input.choiceDown) {
+						this.choices[3].emit('click');
 					}
+				} else {
+					// keys 1-9 select choices
+					this.choices
+						.slice(0, 9)
+						.find((_, idx) => keys.isJustDown(KEYS.ONE + idx))
+						?.emit('click');
+
+					// menu select
 					if (this.selected === undefined) {
 						this.selected = 0;
-					} else if (input.justMoved.y > 0) {
+					}
+					this.choices[this.selected].alpha = 1;
+					if (input.justMoved.y > 0) {
 						this.selected =
 							this.selected < this.choices.length - 1 ? this.selected + 1 : 0;
 					} else if (input.justMoved.y < 0) {
@@ -312,17 +338,10 @@ export class UIDialogue extends GameObject {
 							this.selected > 0 ? this.selected - 1 : this.choices.length - 1;
 					}
 					this.choices[this.selected].alpha = 0.75;
-				} else if (input.interact && this.selected !== undefined) {
-					this.choices[this.selected].emit('click');
-				} else if (input.interact) {
-					this.complete();
-				} else {
-					this.choices
-						.find((_, idx) => keys.isJustDown(KEYS.ONE + idx))
-						?.emit('click');
+					if (input.interact && this.selected !== undefined) {
+						this.choices[this.selected].emit('click');
+					}
 				}
-			} else if (input.interact) {
-				this.complete();
 			}
 		}
 

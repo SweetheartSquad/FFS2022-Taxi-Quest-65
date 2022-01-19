@@ -40,6 +40,10 @@ export function getInput() {
 				(gamepads.axisJustPast(Axes.LSTICK_V, -0.5, -1) && -1) ||
 				0,
 		},
+		choiceLeft: false,
+		choiceRight: false,
+		choiceUp: false,
+		choiceDown: false,
 		interact:
 			gamepads.isJustDown(Buttons.A) ||
 			gamepads.isJustDown(Buttons.B) ||
@@ -118,6 +122,16 @@ export function getInput() {
 
 	res.move.x = clamp(-1.0, res.move.x, 1.0);
 	res.move.y = clamp(-1.0, res.move.y, 1.0);
+
+	if (res.justMoved.x < 0 || gamepads.isJustDown(Buttons.X)) {
+		res.choiceLeft = true;
+	} else if (res.justMoved.x > 0 || gamepads.isJustDown(Buttons.B)) {
+		res.choiceRight = true;
+	} else if (res.justMoved.y < 0 || gamepads.isJustDown(Buttons.Y)) {
+		res.choiceUp = true;
+	} else if (res.justMoved.y > 0 || gamepads.isJustDown(Buttons.A)) {
+		res.choiceDown = true;
+	}
 
 	return res;
 }
