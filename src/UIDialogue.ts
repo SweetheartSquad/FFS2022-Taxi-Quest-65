@@ -255,8 +255,8 @@ export class UIDialogue extends GameObject {
 		start.y = clamp(min.y, start.y, max.y);
 		if (this.animatorBg.frameChanged) {
 			this.arrowStart.x = lerp(this.arrowStart.x, start.x, 0.9);
-			this.arrowStart.y = lerp(this.arrowStart.y, start.y, 0.9);
 		}
+		this.arrowStart.y = start.y;
 
 		this.graphics.clear();
 		this.graphics.beginFill(0xffffff);
