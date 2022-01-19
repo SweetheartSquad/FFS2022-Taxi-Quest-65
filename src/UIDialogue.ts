@@ -239,8 +239,16 @@ export class UIDialogue extends GameObject {
 				pos.y + (Math.random() - 0.5) * arrowSize * 0.5,
 				0.8
 			);
-			this.sprBg.pivot.x = lerp(0, -pos.x + size.x / 2, 0.1);
-			this.sprBg.pivot.y = lerp(0, -pos.y + size.y / 2, 0.1);
+			this.sprBg.pivot.x = lerp(
+				this.sprBg.pivot.x,
+				lerp(0, -pos.x + size.x / 2, 0.1),
+				0.5
+			);
+			this.sprBg.pivot.y = lerp(
+				this.sprBg.pivot.y,
+				lerp(0, -pos.y + size.y / 2, 0.1),
+				0.5
+			);
 		}
 
 		const angle = Math.atan2(pos.y - this.sprBg.y, pos.x - this.sprBg.x);
