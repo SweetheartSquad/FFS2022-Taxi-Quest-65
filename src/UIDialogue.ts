@@ -296,7 +296,7 @@ export class UIDialogue extends GameObject {
 
 		// interaction
 		if (this.isOpen && this.choices.length) {
-			if (input.interact) {
+			if (input.interact || input.choiceAny) {
 				this.complete();
 			}
 			if (this.containerChoices.alpha > 0.5) {

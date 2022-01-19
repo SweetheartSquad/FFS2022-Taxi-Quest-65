@@ -44,6 +44,7 @@ export function getInput() {
 		choiceRight: false,
 		choiceUp: false,
 		choiceDown: false,
+		choiceAny: false,
 		interact:
 			gamepads.isJustDown(Buttons.A) ||
 			gamepads.isJustDown(Buttons.B) ||
@@ -132,6 +133,8 @@ export function getInput() {
 	} else if (res.justMoved.y > 0 || gamepads.isJustDown(Buttons.A)) {
 		res.choiceDown = true;
 	}
+	res.choiceAny =
+		res.choiceLeft || res.choiceRight || res.choiceUp || res.choiceDown;
 
 	return res;
 }
