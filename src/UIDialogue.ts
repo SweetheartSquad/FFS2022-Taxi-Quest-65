@@ -8,6 +8,7 @@ import { game } from './Game';
 import { GameObject } from './GameObject';
 import { KEYS, keys } from './input-keys';
 import { getInput } from './main';
+import { Animator } from './Scripts/Animator';
 import { Display } from './Scripts/Display';
 import { Toggler } from './Scripts/Toggler';
 import { Transform } from './Scripts/Transform';
@@ -30,6 +31,8 @@ export class UIDialogue extends GameObject {
 	tweens: Tween[] = [];
 
 	sprBg: Sprite;
+
+	animatorBg: Animator;
 
 	transform: Transform;
 
@@ -97,8 +100,11 @@ export class UIDialogue extends GameObject {
 		this.sprScrim.width = size.x;
 		this.sprScrim.height = size.y;
 		this.sprScrim.alpha = 1;
-		this.sprBg = new Sprite(tex('dialogueBg'));
-		this.sprBg.anchor.y = 1.0;
+		this.sprBg = new Sprite(Texture.WHITE);
+		this.scripts.push(
+			(this.animatorBg = new Animator(this, { spr: this.sprBg }))
+		);
+		this.animatorBg.setAnimation('dialogueBg');
 		this.transform.x = 0;
 
 		this.scripts.push((this.toggler = new Toggler(this)));
