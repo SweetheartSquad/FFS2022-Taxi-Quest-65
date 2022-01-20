@@ -35,4 +35,10 @@ export class Model extends GameObject {
 	setAnimation(...args: Parameters<Animator3d['setAnimation']>) {
 		return this.animator.setAnimation(...args);
 	}
+
+	destroy(): void {
+		this.model.destroy({ children: true });
+		this.material.destroy();
+		super.destroy();
+	}
 }
