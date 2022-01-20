@@ -8,9 +8,10 @@ export const fontDialogue: Partial<ITextStyle> = {
 	lineHeight: 20,
 	letterSpacing: 0,
 	padding: 2,
-	stroke: 0xffffff,
-	strokeThickness: 2,
-	lineJoin: 'round',
+};
+export const fontChoice: Partial<ITextStyle> = {
+	...fontDialogue,
+	fill: 0xffffff,
 };
 export const fontPrompt: Partial<ITextStyle> = {
 	fontFamily: 'font',
