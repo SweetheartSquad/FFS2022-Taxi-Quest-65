@@ -46,9 +46,16 @@ export class StrandE extends Strand {
 					(_: never, link: string) =>
 						link === '>'
 							? `>${link}`
-							: `[[${
-									link || promptDefault
-							  }|this.goto('auto-${++autolink}')]]\n\n::auto-${autolink}\n`
+							: link
+									.split('|')
+									.map(
+										(l) =>
+											`[[${l || promptDefault}|this.goto('auto-${
+												autolink + 1
+											}')]]`
+									)
+									.concat(`\n::auto-${++autolink}`)
+									.join('\n')
 				)
 				// auto link escape
 				.replace(/^\\>/gm, '>')
