@@ -119,6 +119,7 @@ export class StrandE extends Strand {
 	Model(...args: ConstructorParameters<typeof Model>) {
 		const model = new Model(...args);
 		this.scene.container3d.addChild(model.model);
+		return model;
 	}
 
 	Text(
