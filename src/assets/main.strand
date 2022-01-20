@@ -17,6 +17,16 @@
 
 	this.Model('taxicab_shell', 'palette');
 
+	this.EnvModel = () => {
+		const m = this.Model('taxicab_shell', 'palette');
+		m.model.position.z = 100;
+		const t = this.tween(m.model.position, 'z', -100, 10000);
+		setTimeout(() => {
+			this.tweenAbort(t);
+			this.destroy(m);
+		}, 10000);
+	};
+
 	// start
 	this.started=true;
 	requestAnimationFrame(() => {
