@@ -134,7 +134,7 @@ export class UIDialogue extends GameObject {
 		this.sprChoiceBg.x = this.sprBg.width / 2;
 		this.sprDiamond = new Sprite(tex('dialogueDiamond'));
 		this.sprDiamond.anchor.x = this.sprDiamond.anchor.y = 0.5;
-		this.sprChoiceBg.addChild(this.sprDiamond);
+		this.sprDiamond.x = this.sprBg.width / 2;
 		this.scripts.push(
 			(this.animatorBg = new Animator(this, { spr: this.sprBg, freq: 1 / 100 }))
 		);
@@ -194,6 +194,7 @@ export class UIDialogue extends GameObject {
 		this.sprBg.addChild(this.textText);
 		this.sprBg.addChild(this.containerChoices);
 		this.containerChoices.addChild(this.sprChoiceBg);
+		this.containerChoices.addChild(this.sprDiamond);
 
 		this.sprBg.y = this.closeY();
 
@@ -466,6 +467,15 @@ export class UIDialogue extends GameObject {
 					this.sprChoiceBg.y + (this.sprDiamond.height / 2 + 5);
 				this.choices[3].anchor.y = 0;
 			}
+			this.sprChoiceBg.visible = false;
+			this.sprChoiceBg.width = Math.max(
+				this.containerChoices.width * 1.3,
+				this.sprChoiceBg.texture.width
+			);
+			this.sprChoiceBg.height = Math.max(
+				this.containerChoices.height * 1.3,
+				this.sprChoiceBg.texture.height
+			);
 		} else {
 			// fallback for debug and etc
 			this.choices.forEach((i, idx) => {
