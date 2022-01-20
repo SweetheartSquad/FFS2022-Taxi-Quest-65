@@ -50,11 +50,11 @@ debug menu
 [[back|this.back()]]
 
 ::main
-test
 <<do this.scrim(0)>>
-[[test1]]
+// <<do this.goto('close');this.gotod(this.scenarios.pop(), (Math.random()*10+12)*1000);>>
+<<do this.goto('close');this.gotod(this.scenarios.pop(), 2000);>>
 
-::test1
+::test-choices
 test
 [[test1]]
 [[test2]]
@@ -81,203 +81,120 @@ test
 [[main]]
 
 
-::bleh
-<<do this.goto('close');this.gotod(this.scenarios.pop(), (Math.random()*10+12)*1000);>>
 
-::scenario-1
-You ever kill someone?
-[[Yes>bad]]
-[[No>good]]
 
-::bad
-It's not your fault, yeah?
+
+
+
+
+
+
+
+
+
+::scenario-busy
+Been a busy night?
+>Nope|Not really|S'pose
+Guess a lot of people have been trying to leave the city.
+>Mmm|S'pose|Yea?
+My mom's been nagging me for the past year.
 >
-I mean, you did it, but...
+Going on about how dangerous it's gotten.
 >
-It's them or you out here these days.
+Thought she was just being annoying but it's gotten outta hand lately...
+>Mhmm|Yea?|Didn't notice
+Saw your rifle in the back, is that for hunting out here?
+[[Nope>busy-nope]]
+[[Yup>busy-yup]]
+
+::busy-nope
+Oh...
 >
-Don't feel too bad or it'll eat you up.
+Have you ever had to use it on the job?
+[[Nope>busy-nope-nope]]
+[[Yup>busy-nope-yup]]
+[[Once>busy-nope-yup]]
+[[Say nothing>busy-nope-nope]]
+
+::busy-nope-nope
+...Hm.
 >
-Of course, don't feel too good, either.
+Well, probably for the best.
 [[>main]]
 
-::good
-Well, you're doing better than most.
+::busy-nope-yup
+Oh.
 >
-...
->
-It's a living, yeah?
->
-I'm not a sadist or anything.
->
-Being out here changes most people.
->
-If you're not careful it'll change you, too.
+Well, I won't ask.
 [[>main]]
 
-
-::scenario-2
-Hey, can you pull over for a bit?
-[[Yes>nice]]
-[[No>mean]]
-
-::nice
-Thanks.
+::busy-yup
+Cool! I've never been hunting before.
 >
-My heart is racing something fierce.
+So do you like, catch hares or something?
+>Yup|Nope|A few|Bigger game
+Ah. Wonder if I'll have to start hunting back at home, ha ha.
+>Mmmhm|S'Pose
+Apparently they're having a hard time finding truckers to make the journey out, and the supply chain is out of wack.
 >
-It'll pass soon.
->
-...
->
-...
->
-I don't think stopping the car helps, but...
->
-Gives me a chance to collect myself.
->
-Wish I knew what was really wrong down there, though.
->
-In my heart.
+Never seen the stores so empty...
+>Mhmm|S'pose
+Wonder how long all this will last for.
+>Can't say|Dunno|Don't Care
+...Yeah.
 >
 ...
->
-Ok, let's go.
->
-Thanks for stopping.
-[[>main]]
-
-::mean
-That's fair...
->
-It's a dangerous world out here.
->
-When you get a chance, though, let me know, yeah?
 [[>main]]
 
 
+::scenario-two-seater
+So... a two seater huh?
+>
+Haven't seen many taxis like that, ha ha.
+>Yea|S'Pose
+Some more supply issues? Not enough yellow cabs?
+>Nope|Yup|S'Pose
+Must be a pain if you get flagged down by a family of four.
+>
+Guess you could stick the kids in the trunk, ha ha.
+[[Yup>two-seater-2]]
+[[S'Pose>two-seater-2]]
+[[Not many families around]]
 
-::scenario-3
+::two-seater-2
+TODO
+[[>main]]
+
+::Not many families around
+Oh...
+>
+Guess that makes things simpler then.
+[[>main]]
+
+
+::scenario-out-of-town
+Guessing most people from the city have been going out of town recently huh?
+>Yup|S'Pose
+Must be nice, lot less hectic out here.
+>S'Quiet|S'Pose|Yup
+Does it feel weird?
+>
+I mean, when all day, you're just watching people leave?
+>S'Pose|Say nothing
+I appreciate the late night trip by the way.
+>
+Had to leave in a bit of a hurry.
+[[>main]]
+
+::scenario-love
 You ever been in love?
-[[Yes>love]]
-[[No>none]]
-
-::love
-I think I was.
 >
-I found out a few days ago that he died.
->
-Raiders shot him to shit.
->
-I don't really feel anything.
->
-We hadn't spoken for a few months.
->
-I guess we won't speak for many more.
->
-Just feels like he's still somewhere out there, ignoring me.
->
-Did you like being in love?
-[[Yes>love2]]
-[[No>love3]]
-
-::love2
-I wish it were that clear for me.
-[[>main]]
-
-::love3
-It's like a disease.
->
-You go for a long time thinking it's normal.
->
-Like this is how life is.
->
-It's a gradual waking up.
->
-One day you think that maybe you deserve better.
->
-I still don't know what's better than love, though.
->
-Maybe nothing.
-[[>main]]
-
-::none
-I'm not convinced it's worth it, if that helps.
->
-Maybe it doesn't.
->
-Sorry.
+TODO
 [[>main]]
 
 
-::scenario-4
-Did you catch the stash game while you were in town?
-
-[[Yes>cool]]
-[[No>lame]]
-
-::cool
-Man, Hardy was really having a go out there, wasn't he?
->
-Pretends he's coming slow off the injury and then goes for broke.
->
-Last week's match was boring without him.
-[[>main]]
 
 
-::lame
-I think it's funny that people have the time or energy for it.
->
-Don't get me wrong, I love to watch it.
->
-But actually playing games just seems too... frivolous.
->
-But man, what a match! You shoulda seen it.
->
-Hardy laid waste to the other team practically single-handedly.
-[[>main]]
-
-
-::scenario-5
-Sorry about the smell.
->
-He's going a bit rotten, I think.
-[[>main]]
-
-
-::scenario-6
-I met a girl, Maz.
->
-She was barely 17. Worked for a research lab.
->
-She told me that what I did tonight doomed us all.
->
-You think that's true?
-[[Yes>true]]
-[[No>false]]
-
-::true
-I think so, too.
-[[>main]]
-
-
-::false
-I think we've got just as much chance now as we ever did.
->
-Not like anyone lasts long out here these days.
->
-Whole world went to shit a long time ago.
->
-We were already doomed.
->
-We're just more resilient than most.
->
-Something was bound to go wrong for him anyway.
->
-He couldn't have saved us.
->
-I doubt anyone really can.
-[[>main]]
 
 
 ::end-scenario
