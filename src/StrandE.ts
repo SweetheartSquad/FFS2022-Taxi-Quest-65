@@ -7,6 +7,7 @@ import { fontIngame } from './font';
 import { GameObject } from './GameObject';
 import { GameScene } from './GameScene';
 import { setScene } from './main';
+import { Model } from './Model';
 import { Prompt } from './prompt';
 import { Prop } from './Prop';
 import { Display } from './Scripts/Display';
@@ -113,6 +114,11 @@ export class StrandE extends Strand {
 
 	Prop(...args: ConstructorParameters<typeof Prop>) {
 		return new Prop(...args);
+	}
+
+	Model(...args: ConstructorParameters<typeof Model>) {
+		const model = new Model(...args);
+		this.scene.container3d.addChild(model.model);
 	}
 
 	Text(

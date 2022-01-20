@@ -2,15 +2,12 @@ import {
 	Container,
 	DisplayObject,
 	Graphics,
-	LoaderResource,
 	MIPMAP_MODES,
 	SCALE_MODES,
 } from 'pixi.js';
 import {
 	Camera as Camera3D,
-	glTFAsset,
 	Mesh3D,
-	Model,
 	Quat,
 	StandardMaterial,
 	StandardMaterialAlphaMode,
@@ -106,15 +103,6 @@ export class GameScene extends GameObject {
 
 		this.camera.display.container.addChild(this.container);
 
-		const matBus = new StandardMaterial();
-		matBus.baseColorTexture = tex('palette');
-		matBus.unlit = true;
-		const bus = Model.from(
-			(resources.bus as LoaderResource & { gltf: glTFAsset }).gltf
-		);
-		bus.meshes.forEach((mesh) => {
-			mesh.material = matBus;
-		});
 		const matPassenger = new StandardMaterial();
 		matPassenger.baseColorTexture = tex('palette');
 		matPassenger.unlit = true;
@@ -124,7 +112,7 @@ export class GameScene extends GameObject {
 		matPassenger.baseColorTexture.baseTexture.mipmap = MIPMAP_MODES.ON;
 		matPassenger.baseColorTexture.baseTexture.scaleMode = SCALE_MODES.LINEAR;
 
-		this.pointDialogue = Mesh3D.createCube(matBus);
+		this.pointDialogue = Mesh3D.createCube();
 		this.pointDialogue.position.set(-9.5, 4.4, 7.1);
 		this.pointDialogue.position.z -= 1;
 		this.pointDialogue.position.y += 4;
@@ -158,7 +146,6 @@ export class GameScene extends GameObject {
 			})
 		);
 
-		this.container3d.addChild(bus);
 		this.container3d.addChild(this.passenger);
 		this.container3d.addChild(this.pointDialogue);
 

@@ -15,6 +15,7 @@
 		}, delay);
 	};
 
+	this.Model('taxicab_shell', 'palette');
 
 	// start
 	this.started=true;
