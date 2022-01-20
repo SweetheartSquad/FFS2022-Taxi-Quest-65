@@ -87,6 +87,10 @@ export class StrandE extends Strand {
 		return TweenManager.tween(...args);
 	}
 
+	tweenFinish = TweenManager.finish;
+
+	tweenAbort = TweenManager.abort;
+
 	shuffle(...args: Parameters<typeof shuffle>) {
 		return shuffle(...args);
 	}
