@@ -27,10 +27,10 @@ import { clamp, lerp, pointOnRect } from './utils';
 import { V } from './VMath';
 
 const padding = {
-	top: 8,
-	bottom: 8,
-	left: 16,
-	right: 16,
+	top: 16,
+	bottom: 16,
+	left: 32,
+	right: 32,
 };
 const scrimDefault = 0;
 
@@ -157,8 +157,8 @@ export class UIDialogue extends GameObject {
 		this.choices = [];
 		// @ts-ignore
 		window.text = this.textText;
-		this.containerChoices.x = this.textText.x =
-			-this.sprBg.width / 2 + padding.left;
+		this.textText.x = -this.sprBg.width / 2 + padding.left;
+		this.containerChoices.x = -this.sprBg.width / 2;
 		this.textText.y = -this.sprBg.height / 2 + padding.top;
 		this.textText.style.wordWrap = true;
 		this.textText.style.wordWrapWidth =
@@ -450,7 +450,7 @@ export class UIDialogue extends GameObject {
 					(i.style.padding || 0) * (idx ? 2 : 0);
 			});
 		}
-		this.containerChoices.y = this.sprBg.height / 2;
+		this.containerChoices.y = this.sprBg.height / 2 + padding.bottom;
 		this.containerChoices.alpha = 0.0;
 		this.open();
 		this.pos = 0;
