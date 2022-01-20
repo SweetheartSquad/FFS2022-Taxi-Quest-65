@@ -476,14 +476,12 @@ export class UIDialogue extends GameObject {
 					(i.style.padding || 0) * (idx ? 2 : 0);
 			});
 		}
-		this.sprChoiceBg.alpha =
+		this.sprChoiceBg.visible =
 			this.choices.length > 0 &&
 			this.choices.length <= 4 &&
-			this.choices[0].text.trim()
-				? 1
-				: 0;
-		this.sprDiamond.alpha =
-			this.choices.length >= 2 && this.choices.length <= 4 ? 1 : 0;
+			!!this.choices[0].text.trim();
+		this.sprDiamond.visible =
+			this.choices.length >= 2 && this.choices.length <= 4;
 		this.containerChoices.y = this.sprBg.height / 2 + padding.bottom;
 		this.containerChoices.alpha = 0.0;
 		this.open();
