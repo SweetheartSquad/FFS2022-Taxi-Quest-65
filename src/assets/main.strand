@@ -15,13 +15,18 @@
 		}, delay);
 	};
 
-	this.car = this.Model('taxicab_shell', 'palette');
+	this.car = this.Model('taxi', 'palette', { doubleSided: true });
 
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
 
+	this.passenger = this.Model('passengerRef', 'passenger', { smooth: true, transparent: true });
+	this.scene.pointDialogue.position.x = this.passenger.model.position.x + 0.15;
+	this.scene.pointDialogue.position.y = this.passenger.model.position.y + 0.35;
+	this.scene.pointDialogue.position.z = this.passenger.model.position.z;
+
 	this.InteractionRegion({
-		x: 0,
-		y: 0,
+		x: 42,
+		y: 33,
 		range: 10,
 		label: 'radio',
 		action: () => {
@@ -34,6 +39,7 @@
 			console.log('radio!');
 		},
 	});
+
 
 	this.EnvModel = () => {
 		const m = this.Model('taxicab_shell', 'palette');
@@ -51,7 +57,6 @@
 		this.scrim(1, 3000);
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 		this.scenarios.unshift('end-scenario');
-		this.music('bgm');
 		this.radio = true;
 		this.goto('main');
 	});

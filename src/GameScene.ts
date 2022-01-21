@@ -1,17 +1,5 @@
-import {
-	Container,
-	DisplayObject,
-	Graphics,
-	MIPMAP_MODES,
-	SCALE_MODES,
-} from 'pixi.js';
-import {
-	Camera as Camera3D,
-	Mesh3D,
-	Quat,
-	StandardMaterial,
-	StandardMaterialAlphaMode,
-} from 'pixi3d';
+import { Container, DisplayObject, Graphics } from 'pixi.js';
+import { Camera as Camera3D, Mesh3D, Quat } from 'pixi3d';
 import { Border } from './Border';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
@@ -22,7 +10,7 @@ import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
-import { lerp, tex } from './utils';
+import { lerp } from './utils';
 import { distance2 } from './VMath';
 
 function depthCompare(a: DisplayObject, b: DisplayObject): number {
@@ -45,8 +33,6 @@ export class GameScene extends GameObject {
 	strand: StrandE;
 
 	border: Border;
-
-	passenger: Mesh3D;
 
 	pointDialogue: Mesh3D;
 
@@ -116,25 +102,10 @@ export class GameScene extends GameObject {
 
 		this.camera.display.container.addChild(this.container);
 
-		const matPassenger = new StandardMaterial();
-		matPassenger.baseColorTexture = tex('palette');
-		matPassenger.unlit = true;
-		matPassenger.alphaMode = StandardMaterialAlphaMode.blend;
-		this.passenger = Mesh3D.createQuad(matPassenger);
-		matPassenger.baseColorTexture = tex('passenger');
-		matPassenger.baseColorTexture.baseTexture.mipmap = MIPMAP_MODES.ON;
-		matPassenger.baseColorTexture.baseTexture.scaleMode = SCALE_MODES.LINEAR;
-
 		this.pointDialogue = Mesh3D.createCube();
-		this.pointDialogue.position.set(-9.5, 4.4, 7.1);
-		this.pointDialogue.position.z -= 1;
-		this.pointDialogue.position.y += 4;
 		this.pointDialogue.visible = false;
 
 		this.camera3d = Camera3D.main;
-		this.passenger.position.set(-9.5, 4.4, 7.1);
-		this.passenger.scale.set(8, 8, 8);
-		this.passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
 
 		this.x = 0;
 		this.y = 10;
@@ -173,7 +144,6 @@ export class GameScene extends GameObject {
 			})
 		);
 
-		this.container3d.addChild(this.passenger);
 		this.container3d.addChild(this.pointDialogue);
 
 		game.app.stage.addChild(this.container3d);
