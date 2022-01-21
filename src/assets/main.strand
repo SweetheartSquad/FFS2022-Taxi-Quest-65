@@ -34,6 +34,7 @@
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 		this.scenarios.unshift('end-scenario');
 		this.music('bgm');
+		this.radio = true;
 		this.goto('main');
 	});
 >>

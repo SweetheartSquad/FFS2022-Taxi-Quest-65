@@ -12,6 +12,7 @@ import {
 	StandardMaterial,
 	StandardMaterialAlphaMode,
 } from 'pixi3d';
+import { music } from './Audio';
 import { Border } from './Border';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
@@ -23,6 +24,7 @@ import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { lerp, tex } from './utils';
+import { distance2 } from './VMath';
 
 function depthCompare(a: DisplayObject, b: DisplayObject): number {
 	return a.y - b.y;
@@ -143,6 +145,37 @@ export class GameScene extends GameObject {
 					y = lerp(y, 70, 0.1);
 				}
 				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
+			})
+		);
+		const interactionRegions = [
+			{
+				x: 0,
+				y: 0,
+				range: 10,
+				label: 'radio',
+				action: () => {
+					// @ts-ignore
+					this.strand.radio = !this.strand.radio;
+					// @ts-ignore
+					if (this.strand.radio) {
+						music('');
+					} else {
+						music('bgm');
+					}
+					console.log('radio!');
+				},
+			},
+		];
+		this.scripts.push(
+			new Updater(this, () => {
+				const interaction = interactionRegions.find(
+					(i) => distance2({ x, y }, i) < i.range ** 2
+				);
+				if (interaction) {
+					this.dialogue.prompt(interaction.label, interaction.action);
+				} else {
+					this.dialogue.prompt();
+				}
 			})
 		);
 

@@ -167,8 +167,9 @@ export class UIDialogue extends GameObject {
 		this.textPrompt = new Text(this.strPrompt, fontPrompt);
 		this.textPrompt.alpha = 0;
 		this.textPrompt.x = size.x / 2;
-		this.textPrompt.y = 10;
+		this.textPrompt.y = size.y * 0.75;
 		this.textPrompt.anchor.x = 0.5;
+		this.textPrompt.anchor.y = 0.5;
 		this.display.container.addChild(this.textPrompt);
 		this.display.container.accessible = true;
 		this.display.container.interactive = true;
@@ -314,7 +315,7 @@ export class UIDialogue extends GameObject {
 
 		this.textPrompt.alpha = lerp(
 			this.textPrompt.alpha,
-			!this.isOpen && this.fnPrompt ? 1 : 0,
+			this.fnPrompt ? 1 : 0,
 			0.1
 		);
 		const input = getInput();
@@ -327,7 +328,9 @@ export class UIDialogue extends GameObject {
 		if (this.progress() < 0.9) return;
 
 		// interaction
-		if (this.isOpen && this.choices.length) {
+		if (this.fnPrompt && input.interact) {
+			this.fnPrompt();
+		} else if (this.isOpen && this.choices.length) {
 			if (input.interact || input.choiceAny) {
 				this.complete();
 			}
