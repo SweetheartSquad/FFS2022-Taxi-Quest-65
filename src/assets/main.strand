@@ -18,6 +18,10 @@
 	this.car = this.Model('taxi', 'palette', { doubleSided: true });
 
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
+	const camProps = window.game.app.loader.resources.taxi.gltf.descriptor.cameras[0].perspective;
+	this.scene.camera3d.fieldOfView = camProps.yfov * 100;
+	this.scene.camera3d.near = camProps.znear;
+	this.scene.camera3d.far = camProps.zfar;
 
 	this.passenger = this.Model('passengerRef', 'passenger_normal', { transparent: true });
 	this.scene.pointDialogue.position.x = this.passenger.model.position.x + 0.15;
