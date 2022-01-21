@@ -8,22 +8,18 @@ export const fontDialogue: Partial<ITextStyle> = {
 	lineHeight: 20,
 	letterSpacing: 0,
 	padding: 2,
-	stroke: 0xffffff,
-	strokeThickness: 2,
-	lineJoin: 'round',
+};
+export const fontChoice: Partial<ITextStyle> = {
+	...fontDialogue,
+	fill: 0xffffff,
 };
 export const fontPrompt: Partial<ITextStyle> = {
-	fontFamily: 'font',
-	fontSize: 8,
+	...fontDialogue,
 	fill: 0xffffff,
-	align: 'center',
-	lineHeight: 12,
-	letterSpacing: 0,
-	padding: 2,
 	dropShadow: true,
 	dropShadowDistance: 0,
 	stroke: 0,
-	strokeThickness: 2,
+	strokeThickness: 4,
 	lineJoin: 'round',
 };
 export const fontIngame: Partial<ITextStyle> = {

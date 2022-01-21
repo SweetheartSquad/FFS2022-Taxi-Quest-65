@@ -2,15 +2,12 @@ import {
 	Container,
 	DisplayObject,
 	Graphics,
-	LoaderResource,
 	MIPMAP_MODES,
 	SCALE_MODES,
 } from 'pixi.js';
 import {
 	Camera as Camera3D,
-	glTFAsset,
 	Mesh3D,
-	Model,
 	Quat,
 	StandardMaterial,
 	StandardMaterialAlphaMode,
@@ -26,6 +23,7 @@ import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { lerp, tex } from './utils';
+import { distance2 } from './VMath';
 
 function depthCompare(a: DisplayObject, b: DisplayObject): number {
 	return a.y - b.y;
@@ -51,6 +49,14 @@ export class GameScene extends GameObject {
 	passenger: Mesh3D;
 
 	pointDialogue: Mesh3D;
+
+	interactionRegions: {
+		x: number;
+		y: number;
+		range: number;
+		label: string;
+		action: () => void;
+	}[] = [];
 
 	constructor() {
 		super();
@@ -106,15 +112,6 @@ export class GameScene extends GameObject {
 
 		this.camera.display.container.addChild(this.container);
 
-		const matBus = new StandardMaterial();
-		matBus.baseColorTexture = tex('palette');
-		matBus.unlit = true;
-		const bus = Model.from(
-			(resources.bus as LoaderResource & { gltf: glTFAsset }).gltf
-		);
-		bus.meshes.forEach((mesh) => {
-			mesh.material = matBus;
-		});
 		const matPassenger = new StandardMaterial();
 		matPassenger.baseColorTexture = tex('palette');
 		matPassenger.unlit = true;
@@ -124,15 +121,13 @@ export class GameScene extends GameObject {
 		matPassenger.baseColorTexture.baseTexture.mipmap = MIPMAP_MODES.ON;
 		matPassenger.baseColorTexture.baseTexture.scaleMode = SCALE_MODES.LINEAR;
 
-		this.pointDialogue = Mesh3D.createCube(matBus);
+		this.pointDialogue = Mesh3D.createCube();
 		this.pointDialogue.position.set(-9.5, 4.4, 7.1);
 		this.pointDialogue.position.z -= 1;
 		this.pointDialogue.position.y += 4;
 		this.pointDialogue.visible = false;
 
 		this.camera3d = Camera3D.main;
-		this.camera3d.y = 7;
-		this.camera3d.position.set(1.475, 9.508, 4.506);
 		this.passenger.position.set(-9.5, 4.4, 7.1);
 		this.passenger.scale.set(8, 8, 8);
 		this.passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
@@ -157,8 +152,19 @@ export class GameScene extends GameObject {
 				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
 			})
 		);
+		this.scripts.push(
+			new Updater(this, () => {
+				const interaction = this.interactionRegions.find(
+					(i) => distance2({ x, y }, i) < i.range ** 2
+				);
+				if (interaction) {
+					this.dialogue.prompt(interaction.label, interaction.action);
+				} else {
+					this.dialogue.prompt();
+				}
+			})
+		);
 
-		this.container3d.addChild(bus);
 		this.container3d.addChild(this.passenger);
 		this.container3d.addChild(this.pointDialogue);
 

@@ -7,12 +7,13 @@ import { fontIngame } from './font';
 import { GameObject } from './GameObject';
 import { GameScene } from './GameScene';
 import { setScene } from './main';
+import { Model } from './Model';
 import { Prompt } from './prompt';
 import { Prop } from './Prop';
 import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { TweenManager } from './Tweens';
-import { chunks, shuffle } from './utils';
+import { chunks, removeFromArray, shuffle } from './utils';
 
 let autolink = 0;
 const promptDefault = ' ';
@@ -45,9 +46,16 @@ export class StrandE extends Strand {
 					(_: never, link: string) =>
 						link === '>'
 							? `>${link}`
-							: `[[${
-									link || promptDefault
-							  }|this.goto('auto-${++autolink}')]]\n\n::auto-${autolink}\n`
+							: link
+									.split('|')
+									.map(
+										(l) =>
+											`[[${l || promptDefault}|this.goto('auto-${
+												autolink + 1
+											}')]]`
+									)
+									.concat(`\n::auto-${++autolink}`)
+									.join('\n')
 				)
 				// auto link escape
 				.replace(/^\\>/gm, '>')
@@ -86,6 +94,10 @@ export class StrandE extends Strand {
 		return TweenManager.tween(...args);
 	}
 
+	tweenFinish = TweenManager.finish;
+
+	tweenAbort = TweenManager.abort;
+
 	shuffle(...args: Parameters<typeof shuffle>) {
 		return shuffle(...args);
 	}
@@ -113,6 +125,19 @@ export class StrandE extends Strand {
 
 	Prop(...args: ConstructorParameters<typeof Prop>) {
 		return new Prop(...args);
+	}
+
+	Model(...args: ConstructorParameters<typeof Model>) {
+		const model = new Model(...args);
+		this.scene.container3d.addChild(model.model);
+		return model;
+	}
+
+	InteractionRegion(region: typeof this.scene['interactionRegions'][number]) {
+		this.scene.interactionRegions.push(region);
+		return () => {
+			removeFromArray(this.scene.interactionRegions, region);
+		};
 	}
 
 	Text(

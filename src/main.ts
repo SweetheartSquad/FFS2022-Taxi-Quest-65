@@ -54,7 +54,9 @@ export function getInput() {
 			keys.isJustDown(KEYS.E) ||
 			keys.isJustDown(KEYS.Z) ||
 			keys.isJustDown(KEYS.X) ||
-			keys.isJustDown(KEYS.ENTER),
+			keys.isJustDown(KEYS.C) ||
+			keys.isJustDown(KEYS.ENTER) ||
+			mouse.isJustDown(),
 		menu:
 			keys.isJustDown(KEYS.ESCAPE) ||
 			gamepads.isJustDown(Buttons.START) ||
