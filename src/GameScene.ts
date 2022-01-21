@@ -128,8 +128,6 @@ export class GameScene extends GameObject {
 		this.pointDialogue.visible = false;
 
 		this.camera3d = Camera3D.main;
-		this.camera3d.y = 7;
-		this.camera3d.position.set(1.475, 9.508, 4.506);
 		this.passenger.position.set(-9.5, 4.4, 7.1);
 		this.passenger.scale.set(8, 8, 8);
 		this.passenger.rotationQuaternion.setEulerAngles(0, 90, 0);

@@ -15,7 +15,9 @@
 		}, delay);
 	};
 
-	this.Model('taxicab_shell', 'palette');
+	this.car = this.Model('taxicab_shell', 'palette');
+
+	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
 
 	this.InteractionRegion({
 		x: 0,
