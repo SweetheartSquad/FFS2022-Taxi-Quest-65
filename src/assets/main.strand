@@ -66,6 +66,7 @@ debug menu
 
 [[passage select>passage select]]
 [[close]]
+[[get interaction region|console.log(this.scene.x, this.scene.y)]]
 [[back|this.back()]]
 
 ::main

@@ -58,6 +58,10 @@ export class GameScene extends GameObject {
 		action: () => void;
 	}[] = [];
 
+	x = 0;
+
+	y = 0;
+
 	constructor() {
 		super();
 		this.container.addChildAt(this.graphics, 0);
@@ -132,30 +136,34 @@ export class GameScene extends GameObject {
 		this.passenger.scale.set(8, 8, 8);
 		this.passenger.rotationQuaternion.setEulerAngles(0, 90, 0);
 
-		let x = 0;
-		let y = 10;
+		this.x = 0;
+		this.y = 10;
 		this.scripts.push(
 			new Updater(this, () => {
 				const input = getInput();
-				x += input.look.x;
-				y += input.look.y;
-				if (x < -130) {
-					x = lerp(x, -130, 0.1);
-				} else if (x > 130) {
-					x = lerp(x, 130, 0.1);
+				this.x += input.look.x;
+				this.y += input.look.y;
+				if (this.x < -130) {
+					this.x = lerp(this.x, -130, 0.1);
+				} else if (this.x > 130) {
+					this.x = lerp(this.x, 130, 0.1);
 				}
-				if (y < -70) {
-					y = lerp(y, -70, 0.1);
-				} else if (y > 70) {
-					y = lerp(y, 70, 0.1);
+				if (this.y < -70) {
+					this.y = lerp(this.y, -70, 0.1);
+				} else if (this.y > 70) {
+					this.y = lerp(this.y, 70, 0.1);
 				}
-				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
+				this.camera3d.rotationQuaternion.array = Quat.fromEuler(
+					this.y,
+					-this.x,
+					0
+				);
 			})
 		);
 		this.scripts.push(
 			new Updater(this, () => {
 				const interaction = this.interactionRegions.find(
-					(i) => distance2({ x, y }, i) < i.range ** 2
+					(i) => distance2({ x: this.x, y: this.y }, i) < i.range ** 2
 				);
 				if (interaction) {
 					this.dialogue.prompt(interaction.label, interaction.action);
