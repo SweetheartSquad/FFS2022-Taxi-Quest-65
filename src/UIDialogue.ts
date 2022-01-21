@@ -198,6 +198,8 @@ export class UIDialogue extends GameObject {
 		this.containerChoices.addChild(this.sprDiamond);
 
 		this.sprBg.y = this.closeY();
+		// @ts-ignore
+		this.display.container.filters[0].alpha = 0;
 
 		this.sprBg.x = size.x / 2;
 		this.sprScrim.x = -this.transform.x - 1;
