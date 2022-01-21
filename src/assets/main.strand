@@ -17,6 +17,22 @@
 
 	this.Model('taxicab_shell', 'palette');
 
+	this.InteractionRegion({
+		x: 0,
+		y: 0,
+		range: 10,
+		label: 'radio',
+		action: () => {
+			this.radio = !this.radio;
+			if (this.radio) {
+				this.music('');
+			} else {
+				this.music('bgm');
+			}
+			console.log('radio!');
+		},
+	});
+
 	this.EnvModel = () => {
 		const m = this.Model('taxicab_shell', 'palette');
 		m.model.position.z = 100;

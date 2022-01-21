@@ -13,7 +13,7 @@ import { Prop } from './Prop';
 import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { TweenManager } from './Tweens';
-import { chunks, shuffle } from './utils';
+import { chunks, removeFromArray, shuffle } from './utils';
 
 let autolink = 0;
 const promptDefault = ' ';
@@ -131,6 +131,13 @@ export class StrandE extends Strand {
 		const model = new Model(...args);
 		this.scene.container3d.addChild(model.model);
 		return model;
+	}
+
+	InteractionRegion(region: typeof this.scene['interactionRegions'][number]) {
+		this.scene.interactionRegions.push(region);
+		return () => {
+			removeFromArray(this.scene.interactionRegions, region);
+		};
 	}
 
 	Text(

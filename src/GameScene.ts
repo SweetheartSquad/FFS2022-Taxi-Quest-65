@@ -12,7 +12,6 @@ import {
 	StandardMaterial,
 	StandardMaterialAlphaMode,
 } from 'pixi3d';
-import { music } from './Audio';
 import { Border } from './Border';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
@@ -50,6 +49,14 @@ export class GameScene extends GameObject {
 	passenger: Mesh3D;
 
 	pointDialogue: Mesh3D;
+
+	interactionRegions: {
+		x: number;
+		y: number;
+		range: number;
+		label: string;
+		action: () => void;
+	}[] = [];
 
 	constructor() {
 		super();
@@ -147,28 +154,9 @@ export class GameScene extends GameObject {
 				this.camera3d.rotationQuaternion.array = Quat.fromEuler(y, -x, 0);
 			})
 		);
-		const interactionRegions = [
-			{
-				x: 0,
-				y: 0,
-				range: 10,
-				label: 'radio',
-				action: () => {
-					// @ts-ignore
-					this.strand.radio = !this.strand.radio;
-					// @ts-ignore
-					if (this.strand.radio) {
-						music('');
-					} else {
-						music('bgm');
-					}
-					console.log('radio!');
-				},
-			},
-		];
 		this.scripts.push(
 			new Updater(this, () => {
-				const interaction = interactionRegions.find(
+				const interaction = this.interactionRegions.find(
 					(i) => distance2({ x, y }, i) < i.range ** 2
 				);
 				if (interaction) {
