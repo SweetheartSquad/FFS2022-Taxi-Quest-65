@@ -112,7 +112,7 @@ export class GameScene extends GameObject {
 		this.scripts.push(
 			new Updater(this, () => {
 				const input = getInput();
-				this.x += input.look.x;
+				this.x += -input.look.x;
 				this.y += input.look.y;
 				if (this.x < -130) {
 					this.x = lerp(this.x, -130, 0.1);
@@ -126,7 +126,7 @@ export class GameScene extends GameObject {
 				}
 				this.camera3d.rotationQuaternion.array = Quat.fromEuler(
 					this.y,
-					-this.x,
+					this.x + 180,
 					0
 				);
 			})
