@@ -16,6 +16,7 @@
 	};
 
 	this.car = this.Model('taxi', 'palette', { doubleSided: true });
+	this.car.model.getChildByName('passengerRef').visible = false;
 
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
 	const camProps = window.game.app.loader.resources.taxi.gltf.descriptor.cameras[0].perspective;
@@ -23,10 +24,13 @@
 	this.scene.camera3d.near = camProps.znear;
 	this.scene.camera3d.far = camProps.zfar;
 
-	this.passenger = this.Model('passengerRef', 'passenger_normal', { transparent: true });
-	this.scene.pointDialogue.position.x = this.passenger.model.position.x + 0.15;
-	this.scene.pointDialogue.position.y = this.passenger.model.position.y + 0.35;
-	this.scene.pointDialogue.position.z = this.passenger.model.position.z;
+	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
+	this.passenger.model.children.forEach(i => i.visible = false);
+	const passengerRef = this.passenger.model.getChildByName('passengerRef');
+	passengerRef.visible = true;
+	this.scene.pointDialogue.position.x = passengerRef.position.x + 0.15;
+	this.scene.pointDialogue.position.y = passengerRef.position.y + 0.35;
+	this.scene.pointDialogue.position.z = passengerRef.position.z;
 
 	this.InteractionRegion({
 		x: 42,

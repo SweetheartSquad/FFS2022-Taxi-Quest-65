@@ -11,7 +11,6 @@ audio/bgm.mp3
 audio/voiceDefault.mp3
 
 models/taxi.gltf
-models/passengerRef.gltf
 textures/palette.png
 textures/passenger_normal.x2.png
 textures/passenger_normal_open.x2.png
