@@ -15,13 +15,22 @@
 		}, delay);
 	};
 
-	this.car = this.Model('taxicab_shell', 'palette');
+	this.car = this.Model('taxi', 'palette', { doubleSided: true });
 
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
+	const camProps = window.game.app.loader.resources.taxi.gltf.descriptor.cameras[0].perspective;
+	this.scene.camera3d.fieldOfView = camProps.yfov * 100;
+	this.scene.camera3d.near = camProps.znear;
+	this.scene.camera3d.far = camProps.zfar;
+
+	this.passenger = this.Model('passengerRef', 'passenger_normal', { transparent: true });
+	this.scene.pointDialogue.position.x = this.passenger.model.position.x + 0.15;
+	this.scene.pointDialogue.position.y = this.passenger.model.position.y + 0.35;
+	this.scene.pointDialogue.position.z = this.passenger.model.position.z;
 
 	this.InteractionRegion({
-		x: 0,
-		y: 0,
+		x: 42,
+		y: 33,
 		range: 10,
 		label: 'radio',
 		action: () => {
@@ -35,6 +44,7 @@
 		},
 	});
 
+
 	this.EnvModel = () => {
 		const m = this.Model('taxicab_shell', 'palette');
 		m.model.position.z = 100;
@@ -45,13 +55,68 @@
 		}, 10000);
 	};
 
+	// pose helper
+	const poses = {
+		':(': 'sad',
+		':)': 'normal',
+	};
+	this.setPose = (pose, state) => {
+		this.pose = poses[pose] || pose;
+		const frame = this.passenger.animator.frame;
+		const offset = this.passenger.animator.offset;
+		this.passenger.setAnimation(['passenger', this.pose, state].filter(i => i).join('_'));
+		this.passenger.animator.frame = frame;
+		this.passenger.animator.offset = offset;
+		this.passenger.animator.updateTexture();
+	};
+
+
+	// blinking and lip flaps
+	this.pose = 'normal';
+	this.blinking = false;
+	this.timeoutBlinking;
+	this.scene.dialogue.scripts.push({
+		gameObject: this.scene.dialogue,
+		update: () => {
+			if (!this.pose) return;
+			if (!this.timeoutBlinking) {
+				this.timeoutBlinking = setTimeout(() => {
+					this.blinking = !this.blinking;
+					this.timeoutBlinking = null;
+				}, this.blinking ? 100 : 2000+Math.random()*4000);
+			};
+
+			const letter = this.scene.dialogue.strText[scene.dialogue.pos];
+			const isLetter = letter && letter.replace(/[^\w]/, '');
+			if (isLetter) {
+				this.setPose(this.pose, 'open');
+			} else if (this.blinking) {
+				this.setPose(this.pose, 'blink');
+			} else {
+				this.setPose(this.pose);
+			}
+		},
+	});
+
+	// add syntax sugar for poses like `:( - Blah blah`
+	const check = /^(.*) - /;
+	this.scene.dialogue.sayo = this.scene.dialogue.say;
+	this.scene.dialogue.say = (text, actions) => {
+		const match = check.exec(text);
+		if (match) {
+			this.setPose(match[1]);
+			return this.scene.dialogue.sayo(text.substring(match[0].length), actions);
+		} else {
+			return this.scene.dialogue.sayo(text, actions);
+		}
+	};
+
 	// start
 	this.started=true;
 	requestAnimationFrame(() => {
 		this.scrim(1, 3000);
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 		this.scenarios.unshift('end-scenario');
-		this.music('bgm');
 		this.radio = true;
 		this.goto('main');
 	});
@@ -66,6 +131,7 @@ debug menu
 
 [[passage select>passage select]]
 [[close]]
+[[get interaction region|console.log(this.scene.x, this.scene.y)]]
 [[back|this.back()]]
 
 ::main
@@ -116,13 +182,13 @@ Been a busy night?
 >Nope|Not really|S'pose
 Guess a lot of people have been trying to leave the city.
 >Mmm|S'pose|Yea?
-My mom's been nagging me for the past year.
+:( - My mom's been nagging me for the past year.
 >
 Going on about how dangerous it's gotten.
 >
 Thought she was just being annoying but it's gotten outta hand lately...
 >Mhmm|Yea?|Didn't notice
-Saw your rifle in the back, is that for hunting out here?
+:) - Saw your rifle in the back, is that for hunting out here?
 [[Nope>busy-nope]]
 [[Yup>busy-yup]]
 
@@ -173,9 +239,9 @@ Haven't seen many taxis like that, ha ha.
 >Yea|S'Pose
 Some more supply issues? Not enough yellow cabs?
 >Nope|Yup|S'Pose
-Must be a pain if you get flagged down by a family of four.
+:( - Must be a pain if you get flagged down by a family of four.
 >
-Guess you could stick the kids in the trunk, ha ha.
+:) - Guess you could stick the kids in the trunk, ha ha.
 [[Yup>two-seater-2]]
 [[S'Pose>two-seater-2]]
 [[Not many families around]]
@@ -194,13 +260,13 @@ Guess that makes things simpler then.
 ::scenario-out-of-town
 Guessing most people from the city have been going out of town recently huh?
 >Yup|S'Pose
-Must be nice, lot less hectic out here.
+:( - Must be nice, lot less hectic out here.
 >S'Quiet|S'Pose|Yup
 Does it feel weird?
 >
 I mean, when all day, you're just watching people leave?
 >S'Pose|Say nothing
-I appreciate the late night trip by the way.
+:) - I appreciate the late night trip by the way.
 >
 Had to leave in a bit of a hurry.
 [[>main]]

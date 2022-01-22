@@ -10,6 +10,12 @@ textures/dialogueDiamond.x3.png
 audio/bgm.mp3
 audio/voiceDefault.mp3
 
-models/taxicab_shell.gltf
+models/taxi.gltf
+models/passengerRef.gltf
 textures/palette.png
-textures/passenger.png
+textures/passenger_normal.x2.png
+textures/passenger_normal_open.x2.png
+textures/passenger_normal_blink.x2.png
+textures/passenger_sad.x2.png
+textures/passenger_sad_open.x2.png
+textures/passenger_sad_blink.x2.png
