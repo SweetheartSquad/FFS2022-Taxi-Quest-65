@@ -143,31 +143,20 @@ debug menu
 // <<do this.goto('close');this.gotod(this.scenarios.pop(), (Math.random()*10+12)*1000);>>
 <<do this.goto('close');this.gotod(this.scenarios.pop(), 2000);>>
 
-::test-choices
-test
-[[test1]]
-[[test2]]
-
-::test2
-test
-[[test1]]
-[[test2]]
-[[test3]]
-
-::test3
-test
-[[test1]]
-[[test2]]
-[[test3]]
-[[test4]]
-
-::test4
-test
-[[test1]]
-[[test2]]
-[[test3]]
-[[test4]]
-[[main]]
+::end-scenario
+Ok. This is my stop.
+>
+Thanks for the ride.
+>
+So long.
+>
+<<do
+	this.scrim(1, 1);
+	this.tween(this.scene.dialogue.display.container, 'alpha', 0, 1);
+	this.tween(scene.camera.display.container, 'alpha', 0, 1);
+	this.tween(scene.container3d, 'alpha', 0, 1);
+	this.music('', { fade: 5000 });
+>>
 
 
 
@@ -180,74 +169,119 @@ test
 
 
 
+
+
+// ███████  ██████ ███████ ███    ██  █████  ██████  ██  ██████  ███████
+// ██      ██      ██      ████   ██ ██   ██ ██   ██ ██ ██    ██ ██     
+// ███████ ██      █████   ██ ██  ██ ███████ ██████  ██ ██    ██ ███████
+//      ██ ██      ██      ██  ██ ██ ██   ██ ██   ██ ██ ██    ██      ██
+// ███████  ██████ ███████ ██   ████ ██   ██ ██   ██ ██  ██████  ███████
 
 ::scenario-busy
 Been a busy night?
->Nope|Not really|S'pose
+>Yeah|Nah
 Guess a lot of people have been trying to leave the city.
->Mmm|S'pose|Yea?
-:( - My mom's been nagging me for the past year.
+>
+My mom's been nagging me for the past year.
 >
 Going on about how dangerous it's gotten.
 >
 Thought she was just being annoying but it's gotten outta hand lately...
->Mhmm|Yea?|Didn't notice
-:) - Saw your rifle in the back, is that for hunting out here?
-[[Nope>busy-nope]]
-[[Yup>busy-yup]]
+>
+I uh, saw your rifle in the back...
+>
+Is that for hunting out here?
+[[Yeah>busy-yes]]
+[[Nah>busy-no]]
 
-::busy-nope
+::busy-no
 Oh...
 >
 Have you ever had to use it on the job?
-[[Nope>busy-nope-nope]]
-[[Yup>busy-nope-yup]]
-[[Once>busy-nope-yup]]
-[[Say nothing>busy-nope-nope]]
+[[Yeah>busy-no-yes]]
+[[Nah>busy-no-no]]
+[[...>busy-no-yes]]
+[[Once>busy-no-yes]]
 
-::busy-nope-nope
+::busy-no-no
 ...Hm.
 >
 Well, probably for the best.
 [[>main]]
 
-::busy-nope-yup
+::busy-no-yes
 Oh.
 >
 Well, I won't ask.
 [[>main]]
 
-::busy-yup
+::busy-yes
 Cool! I've never been hunting before.
 >
-So do you like, catch hares or something?
->Yup|Nope|A few|Bigger game
+So do you like, catch desert hares or something?
+[[Yeah>hares]]
+[[Nah>no-hares]]
+[[...>Bigger game]]
+[[Bigger game]]
+
+::hares
 Ah. Wonder if I'll have to start hunting back at home, ha ha.
->Mmmhm|S'Pose
-Apparently they're having a hard time finding truckers to make the journey out, and the supply chain is out of wack.
+>
+Apparently they're having a hard time finding truckers to make the journey out. Supply chain's out of wack or something.
 >
 Never seen the stores so empty...
->Mhmm|S'pose
-Wonder how long all this will last for.
->Can't say|Dunno|Don't Care
-...Yeah.
 >
-...
+Wonder how long all this will last for.
 [[>main]]
 
+::no-hares
+No? I thought they were common out here...
+>
+Though... come to think of it, I guess I haven't seen any.
+>
+Wonder where they all went...
+[[>main]]
+
+::Bigger game
+Deer, then?
+>
+I hear there are some deer in this desert.
+>
+Never seen one, though.
+>
+...
+>
+I don't think I could shoot a deer.
+>
+Probably not a hare either, heh.
+>
+In fact, I think continuing to live my life in a way that does not involve me shooting things would be best.
+>
+Just in general.
+[[>main]]
 
 ::scenario-two-seater
 So... a two seater huh?
 >
 Haven't seen many taxis like that, ha ha.
->Yea|S'Pose
-Some more supply issues? Not enough yellow cabs?
->Nope|Yup|S'Pose
-:( - Must be a pain if you get flagged down by a family of four.
 >
-:) - Guess you could stick the kids in the trunk, ha ha.
-[[Yup>two-seater-2]]
-[[S'Pose>two-seater-2]]
+Some more supply issues? Not enough yellow cabs to go 'round?
+[[Yeah>two-seater-yeah]]
+[[Nah>two-seater-nah]]
+
+::two-seater-nah
+Oh, just dealer's choice then?
+>
+It is kinda cozy.
+[[>two-seater-yeah]]
+
+::two-seater-yeah
+Must be a pain if you get flagged down by a family of four.
+>
+Guess you could stick the kids in the trunk, ha ha.
+[[Yeah>two-seater-2]]
+[[Nah>two-seater-2]]
+[[...>two-seater-2]]
 [[Not many families around]]
 
 ::two-seater-2
@@ -263,14 +297,24 @@ Guess that makes things simpler then.
 
 ::scenario-out-of-town
 Guessing most people from the city have been going out of town recently huh?
->Yup|S'Pose
-:( - Must be nice, lot less hectic out here.
->S'Quiet|S'Pose|Yup
+>Yeah|Nah
+Must be nice, lot less hectic out here.
+>
+...
+>
 Does it feel weird?
 >
 I mean, when all day, you're just watching people leave?
->S'Pose|Say nothing
-:) - I appreciate the late night trip by the way.
+[[Yeah>town-yeah]]
+[[Nah>town-nah]]
+[[...>town-yeah]]
+
+::town-nah
+Hmm, s'pose it's less strange if you're always coming and going yourself.
+[[>town-yeah]]
+
+::town-yeah
+I appreciate the late night trip by the way.
 >
 Had to leave in a bit of a hurry.
 [[>main]]
@@ -278,25 +322,148 @@ Had to leave in a bit of a hurry.
 ::scenario-love
 You ever been in love?
 >
-TODO
+I mean- Sorry, that's a weird question, isn't it?
+[[Yeah>awkward]]
+[[Nah>okay]]
+
+::awkward
+Gahhh sorry, I'm really sorry.
+>
+I just... It's a long trip, you know? It's a lot of waiting.
+>
+I don't like waiting. Especially in silence.
+>
+But you gotta have ice-breakers. Conversation starters.
+>
+I met a guy once, and that was the first thing he asked me.
+>
+"You ever been in love?"
+>
+He asked it like he knew the answer.
+>
+Like he could look right past me and see it floating above my head.
+>
+It was... really scary, to be honest. But also kind of cool?
+>
+...
+>
+Sorry, I'll drop it.
+[[>main]]
+
+::okay
+You sure? You can say if it's not, I know I kind of sprang that out of nowhere... It's really okay?
+[[Yeah>okay2]]
+[[Nah>awkward]]
+
+::okay2
+Okay. Yeah? Okay!
+>
+Cool.
+>
+So...
+>
+Have you?
+>
+Ever been in love, that is?
+[[Yeah>love]]
+[[Nah>no-love]]
+
+::love
+Huh.
+>
+...
+>
+Would you recommend it?
+>Yeah|Nah
+Okay.
+>
+I'll keep that in mind.
+[[>main]]
+
+::no-love
+Oh.
+>
+That's a shame.
+>
+I mean- I wouldn't know. But still...
+>
+Kinda feels like we've missed the bus on it sometimes.
+>
+...Heh.
+>
+You know, when I miss a bus, I usually call a cab.
+>
+...
+>
+Sorry, I'll drop it.
+[[>main]]
+
+::scenario-speed
+We're going pretty fast, huh?
+>
+Guess they don't care much about speed limits out here.
+>Yeah|Nah
+Hard to imagine a cop pulling someone over for a traffic ticket these days.
+>
+Silver linings, heh.
 [[>main]]
 
 
-
-
-
-
-::end-scenario
-Ok. This is my stop.
+::scenario-there-yet
+You know, I was just thinking...
 >
-Thanks for the ride.
+It's a good thing we're not making this trip with like, a kid, or something.
 >
-So long.
+Can you imagine? Just "are we there yet" "are we there yet" all the way there.
 >
-<<do
-	this.scrim(1, 1);
-	this.tween(this.scene.dialogue.display.container, 'alpha', 0, 1);
-	this.tween(scene.camera.display.container, 'alpha', 0, 1);
-	this.tween(scene.container3d, 'alpha', 0, 1);
-	this.music('', { fade: 5000 });
->>
+Nightmare.
+>
+Can't stand kids, honestly.
+>
+I know it's not their fault but it's just like... Grow up!
+>
+Ugh.
+>
+...You don't have kids, do you?
+[[I do>kids]]
+[[I don't>no-kids]]
+[[...>oof-kids]]
+[[I did>oof-kids]]
+
+::kids
+Oh. Well, you know, no offense.
+>
+I'm sure yours are nice. You seem like- well, you know. I'm sure they're nice.
+>
+Still, glad they're not here right now, ha ha.
+>
+...
+>
+Again, no offense. You know, it's just- you know.
+>
+Kids. Ugh.
+[[>main]]
+
+::no-kids
+Yeah, that's what I thought.
+>
+You don't seem like the "having kids" type.
+>
+Takes one to know one, ha ha.
+>
+Who needs 'em.
+>
+"Are we there yet" "are we there yet" "are we there yet".
+>
+"No, now stow it you little brat!!"
+>
+That's what I'd say.
+>
+Ughhh.
+[[>main]]
+
+::oof-kids
+...Sorry.
+>
+I, uh... I'll shut up now.
+[[>main]]
