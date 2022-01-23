@@ -1,6 +1,16 @@
 import type { EventEmitter } from '@pixi/utils';
 import { cubicIn, cubicOut } from 'eases';
 import { Container, Sprite, Text, TextMetrics, Texture } from 'pixi.js';
+import {
+	Container,
+	Graphics,
+	Rectangle,
+	Sprite,
+	Text,
+	TextMetrics,
+	Texture,
+} from 'pixi.js';
+import { Camera, Mesh3D, ObservablePoint3D, Vec3 } from 'pixi3d';
 import Strand from 'strand-core';
 import { fontDialogue, fontPrompt } from './font';
 import { game } from './Game';
@@ -174,6 +184,11 @@ export class UIDialogue extends GameObject {
 		if (this.progress() < 0.9) return;
 
 		if (this.isOpen && this.choices.length) {
+			// make single option clickable from anywhere
+			if (this.choices.length === 1) {
+				const p = this.choices[0].toGlobal({ x: 0, y: 0 });
+				this.choices[0].hitArea = new Rectangle(-p.x, -p.y, size.x, size.y);
+			}
 			if (this.containerChoices.alpha > 0.5) {
 				if (
 					this.choices.length === 1 &&
@@ -309,6 +324,9 @@ export class UIDialogue extends GameObject {
 
 	close() {
 		if (this.isOpen) {
+			this.choices.forEach((i) => {
+				i.interactive = false;
+			});
 			this.isOpen = false;
 			this.scrim(0, 500);
 			this.tweens.forEach((t) => TweenManager.abort(t));
