@@ -4,6 +4,7 @@ import { cubicIn, cubicOut } from 'eases';
 import {
 	Container,
 	Graphics,
+	Rectangle,
 	Sprite,
 	Text,
 	TextMetrics,
@@ -333,6 +334,12 @@ export class UIDialogue extends GameObject {
 		if (this.fnPrompt && input.interact) {
 			this.fnPrompt();
 		} else if (this.isOpen && this.choices.length) {
+			// make single option clickable from anywhere
+			if (this.choices.length === 1) {
+				const p = this.choices[0].toGlobal({ x: 0, y: 0 });
+				this.choices[0].hitArea = new Rectangle(-p.x, -p.y, size.x, size.y);
+			}
+
 			if (input.interact || input.choiceAny) {
 				this.complete();
 			}
@@ -546,6 +553,9 @@ export class UIDialogue extends GameObject {
 
 	close() {
 		if (this.isOpen) {
+			this.choices.forEach((i) => {
+				i.interactive = false;
+			});
 			this.isOpen = false;
 			this.scrim(0, 500);
 			this.tweens.forEach((t) => TweenManager.abort(t));
