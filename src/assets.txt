@@ -13,10 +13,10 @@ audio/voiceDefault.mp3
 models/taxi.gltf
 textures/palette.png
 textures/passenger_normal.x2.png
-textures/passenger_normal_open.x2.png
-textures/passenger_normal_blink.x2.png
+textures/passenger_normal_o.x2.png
+textures/passenger_normal_b.x2.png
 textures/passenger_sad.x2.png
-textures/passenger_sad_open.x2.png
-textures/passenger_sad_blink.x2.png
+textures/passenger_sad_o.x2.png
+textures/passenger_sad_b.x2.png
 
 textures/migue-8x.png

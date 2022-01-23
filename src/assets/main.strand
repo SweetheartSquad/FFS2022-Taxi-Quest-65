@@ -93,9 +93,9 @@
 			const letter = this.scene.dialogue.strText[scene.dialogue.pos];
 			const isLetter = letter && letter.replace(/[^\w]/, '');
 			if (isLetter) {
-				this.setPose(this.pose, 'open');
+				this.setPose(this.pose, 'o');
 			} else if (this.blinking) {
-				this.setPose(this.pose, 'blink');
+				this.setPose(this.pose, 'b');
 			} else {
 				this.setPose(this.pose);
 			}
