@@ -97,7 +97,7 @@
 			} else if (this.blinking) {
 				this.setPose(this.pose, 'b');
 			} else {
-				this.setPose(this.pose);
+				this.setPose(this.pose, 'n');
 			}
 		},
 	});
