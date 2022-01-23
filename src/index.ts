@@ -24,7 +24,7 @@ progressEl.textContent = makeStr(0);
 
 // try to auto-focus and make sure the game can be focused with a click if run from an iframe
 window.focus();
-document.body.addEventListener('mousedown', () => {
+document.body.addEventListener('pointerdown', () => {
 	window.focus();
 });
 

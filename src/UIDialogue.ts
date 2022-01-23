@@ -1,16 +1,13 @@
 import type { EventEmitter } from '@pixi/utils';
 import { cubicIn, cubicOut } from 'eases';
-import { Container, Sprite, Text, TextMetrics, Texture } from 'pixi.js';
 import {
 	Container,
-	Graphics,
 	Rectangle,
 	Sprite,
 	Text,
 	TextMetrics,
 	Texture,
 } from 'pixi.js';
-import { Camera, Mesh3D, ObservablePoint3D, Vec3 } from 'pixi3d';
 import Strand from 'strand-core';
 import { fontDialogue, fontPrompt } from './font';
 import { game } from './Game';
@@ -129,8 +126,8 @@ export class UIDialogue extends GameObject {
 		this.display.container.addChild(this.textPrompt);
 		this.display.container.accessible = true;
 		this.display.container.interactive = true;
-		(this.display.container as EventEmitter).on('click', () => {
-			this.complete();
+		(this.display.container as EventEmitter).on('pointerdown', () => {
+			if (this.isOpen) this.complete();
 		});
 		this.containerChoices = new Container();
 		this.containerChoices.x = padding.left;
@@ -194,19 +191,36 @@ export class UIDialogue extends GameObject {
 					this.choices.length === 1 &&
 					(input.interact || input.justMoved.x)
 				) {
-					this.choices[0].emit('click');
-				} else if (input.justMoved.x) {
-					if (input.justMoved.x > 0) {
-						this.choices[1].emit('click');
-					} else if (input.justMoved.x < 0) {
-						this.choices[0].emit('click');
+					this.choices[0].emit('pointerdown');
+				} else if (this.choices.length > 0 && this.choices.length <= 2) {
+					if (input.choiceLeft) {
+						this.choices[0].emit('pointerdown');
+					} else if (input.choiceRight) {
+						this.choices[1].emit('pointerdown');
 					}
 				} else if (input.interact) {
 					this.complete();
 				} else {
 					this.choices
 						.find((_, idx) => keys.isJustDown(KEYS.ONE + idx))
-						?.emit('click');
+						?.emit('pointerdown');
+
+					// menu select
+					if (this.selected === undefined) {
+						this.selected = 0;
+					}
+					this.choices[this.selected].alpha = 1;
+					if (input.justMoved.y > 0) {
+						this.selected =
+							this.selected < this.choices.length - 1 ? this.selected + 1 : 0;
+					} else if (input.justMoved.y < 0) {
+						this.selected =
+							this.selected > 0 ? this.selected - 1 : this.choices.length - 1;
+					}
+					this.choices[this.selected].alpha = 0.75;
+					if (input.interact && this.selected !== undefined) {
+						this.choices[this.selected].emit('pointerdown');
+					}
 				}
 			} else if (input.interact) {
 				this.complete();
@@ -261,7 +275,7 @@ export class UIDialogue extends GameObject {
 				t.alpha = 1;
 				this.selected = undefined;
 			});
-			t.on('click', () => {
+			t.on('pointerdown', () => {
 				if (this.containerChoices.alpha > 0.5) {
 					i.action();
 				}

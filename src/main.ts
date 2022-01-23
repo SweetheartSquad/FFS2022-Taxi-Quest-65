@@ -4,6 +4,7 @@ import { game } from './Game';
 import { GameScene } from './GameScene';
 import { keys, KEYS } from './input-keys';
 import { Mouse } from './input-mouse';
+import { swipes } from './input-swipe';
 import { size } from './size';
 import { clamp } from './utils';
 
@@ -49,11 +50,15 @@ export function getInput() {
 			keys.isJustDown(KEYS.E) ||
 			keys.isJustDown(KEYS.Z) ||
 			keys.isJustDown(KEYS.X) ||
+			keys.isJustDown(KEYS.C) ||
 			keys.isJustDown(KEYS.ENTER),
 		menu:
 			keys.isJustDown(KEYS.ESCAPE) ||
 			gamepads.isJustDown(Buttons.START) ||
 			gamepads.isJustDown(Buttons.BACK),
+		choiceLeft: false,
+		choiceRight: false,
+		choiceAny: false,
 	};
 
 	if (
@@ -119,6 +124,21 @@ export function getInput() {
 	res.move.x = clamp(-1.0, res.move.x, 1.0);
 	res.move.y = clamp(-1.0, res.move.y, 1.0);
 
+	if (
+		res.justMoved.x < 0 ||
+		gamepads.isJustDown(Buttons.X) ||
+		swipes.isLeft()
+	) {
+		res.choiceLeft = true;
+	} else if (
+		res.justMoved.x > 0 ||
+		gamepads.isJustDown(Buttons.B) ||
+		swipes.isRight()
+	) {
+		res.choiceRight = true;
+	}
+	res.choiceAny = res.choiceLeft || res.choiceRight;
+
 	return res;
 }
 
@@ -141,6 +161,7 @@ function update(): void {
 	gamepads.update();
 	keys.update();
 	mouse.update();
+	swipes.update();
 }
 
 export function init(): void {
