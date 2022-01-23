@@ -18,3 +18,5 @@ textures/passenger_normal_blink.x2.png
 textures/passenger_sad.x2.png
 textures/passenger_sad_open.x2.png
 textures/passenger_sad_blink.x2.png
+
+textures/migue-8x.png
