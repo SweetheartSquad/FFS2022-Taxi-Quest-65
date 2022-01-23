@@ -12,6 +12,7 @@ import { Prompt } from './prompt';
 import { Prop } from './Prop';
 import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
+import { Updater } from './Scripts/Updater';
 import { TweenManager } from './Tweens';
 import { chunks, removeFromArray, shuffle } from './utils';
 
@@ -137,6 +138,15 @@ export class StrandE extends Strand {
 		this.scene.interactionRegions.push(region);
 		return () => {
 			removeFromArray(this.scene.interactionRegions, region);
+		};
+	}
+
+	Updater(cb: ConstructorParameters<typeof Updater>[1]) {
+		const updater = new Updater(this.scene, cb);
+		this.scene.scripts.push(updater);
+		return () => {
+			removeFromArray(this.scene.scripts, updater);
+			updater.destroy?.();
 		};
 	}
 
