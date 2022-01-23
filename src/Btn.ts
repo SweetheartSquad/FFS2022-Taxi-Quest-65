@@ -21,17 +21,17 @@ export class Btn extends GameObject {
 		spr.buttonMode = true;
 		spr.tabIndex = 0;
 		spr.on('click', onClick);
-		spr.on('mouseover', () => {
+		spr.on('pointerover', () => {
 			spr.texture = tex(`${texture}_over`);
 		});
-		spr.on('mousedown', () => {
+		spr.on('pointerdown', () => {
 			spr.texture = tex(`${texture}_down`);
 			setTimeout(() => {
 				spr.texture = tex(`${texture}_normal`);
 			}, 100);
 			sfx(texture, { rate: Math.random() * 0.2 + 0.9 });
 		});
-		spr.on('mouseout', () => {
+		spr.on('pointerout', () => {
 			spr.texture = tex(`${texture}_normal`);
 		});
 	}

@@ -174,8 +174,8 @@ export class UIDialogue extends GameObject {
 		this.display.container.addChild(this.textPrompt);
 		this.display.container.accessible = true;
 		this.display.container.interactive = true;
-		(this.display.container as EventEmitter).on('click', () => {
-			this.complete();
+		(this.display.container as EventEmitter).on('pointerdown', () => {
+			if (this.isOpen) this.complete();
 		});
 		this.containerChoices = new Container();
 		this.choices = [];
@@ -351,23 +351,23 @@ export class UIDialogue extends GameObject {
 						input.choiceUp ||
 						input.choiceDown)
 				) {
-					this.choices[0].emit('click');
+					this.choices[0].emit('pointerdown');
 				} else if (this.choices.length > 0 && this.choices.length <= 4) {
 					if (input.choiceLeft) {
-						this.choices[0].emit('click');
+						this.choices[0].emit('pointerdown');
 					} else if (input.choiceRight) {
-						this.choices[1].emit('click');
+						this.choices[1].emit('pointerdown');
 					} else if (this.choices[2] && input.choiceUp) {
-						this.choices[2].emit('click');
+						this.choices[2].emit('pointerdown');
 					} else if (this.choices[3] && input.choiceDown) {
-						this.choices[3].emit('click');
+						this.choices[3].emit('pointerdown');
 					}
 				} else {
 					// keys 1-9 select choices
 					this.choices
 						.slice(0, 9)
 						.find((_, idx) => keys.isJustDown(KEYS.ONE + idx))
-						?.emit('click');
+						?.emit('pointerdown');
 
 					// menu select
 					if (this.selected === undefined) {
@@ -383,7 +383,7 @@ export class UIDialogue extends GameObject {
 					}
 					this.choices[this.selected].alpha = 0.75;
 					if (input.interact && this.selected !== undefined) {
-						this.choices[this.selected].emit('click');
+						this.choices[this.selected].emit('pointerdown');
 					}
 				}
 			}
@@ -447,7 +447,7 @@ export class UIDialogue extends GameObject {
 				t.alpha = 1;
 				this.selected = undefined;
 			});
-			t.on('click', () => {
+			t.on('pointerdown', () => {
 				if (this.containerChoices.alpha > 0.5) {
 					i.action();
 				}
