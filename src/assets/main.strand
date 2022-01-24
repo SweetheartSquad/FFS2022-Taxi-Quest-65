@@ -18,9 +18,31 @@
 	this.car = this.Model('taxi', 'palette', { doubleSided: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
 	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
-	
+
+	const roadSegments = 15;
+	const roadSize = 20 * 0.990306;
+	const roadSpeed = 20;
+	let rootRoad;
+	for(let i = 0; i < roadSegments; ++i) {
+		const pos = i-roadSegments/2;
+		const road = this.Model('roadSeg1', 'palette');
+		if (i === 0) {
+			rootRoad = road;
+		} else {
+			rootRoad.model.addChild(road.model);
+			road.model.position.z = i * roadSize;
+		}
+	}
+	rootRoad.model.position.y -= 1.36;
+	rootRoad.model.position.x -= 3.3;
+	const xRoot = rootRoad.model.position.x;
 	this.Updater(() => {
-		wheel.rotationQuaternion.setEulerAngles(65, 0, Math.sin(Date.now()/2300)*2 + Math.sin(Date.now()/3200)*4);
+		const curPos = (Date.now()/1000 * roadSpeed) % roadSize - (roadSize*roadSegments/2);
+		rootRoad.model.position.z = curPos;
+
+		const sway = Math.sin(Date.now()/2300)*2 + Math.sin(Date.now()/3200)*4;
+		wheel.rotationQuaternion.setEulerAngles(65, 0, sway);
+		rootRoad.model.position.x = xRoot + sway * 0.1;
 	});
 
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
