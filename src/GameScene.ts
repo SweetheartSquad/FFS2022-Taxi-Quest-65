@@ -1,4 +1,4 @@
-import { Container, DisplayObject, Graphics } from 'pixi.js';
+import { Container, DisplayObject } from 'pixi.js';
 import { Camera as Camera3D, Mesh3D, Quat } from 'pixi3d';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
@@ -20,8 +20,6 @@ export class GameScene extends GameObject {
 	container = new Container();
 
 	container3d = new Container();
-
-	graphics = new Graphics();
 
 	camera = new Camera();
 
@@ -47,8 +45,6 @@ export class GameScene extends GameObject {
 
 	constructor() {
 		super();
-		this.container.addChildAt(this.graphics, 0);
-
 		this.strand = new StrandE({
 			source: resources.main.data,
 			renderer: {
@@ -165,22 +161,6 @@ export class GameScene extends GameObject {
 				this.strand.goto('debug menu');
 			}
 		}
-
-		const curTime = game.app.ticker.lastTime;
-
-		// depth sort
-		this.container.children.sort(depthCompare);
-		this.container.addChild(this.graphics);
-
-		// adjust camera based on dialogue state
-		const p = this.dialogue.progress();
-		this.camera.display.container.scale.x =
-			this.camera.display.container.scale.y = 1 + p * 0.1;
-
-		const g = this.graphics;
-
-		// test bg
-		g.clear();
 
 		const u = this.update;
 		// @ts-ignore
