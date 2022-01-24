@@ -15,7 +15,7 @@
 		}, delay);
 	};
 
-	this.car = this.Model('taxi', 'palette', { doubleSided: true });
+	this.car = this.Model('taxi', 'palette', { doubleSided: true, depth: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
 	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
 
@@ -25,7 +25,7 @@
 	let rootRoad;
 	for(let i = 0; i < roadSegments; ++i) {
 		const pos = i-roadSegments/2;
-		const road = this.Model('roadSeg1', 'palette');
+		const road = this.Model('roadSeg1', 'palette', { depth: true });
 		if (i === 0) {
 			rootRoad = road;
 		} else {

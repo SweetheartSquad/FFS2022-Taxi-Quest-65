@@ -1,5 +1,3 @@
-import { Texture } from 'pixi.js';
-import { StandardMaterial } from 'pixi3d';
 import { game, resources } from '../Game';
 import { GameObject } from '../GameObject';
 import { Script } from './Script';
@@ -13,7 +11,7 @@ function getFrameCount(animation: string): number {
 }
 
 export class Animator3d extends Script {
-	mat: StandardMaterial;
+	mat: { getTexture: () => string; setTexture: (tex: string) => void };
 
 	freq: number;
 
@@ -35,12 +33,12 @@ export class Animator3d extends Script {
 
 	constructor(
 		gameObject: GameObject,
-		{ mat, freq = 1 / 200 }: { mat: StandardMaterial; freq?: number }
+		{ mat, freq = 1 / 200 }: { mat: Animator3d['mat']; freq?: number }
 	) {
 		super(gameObject);
 		this.mat = mat;
 		this.freq = freq;
-		this.setAnimation(mat.baseColorTexture?.textureCacheIds?.[0] || '');
+		this.setAnimation(mat.getTexture());
 	}
 
 	setAnimation(a: string, holds: { [frame: number]: number } = {}) {
@@ -62,12 +60,11 @@ export class Animator3d extends Script {
 	}
 
 	updateTexture() {
-		this.mat.baseColorTexture =
-			resources[
-				this.frameCount
-					? `${this.animation}.${this.frames[this.frame]}`
-					: this.animation
-			]?.texture || (resources.error.texture as Texture);
+		this.mat.setTexture(
+			this.frameCount
+				? `${this.animation}.${this.frames[this.frame]}`
+				: this.animation
+		);
 	}
 
 	update(): void {
