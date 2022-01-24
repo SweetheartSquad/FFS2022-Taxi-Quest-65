@@ -17,10 +17,28 @@
 
 	this.car = this.Model('taxi', 'palette', { doubleSided: true, depth: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
-	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
 
-	const roadSegments = 15;
+	// camera
+	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
+	const camProps = window.game.app.loader.resources.taxi.gltf.descriptor.cameras[0].perspective;
+	this.scene.camera3d.fieldOfView = camProps.yfov * 100;
+	this.scene.camera3d.near = camProps.znear;
+	this.scene.camera3d.far = camProps.zfar;
+
+	// passenger
+	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
+	this.passenger.model.children.forEach(i => i.visible = false);
+	const passengerRef = this.passenger.model.getChildByName('passengerRef');
+	passengerRef.visible = true;
+	this.scene.pointDialogue.position.x = passengerRef.position.x + 0.15;
+	this.scene.pointDialogue.position.y = passengerRef.position.y + 0.35;
+	this.scene.pointDialogue.position.z = passengerRef.position.z;
+
+	// road + sway
+	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
 	const roadSize = 20 * 0.990306;
+	const roadSegments = Math.ceil(this.scene.camera3d.far*2 / roadSize);
+	console.log(roadSegments);
 	const roadSpeed = 20;
 	let rootRoad;
 	for(let i = 0; i < roadSegments; ++i) {
@@ -44,20 +62,6 @@
 		wheel.rotationQuaternion.setEulerAngles(65, 0, sway);
 		rootRoad.model.position.x = xRoot + sway * 0.1;
 	});
-
-	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
-	const camProps = window.game.app.loader.resources.taxi.gltf.descriptor.cameras[0].perspective;
-	this.scene.camera3d.fieldOfView = camProps.yfov * 100;
-	this.scene.camera3d.near = camProps.znear;
-	this.scene.camera3d.far = camProps.zfar;
-
-	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
-	this.passenger.model.children.forEach(i => i.visible = false);
-	const passengerRef = this.passenger.model.getChildByName('passengerRef');
-	passengerRef.visible = true;
-	this.scene.pointDialogue.position.x = passengerRef.position.x + 0.15;
-	this.scene.pointDialogue.position.y = passengerRef.position.y + 0.35;
-	this.scene.pointDialogue.position.z = passengerRef.position.z;
 
 	this.InteractionRegion({
 		x: -35,
