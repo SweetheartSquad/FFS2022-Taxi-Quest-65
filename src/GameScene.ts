@@ -1,6 +1,5 @@
 import { Container, DisplayObject, Graphics } from 'pixi.js';
 import { Camera as Camera3D, Mesh3D, Quat } from 'pixi3d';
-import { Border } from './Border';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
 import { game, resources } from './Game';
@@ -31,8 +30,6 @@ export class GameScene extends GameObject {
 	dialogue: UIDialogue;
 
 	strand: StrandE;
-
-	border: Border;
 
 	pointDialogue: Mesh3D;
 
@@ -96,10 +93,6 @@ export class GameScene extends GameObject {
 		this.strand.debug = DEBUG;
 		this.dialogue = new UIDialogue(this.strand);
 
-		this.border = new Border();
-		this.border.init();
-		this.border.display.container.alpha = 0;
-
 		this.camera.display.container.addChild(this.container);
 
 		this.pointDialogue = Mesh3D.createCube();
@@ -148,7 +141,6 @@ export class GameScene extends GameObject {
 
 		game.app.stage.addChild(this.container3d);
 		game.app.stage.addChild(this.dialogue.display.container);
-		game.app.stage.addChild(this.border.display.container);
 
 		this.strand.history.push('close');
 		this.strand.goto('start');

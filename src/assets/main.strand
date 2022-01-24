@@ -17,6 +17,11 @@
 
 	this.car = this.Model('taxi', 'palette', { doubleSided: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
+	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
+	
+	this.Updater(() => {
+		wheel.rotationQuaternion.setEulerAngles(65, 0, Math.sin(Date.now()/2300)*2 + Math.sin(Date.now()/3200)*4);
+	});
 
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;
 	const camProps = window.game.app.loader.resources.taxi.gltf.descriptor.cameras[0].perspective;

@@ -2,7 +2,6 @@ textures/error.png
 textures/black.png
 textures/white.png
 textures/blank.png
-textures/border.png
 textures/dialogueBg.x6.png
 textures/dialogueChoiceBg.x3.png
 textures/dialogueDiamond.x3.png
@@ -20,5 +19,3 @@ textures/passenger_normal_b.x2.png
 textures/passenger_sad_n.x2.png
 textures/passenger_sad_o.x2.png
 textures/passenger_sad_b.x2.png
-
-textures/migue-8x.png
