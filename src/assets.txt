@@ -19,3 +19,10 @@ textures/passenger_normal_b.x2.png
 textures/passenger_sad_n.x2.png
 textures/passenger_sad_o.x2.png
 textures/passenger_sad_b.x2.png
+
+textures/skybox_posx.jpg
+textures/skybox_posy.jpg
+textures/skybox_posz.jpg
+textures/skybox_negx.jpg
+textures/skybox_negy.jpg
+textures/skybox_negz.jpg

@@ -1,5 +1,5 @@
 import { Container, DisplayObject } from 'pixi.js';
-import { Camera as Camera3D, Mesh3D, Quat } from 'pixi3d';
+import { Camera as Camera3D, Cubemap, Mesh3D, Quat, Skybox } from 'pixi3d';
 import { Camera } from './Camera';
 import { DEBUG } from './debug';
 import { game, resources } from './Game';
@@ -9,7 +9,7 @@ import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
-import { lerp } from './utils';
+import { lerp, tex } from './utils';
 import { distance2 } from './VMath';
 
 function depthCompare(a: DisplayObject, b: DisplayObject): number {
@@ -133,6 +133,17 @@ export class GameScene extends GameObject {
 			})
 		);
 
+		const skybox = new Skybox(
+			Cubemap.fromFaces({
+				posx: tex('skybox_posx'),
+				posy: tex('skybox_posy'),
+				posz: tex('skybox_posz'),
+				negx: tex('skybox_negx'),
+				negy: tex('skybox_negy'),
+				negz: tex('skybox_negz'),
+			})
+		);
+		this.container3d.addChild(skybox);
 		this.container3d.addChild(this.pointDialogue);
 
 		game.app.stage.addChild(this.container3d);
