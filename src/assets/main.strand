@@ -39,7 +39,7 @@
 	const roadSize = 20 * 0.990306;
 	const roadSegments = Math.ceil(this.scene.camera3d.far*2 / roadSize);
 	console.log(roadSegments);
-	const roadSpeed = 20;
+	this.roadSpeed = 40;
 	let rootRoad;
 	for(let i = 0; i < roadSegments; ++i) {
 		const pos = i-roadSegments/2;
@@ -54,13 +54,21 @@
 	rootRoad.model.position.y -= 1.36;
 	rootRoad.model.position.x -= 3.3;
 	const xRoot = rootRoad.model.position.x;
+	const yRoot = rootRoad.model.position.y;
+	let pTime = Date.now();
+	let curPos = 0;
 	this.Updater(() => {
-		const curPos = (Date.now()/1000 * roadSpeed) % roadSize - (roadSize*roadSegments/2);
-		rootRoad.model.position.z = curPos;
+		const cTime = Date.now();
+		const dTime = cTime - pTime;
+		curPos += dTime/1000 * this.roadSpeed;
+		curPos %= roadSize;
+		rootRoad.model.position.z = curPos - (roadSize*roadSegments/2);
 
+		// rotate wheel + sway road back and forth
 		const sway = Math.sin(Date.now()/2300)*2 + Math.sin(Date.now()/3200)*4;
 		wheel.rotationQuaternion.setEulerAngles(65, 0, sway);
-		rootRoad.model.position.x = xRoot + sway * 0.1;
+		rootRoad.model.position.x = xRoot + sway * 0.1 * Math.min(1, this.roadSpeed/50);
+		pTime = cTime;
 	});
 
 	this.InteractionRegion({
