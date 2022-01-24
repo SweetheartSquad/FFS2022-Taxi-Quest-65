@@ -68,6 +68,8 @@
 		const sway = Math.sin(Date.now()/2300)*2 + Math.sin(Date.now()/3200)*4;
 		wheel.rotationQuaternion.setEulerAngles(65, 0, sway);
 		rootRoad.model.position.x = xRoot + sway * 0.1 * Math.min(1, this.roadSpeed/50);
+		// bounce road
+		rootRoad.model.position.y = yRoot + Math.sin(cTime/20) * 0.01;
 		pTime = cTime;
 	});
 
