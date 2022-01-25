@@ -15,9 +15,12 @@
 		}, delay);
 	};
 
+	
+	// start with music off in debug
+	this.radio = !this.debug;
+
 	this.car = this.Model('taxi', 'palette', { doubleSided: true, depth: true });
 	this.clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
-	this.clock.model.visible = false;
 	this.car.model.getChildByName('passengerRef').visible = false;
 	
 	this.chimneys = this.Model('chimneys', 'palette', { doubleSided: true, depth: true });
@@ -77,23 +80,23 @@
 	this.scene.pointDialogue.position.y = passengerRef.position.y + 0.35;
 	this.scene.pointDialogue.position.z = passengerRef.position.z;
 
+	this.toggleRadio = () => {
+		this.radio = !this.radio;
+		this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
+		if (this.radio) {
+			this.music('bgm');
+			this.clock.model.visible = true;
+		} else {
+			this.music('');
+			this.clock.model.visible = false;
+		}
+	};
 	this.InteractionRegion({
 		x: -42,
 		y: 12,
 		range: 10,
 		label: 'crank',
-		action: () => {
-			this.radio = !this.radio;
-			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
-			if (this.radio) {
-				this.music('');
-				this.clock.model.visible = false;
-			} else {
-				this.music('bgm');
-				this.clock.model.visible = true;
-			}
-			console.log('radio!');
-		},
+		action: () => this.toggleRadio(),
 	});
 
 	const rearView = scene.strand.car.model.getChildByName('rearView');
@@ -201,13 +204,16 @@
 		}
 	};
 
+	if (this.radio) {
+		this.music('bgm');
+	}
+	this.clock.model.visible = this.radio;
+
 	// start
 	this.started=true;
 	requestAnimationFrame(() => {
-		this.scrim(1, 3000);
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 		this.scenarios.unshift('end-scenario');
-		this.radio = true;
 		this.goto('main');
 	});
 >>
