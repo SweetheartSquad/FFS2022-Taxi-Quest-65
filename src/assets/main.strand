@@ -16,7 +16,8 @@
 	};
 
 	this.car = this.Model('taxi', 'palette', { doubleSided: true, depth: true });
-	const clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
+	this.clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
+	this.clock.model.visible = false;
 	this.car.model.getChildByName('passengerRef').visible = false;
 
 	// camera
@@ -81,10 +82,13 @@
 		label: 'radio',
 		action: () => {
 			this.radio = !this.radio;
+			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
 			if (this.radio) {
 				this.music('');
+				this.clock.model.visible = false;
 			} else {
 				this.music('bgm');
+				this.clock.model.visible = true;
 			}
 			console.log('radio!');
 		},

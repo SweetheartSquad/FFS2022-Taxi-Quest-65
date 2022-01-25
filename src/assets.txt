@@ -8,6 +8,7 @@ textures/dialogueDiamond.x3.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
+audio/click.mp3
 
 models/taxi.gltf
 models/clock.gltf
