@@ -563,3 +563,60 @@ Ughhh.
 >
 I, uh... I'll shut up now.
 [[>main]]
+
+::scenario-radio
+<<do
+    this.radioRequest = this.radio;
+    this.toggleRadioO = this.toggleRadio;
+    this.toggleRadio = () => {};
+>>
+Hey, do you mind if I turn the radio <<print this.radioRequest ? 'off' : 'on'>>?
+[[Yeah>radio-refuse]]
+[[Nah>radio-allow]]
+
+::radio-refuse
+Oh...
+>
+Rude.
+[[ |this.toggleRadio = this.toggleRadioO;this.goto('main')]]
+
+::radio-allow
+Thanks.
+>
+<<do
+    this.radio = this.radioRequest;
+    this.toggleRadioO();
+>>
+...
+>
+<<do
+    this.toggleRadio = () => {
+        this.toggleRadioO();
+        this.goto('radio-override');
+    };
+>>
+*sigh*
+>
+It's just good to have a <<print this.radioRequest ? 'bit of quiet' : 'distraction'>>, you know?
+>
+Clears your head.
+>
+Gives you a chance to really think things through.
+>
+...
+>
+...Can't believe I'm really going through with this.
+>
+Thanks again. I mean it.
+[[ |this.toggleRadio = this.toggleRadioO;this.goto('main')]]
+
+
+::radio-override
+<<do this.toggleRadio = this.toggleRadioO>>
+Seriously? That was- that was barely...
+>
+Whatever. Leave it for all I care.
+>
+I just... whatever.
+[[>main]]
+
