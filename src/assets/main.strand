@@ -79,7 +79,7 @@
 		x: -42,
 		y: 12,
 		range: 10,
-		label: 'radio',
+		label: 'crank',
 		action: () => {
 			this.radio = !this.radio;
 			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
@@ -91,6 +91,44 @@
 				this.clock.model.visible = true;
 			}
 			console.log('radio!');
+		},
+	});
+
+	const rearView = scene.strand.car.model.getChildByName('rearView');
+	this.InteractionRegion({
+		x: -49,
+		y: -15,
+		range: 5,
+		label: 'adjust',
+		action: () => {
+			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
+			rearView.rotationQuaternion.setEulerAngles(0, Math.random()*40-30, 0);
+		},
+	});
+
+	const sideMirror = scene.strand.car.model.getChildByName('sideMirror');
+	this.InteractionRegion({
+		x: 34,
+		y: 3,
+		range: 5,
+		label: 'adjust',
+		action: () => {
+			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
+			sideMirror.rotationQuaternion.setEulerAngles(0, Math.random()*30+10, 0);
+		},
+	});
+
+	const sunBlind = scene.strand.car.model.getChildByName('sunBlind1');
+	let sunBlindOpen = false;
+	this.InteractionRegion({
+		x: -7,
+		y: -35,
+		range: 10,
+		label: 'flip',
+		action: () => {
+			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
+			sunBlind.rotationQuaternion.setEulerAngles(sunBlindOpen ? 0 : 90, 0, 0);
+			sunBlindOpen = !sunBlindOpen;
 		},
 	});
 
