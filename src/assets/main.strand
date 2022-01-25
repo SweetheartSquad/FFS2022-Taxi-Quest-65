@@ -235,25 +235,47 @@ debug menu
 <<do this.goto('close');this.gotod(this.scenarios.pop(), 2000);>>
 
 ::end-scenario
-Ok. This is my stop.
+Oh, is that a sign up ahead?
 >
-Thanks for the ride.
->
-So long.
+// TODO: spawn sign
+I think this is my exit.
 >
 <<do
-	this.scrim(1, 1);
-	this.tween(this.scene.dialogue.display.container, 'alpha', 0, 1);
-	this.tween(scene.camera.display.container, 'alpha', 0, 1);
-	this.tween(scene.container3d, 'alpha', 0, 1);
-	this.music('', { fade: 5000 });
-	requestAnimationFrame(() => {
-		this.scene.destroy();
-		this.end();
-	});
+	this.scene.interactive = false;
+	this.scrim(1, 4000);
+	this.gotod('end-scenario2', 5000);
 >>
 
-
+::end-scenario2
+This is it, huh?
+>
+// TODO: getting out of car noise
+<<do this.sfx('click')>>
+...
+>
+So, uh.
+>
+How much do I owe you?
+[[ |setTimeout(() => {
+		if (this.ended) return;
+		const t = this.Text('The End');
+		this.ended = true;
+		this.scrim(1, 1);
+		this.tween(this.scene.dialogue.display.container, 'alpha', 0, 1);
+		this.tween(scene.camera.display.container, 'alpha', 0, 1);
+		this.tween(scene.container3d, 'alpha', 0, 1);
+		this.music('', { fade: 5000 });
+		requestAnimationFrame(() => {
+			this.scene.destroy();
+			this.end();
+			setTimeout(() => {
+				t.display.container.x = game.app.renderer.width * 0.88;
+				t.display.container.y = game.app.renderer.height * 0.88;
+				window.game.app.stage.addChild(t.display.container);
+			}, 2000);
+		});
+	}, 3000);
+]]
 
 
 

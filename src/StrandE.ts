@@ -178,6 +178,10 @@ export class StrandE extends Strand {
 		display.container.x = transform.x = x;
 		display.container.y = transform.y = y + offset;
 		text.y -= offset;
+		// @ts-ignore
+		go.display = display;
+		// @ts-ignore
+		go.transform = transform;
 		return go;
 	}
 
