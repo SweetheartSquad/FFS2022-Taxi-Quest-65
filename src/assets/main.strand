@@ -16,6 +16,7 @@
 	};
 
 	this.car = this.Model('taxi', 'palette', { doubleSided: true, depth: true });
+	const clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
 
 	// camera
@@ -34,7 +35,7 @@
 	let rootRoad;
 	for(let i = 0; i < roadSegments; ++i) {
 		const pos = i-roadSegments/2;
-		const road = this.Model('roadSeg1', 'palette', { depth: true });
+		const road = this.Model('roadSeg1', 'palette', { doubleSided: true, depth: true });
 		if (i === 0) {
 			rootRoad = road;
 		} else {

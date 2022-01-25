@@ -10,6 +10,7 @@ audio/bgm.mp3
 audio/voiceDefault.mp3
 
 models/taxi.gltf
+models/clock.gltf
 models/roadSeg1.gltf
 
 textures/palette.png
