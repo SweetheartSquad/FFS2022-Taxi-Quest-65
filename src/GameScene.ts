@@ -34,6 +34,8 @@ export class GameScene extends GameObject {
 
 	pointDialogue: Mesh3D;
 
+	interactive = true;
+
 	interactionRegions: {
 		x: number;
 		y: number;
@@ -126,9 +128,11 @@ export class GameScene extends GameObject {
 		);
 		this.scripts.push(
 			new Updater(this, () => {
-				const interaction = this.interactionRegions.find(
-					(i) => distance2({ x: this.x, y: this.y }, i) < i.range ** 2
-				);
+				const interaction =
+					this.interactive &&
+					this.interactionRegions.find(
+						(i) => distance2({ x: this.x, y: this.y }, i) < i.range ** 2
+					);
 				if (interaction) {
 					this.prompt.prompt(interaction.label, interaction.action);
 				} else {
