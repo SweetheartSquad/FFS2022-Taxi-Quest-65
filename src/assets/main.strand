@@ -19,6 +19,8 @@
 	this.clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
 	this.clock.model.visible = false;
 	this.car.model.getChildByName('passengerRef').visible = false;
+	
+	this.chimneys = this.Model('chimneys', 'palette', { doubleSided: true, depth: true });
 
 	// camera
 	this.scene.camera3d.position = this.car.model.getChildByName('Camera').position;

@@ -13,6 +13,7 @@ audio/click.mp3
 models/taxi.gltf
 models/clock.gltf
 models/roadSeg1.gltf
+models/chimneys.gltf
 
 textures/palette.png
 textures/passenger_normal_n.x2.png
