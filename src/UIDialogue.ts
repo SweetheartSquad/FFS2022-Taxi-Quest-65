@@ -13,11 +13,11 @@ import {
 import { Camera, Mesh3D, ObservablePoint3D, Vec3 } from 'pixi3d';
 import Strand from 'strand-core';
 import { sfx } from './Audio';
-import { fontChoice, fontDialogue, fontPrompt } from './font';
+import { fontChoice, fontDialogue } from './font';
 import { game } from './Game';
 import { GameObject } from './GameObject';
 import { KEYS, keys } from './input-keys';
-import { getInput, mouse } from './main';
+import { getInput } from './main';
 import { Animator } from './Scripts/Animator';
 import { Display } from './Scripts/Display';
 import { Toggler } from './Scripts/Toggler';
@@ -72,10 +72,6 @@ export class UIDialogue extends GameObject {
 
 	textText: Text;
 
-	textPrompt: Text;
-
-	fnPrompt?: () => void;
-
 	choices: (Text & EventEmitter)[];
 
 	selected: number | undefined;
@@ -83,8 +79,6 @@ export class UIDialogue extends GameObject {
 	containerChoices: Container;
 
 	strText: string;
-
-	strPrompt: string;
 
 	strand: Strand;
 
@@ -159,19 +153,11 @@ export class UIDialogue extends GameObject {
 		this.scripts.push((this.toggler = new Toggler(this)));
 
 		this.strText = '';
-		this.strPrompt = '';
 		this.pos = 0;
 		this.posTime = 0;
 		this.posDelay = 2;
 		this.selected = undefined;
 		this.textText = new Text(this.strText, { ...fontDialogue });
-		this.textPrompt = new Text(this.strPrompt, fontPrompt);
-		this.textPrompt.alpha = 0;
-		this.textPrompt.x = size.x / 2;
-		this.textPrompt.y = size.y * 0.75;
-		this.textPrompt.anchor.x = 0.5;
-		this.textPrompt.anchor.y = 0.5;
-		this.display.container.addChild(this.textPrompt);
 		this.display.container.accessible = true;
 		this.display.container.interactive = true;
 		(this.display.container as EventEmitter).on('pointerdown', () => {
@@ -316,24 +302,13 @@ export class UIDialogue extends GameObject {
 
 		this.graphics.endFill();
 
-		this.textPrompt.alpha = lerp(
-			this.textPrompt.alpha,
-			this.fnPrompt ? 1 : 0,
-			0.1
-		);
 		const input = getInput();
-
-		if ((input.interact || mouse.isJustDown()) && this.fnPrompt) {
-			this.fnPrompt();
-		}
 
 		// early return (still opening)
 		if (this.progress() < 0.9) return;
 
 		// interaction
-		if (this.fnPrompt && input.interact) {
-			this.fnPrompt();
-		} else if (this.isOpen && this.choices.length) {
+		if (this.isOpen && this.choices.length) {
 			// make single option clickable from anywhere
 			if (this.choices.length === 1) {
 				const p = this.choices[0].toGlobal({ x: 0, y: 0 });
@@ -513,15 +488,6 @@ export class UIDialogue extends GameObject {
 
 	show(...args: Parameters<Toggler['show']>) {
 		return this.toggler.show(...args);
-	}
-
-	prompt(
-		label: string = this.strPrompt,
-		action: (() => void) | undefined = undefined
-	) {
-		this.strPrompt = label;
-		this.textPrompt.text = label;
-		this.fnPrompt = action;
 	}
 
 	complete() {
