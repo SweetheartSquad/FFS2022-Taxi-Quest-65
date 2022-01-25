@@ -136,10 +136,10 @@ export class GameScene extends GameObject {
 		const skybox = new Skybox(
 			Cubemap.fromFaces({
 				posx: tex('skybox_posx'),
-				posy: tex('skybox_posy'),
+				posy: tex('skybox_y'),
 				posz: tex('skybox_posz'),
 				negx: tex('skybox_negx'),
-				negy: tex('skybox_negy'),
+				negy: tex('skybox_y'),
 				negz: tex('skybox_negz'),
 			})
 		);
