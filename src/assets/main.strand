@@ -231,7 +231,6 @@ debug menu
 [[back|this.back()]]
 
 ::main
-<<do this.scrim(0)>>
 // <<do this.goto('close');this.gotod(this.scenarios.pop(), (Math.random()*10+12)*1000);>>
 <<do this.goto('close');this.gotod(this.scenarios.pop(), 2000);>>
 

@@ -33,7 +33,6 @@ const padding = {
 	left: 32,
 	right: 32,
 };
-const scrimDefault = 0;
 
 function formatLabel(str: string, idx: number, length: number) {
 	if (length === 1) return str;
@@ -122,7 +121,7 @@ export class UIDialogue extends GameObject {
 		this.sprScrim.tint = 0x000000;
 		this.sprScrim.width = size.x + 2;
 		this.sprScrim.height = size.y + 2;
-		this.sprScrim.alpha = 1;
+		this.sprScrim.alpha = 0;
 		this.sprBg = new Sprite(tex('dialogueBg'));
 		this.sprChoiceBg = new Sprite(tex('dialogueChoiceBg'));
 		this.sprChoiceBg.anchor.x = this.sprChoiceBg.anchor.y = 0.5;
@@ -499,7 +498,6 @@ export class UIDialogue extends GameObject {
 	private open() {
 		if (!this.isOpen) {
 			this.isOpen = true;
-			this.scrim(scrimDefault, 500);
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
@@ -523,7 +521,6 @@ export class UIDialogue extends GameObject {
 				i.interactive = false;
 			});
 			this.isOpen = false;
-			this.scrim(0, 500);
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
