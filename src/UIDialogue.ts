@@ -17,7 +17,7 @@ import { fontChoice, fontDialogue, fontPrompt } from './font';
 import { game } from './Game';
 import { GameObject } from './GameObject';
 import { KEYS, keys } from './input-keys';
-import { getInput } from './main';
+import { getInput, mouse } from './main';
 import { Animator } from './Scripts/Animator';
 import { Display } from './Scripts/Display';
 import { Toggler } from './Scripts/Toggler';
@@ -323,7 +323,7 @@ export class UIDialogue extends GameObject {
 		);
 		const input = getInput();
 
-		if (!this.isOpen && input.interact && this.fnPrompt) {
+		if ((input.interact || mouse.isJustDown()) && this.fnPrompt) {
 			this.fnPrompt();
 		}
 
