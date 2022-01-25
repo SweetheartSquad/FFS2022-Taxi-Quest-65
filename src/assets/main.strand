@@ -34,7 +34,7 @@
 
 	// road + sway
 	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
-	const roadSize = 60 * 0.990306;
+	const roadSize = 60;
 	const roadSegments = Math.max(2, Math.ceil(this.scene.camera3d.far*2 / roadSize));
 	console.log(roadSegments);
 	this.roadSpeed = 40;
