@@ -162,6 +162,11 @@ export class GameScene extends GameObject {
 		this.container.destroy({
 			children: true,
 		});
+		this.container3d.destroy({
+			children: true,
+		});
+		this.dialogue.destroy();
+		this.prompt.destroy();
 		super.destroy();
 	}
 

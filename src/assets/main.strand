@@ -242,6 +242,10 @@ So long.
 	this.tween(scene.camera.display.container, 'alpha', 0, 1);
 	this.tween(scene.container3d, 'alpha', 0, 1);
 	this.music('', { fade: 5000 });
+	requestAnimationFrame(() => {
+		this.scene.destroy();
+		this.end();
+	});
 >>
 
 

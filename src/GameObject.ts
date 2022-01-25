@@ -32,6 +32,7 @@ export class GameObject {
 
 	destroy(): void {
 		this.scripts.forEach((s) => s.destroy && s.destroy());
+		this.scripts.length = 0;
 		removeFromArray(GameObject.gameObjects, this);
 	}
 

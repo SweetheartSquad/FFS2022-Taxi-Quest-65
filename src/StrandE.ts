@@ -124,6 +124,10 @@ export class StrandE extends Strand {
 		setScene(newScene);
 	}
 
+	end() {
+		setScene();
+	}
+
 	Prop(...args: ConstructorParameters<typeof Prop>) {
 		return new Prop(...args);
 	}
