@@ -77,7 +77,7 @@
 
 	this.InteractionRegion({
 		x: -42,
-		y: 22,
+		y: 12,
 		range: 10,
 		label: 'radio',
 		action: () => {
