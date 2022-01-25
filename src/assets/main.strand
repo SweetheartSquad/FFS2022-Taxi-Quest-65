@@ -25,15 +25,6 @@
 	this.scene.camera3d.near = camProps.znear;
 	this.scene.camera3d.far = camProps.zfar;
 
-	// passenger
-	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
-	this.passenger.model.children.forEach(i => i.visible = false);
-	const passengerRef = this.passenger.model.getChildByName('passengerRef');
-	passengerRef.visible = true;
-	this.scene.pointDialogue.position.x = passengerRef.position.x + 0.15;
-	this.scene.pointDialogue.position.y = passengerRef.position.y + 0.35;
-	this.scene.pointDialogue.position.z = passengerRef.position.z;
-
 	// road + sway
 	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
 	const roadSize = 60 * 0.990306;
@@ -72,6 +63,15 @@
 		rootRoad.model.position.y = yRoot + Math.sin(cTime/20) * 0.01;
 		pTime = cTime;
 	});
+
+	// passenger
+	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
+	this.passenger.model.children.forEach(i => i.visible = false);
+	const passengerRef = this.passenger.model.getChildByName('passengerRef');
+	passengerRef.visible = true;
+	this.scene.pointDialogue.position.x = passengerRef.position.x + 0.15;
+	this.scene.pointDialogue.position.y = passengerRef.position.y + 0.35;
+	this.scene.pointDialogue.position.z = passengerRef.position.z;
 
 	this.InteractionRegion({
 		x: -42,
