@@ -55,10 +55,12 @@
 	const yRoot = rootRoad.model.position.y;
 	let pTime = Date.now();
 	let curPos = 0;
+	let roadDelta = 0;
 	this.Updater(() => {
 		const cTime = Date.now();
 		const dTime = cTime - pTime;
-		curPos += dTime/1000 * this.roadSpeed;
+		roadDelta = dTime/1000 * this.roadSpeed;
+		curPos += roadDelta;
 		curPos %= roadSize;
 		rootRoad.model.position.z = curPos - (roadSize*roadSegments/2);
 
@@ -138,14 +140,17 @@
 	});
 
 
-	this.EnvModel = () => {
-		const m = this.Model('taxicab_shell', 'palette');
-		m.model.position.z = 100;
-		const t = this.tween(m.model.position, 'z', -100, 10000);
-		setTimeout(() => {
-			this.tweenAbort(t);
-			this.destroy(m);
-		}, 10000);
+	this.EnvModel = (model) => {
+		const m = this.Model(model, 'palette', { doubleSided: true, depth: true });
+		m.model.position.z = -110;
+		const remove = this.Updater(() => {
+			m.model.position.z += roadDelta;
+			if (m.model.position.z > 110) {
+				remove();
+				this.destroy(m);
+			}
+		});
+		return m;
 	};
 
 	// pose helper
