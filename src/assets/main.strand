@@ -73,6 +73,16 @@
 		pTime = cTime;
 	});
 
+	// looping speed sign
+	const sign = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
+	sign.model.position.z = -roadSize*16;
+	this.Updater(() => {
+		sign.model.position.z += roadDelta;
+		if (sign.model.position.z > roadSize) {
+			sign.model.position.z -= roadSize*16;
+		}
+	});
+
 	// passenger
 	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
 	this.passenger.model.children.forEach(i => i.visible = false);
