@@ -206,6 +206,8 @@
 	const poses = {
 		':(': 'sad',
 		':)': 'normal',
+		'o_o': 'facing_you',
+		'-_-': 'facing_away',
 	};
 	this.setPose = (pose, state) => {
 		this.pose = poses[pose] || pose;

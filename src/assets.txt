@@ -29,6 +29,12 @@ textures/passenger_normal_b.x2.png
 textures/passenger_sad_n.x2.png
 textures/passenger_sad_o.x2.png
 textures/passenger_sad_b.x2.png
+textures/passenger_facing_you_n.x2.png
+textures/passenger_facing_you_o.x2.png
+textures/passenger_facing_you_b.x2.png
+textures/passenger_facing_away_n.x2.png
+textures/passenger_facing_away_o.x2.png
+textures/passenger_facing_away_b.x2.png
 
 textures/skybox_y.png
 textures/skybox_posx.jpg
