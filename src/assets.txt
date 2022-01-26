@@ -18,6 +18,9 @@ models/coyote.gltf
 models/speedlimitsign.gltf
 models/coyoteXsign.gltf
 models/flashfloodsign.gltf
+models/roadsideTrash1.gltf
+models/roadsideTrash2.gltf
+models/longhornskull.gltf
 
 textures/palette.png
 textures/passenger_normal_n.x2.png
