@@ -33,6 +33,7 @@
 	this.scene.camera3d.far = camProps.zfar;
 
 	// road + sway
+	const speedometer = this.car.model.getChildByName('speed').getChildByName('speedMeter');
 	const wheel = this.scene.strand.car.model.getChildByName('steeringColumn');
 	const roadSize = 60;
 	const roadSegments = Math.max(2, Math.ceil(this.scene.camera3d.far*2 / roadSize));
@@ -71,6 +72,8 @@
 		// bounce road
 		rootRoad.model.position.y = yRoot + Math.sin(cTime/20) * 0.01;
 		pTime = cTime;
+		// speedometer
+		speedometer.rotationQuaternion.setEulerAngles(0, 30 - this.roadSpeed * 2 * (Math.random()*0.1+0.95), 0);
 	});
 
 	// looping speed sign
