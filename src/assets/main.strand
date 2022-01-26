@@ -663,3 +663,36 @@ Whatever. Leave it for all I care.
 I just... whatever.
 [[>main]]
 
+::scenario-flood
+<<do this.EnvModel('flashfloodsign')>>
+Huh, is that a flood warning?
+>
+Do you get floods out here often?
+[[Yeah>flood-yes]]
+[[Nah>flood-no]]
+
+::flood-yes
+Weird. Floods in a desert?
+>
+Isn't the whole deal that it's dry out here?
+>
+Guess I don't really know how floods work though...
+>
+Never know when a flood's gonna get you!
+>
+Or, well- they put a sign up, so I suppose that's how you know.
+>
+Heh.
+[[>main]]
+
+::flood-no
+Can't always trust what you read, I guess.
+>
+Makes sense though, don't even remember when it last rained.
+>
+Just about triggered a riot last time they raised the water tax.
+>
+...
+>
+Least that's not my problem anymore.
+[[>main]]
