@@ -182,6 +182,8 @@ export class StrandE extends Strand {
 		go.display = display;
 		// @ts-ignore
 		go.transform = transform;
+		// @ts-ignore
+		go.text = text;
 		return go;
 	}
 

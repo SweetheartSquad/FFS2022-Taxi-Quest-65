@@ -24,5 +24,5 @@ export const fontPrompt: Partial<ITextStyle> = {
 };
 export const fontIngame: Partial<ITextStyle> = {
 	...fontChoice,
-	fontSize: 32,
+	fontSize: 48,
 };
