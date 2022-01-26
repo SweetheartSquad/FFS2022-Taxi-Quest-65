@@ -95,13 +95,6 @@
 		}
 	});
 
-	setTimeout(() => {
-		this.EnvModel('coyoteXsign');
-	}, 1000 * 110);
-	setTimeout(() => {
-		this.EnvModel('coyote');
-	}, 1000 * 120);
-
 	// passenger
 	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
 	this.passenger.model.children.forEach(i => i.visible = false);
@@ -181,6 +174,33 @@
 		});
 		return m;
 	};
+
+	setTimeout(() => {
+		this.EnvModel('coyoteXsign');
+	}, 1000 * 110);
+	setTimeout(() => {
+		this.EnvModel('coyote');
+	}, 1000 * 120);
+
+	// random props
+	const props = [
+		'roadsideTrash1',
+		'roadsideTrash1',
+		'roadsideTrash1',
+		'roadsideTrash2',
+		'roadsideTrash2',
+		'roadsideTrash2',
+		'longhornskull',
+	];
+	let lastprop;
+	const rndprop = () => {
+		if (!lastprop || lastprop.model.destroyed) {
+			const prop = this.shuffle(props)[0];
+			lastprop = this.EnvModel(prop);
+		}
+		setTimeout(rndprop, Math.random()*25000+Math.random()*25000+10000);
+	};
+	rndprop();
 
 	// pose helper
 	const poses = {
