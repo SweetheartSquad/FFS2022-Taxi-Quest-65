@@ -33,7 +33,7 @@
 	this.scene.camera3d.far = camProps.zfar;
 
 	// road + sway
-	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
+	const wheel = this.scene.strand.car.model.getChildByName('steeringColumn');
 	const roadSize = 60;
 	const roadSegments = Math.max(2, Math.ceil(this.scene.camera3d.far*2 / roadSize));
 	console.log(roadSegments);
