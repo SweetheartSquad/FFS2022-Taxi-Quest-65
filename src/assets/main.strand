@@ -83,6 +83,10 @@
 		}
 	});
 
+	setTimeout(() => {
+		this.EnvModel('coyote');
+	}, 1000 * 120);
+
 	// passenger
 	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
 	this.passenger.model.children.forEach(i => i.visible = false);
