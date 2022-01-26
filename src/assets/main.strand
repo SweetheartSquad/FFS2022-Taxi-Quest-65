@@ -74,12 +74,21 @@
 	});
 
 	// looping speed sign
-	const sign = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
-	sign.model.position.z = -roadSize*16;
+	const sign1 = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
+	sign1.model.position.z = -roadSize*16;
 	this.Updater(() => {
-		sign.model.position.z += roadDelta;
-		if (sign.model.position.z > roadSize) {
-			sign.model.position.z -= roadSize*16;
+		sign1.model.position.z += roadDelta;
+		if (sign1.model.position.z > roadSize) {
+			sign1.model.position.z -= roadSize*16;
+		}
+	});
+	const sign2 = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
+	sign2.model.position.z = -roadSize*16*0.5;
+	sign2.model.position.x -= 15;
+	this.Updater(() => {
+		sign2.model.position.z += roadDelta;
+		if (sign2.model.position.z > roadSize) {
+			sign2.model.position.z -= roadSize*16;
 		}
 	});
 
