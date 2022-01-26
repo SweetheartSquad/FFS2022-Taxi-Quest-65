@@ -14,6 +14,7 @@ models/taxi.gltf
 models/clock.gltf
 models/roadSeg1.gltf
 models/chimneys.gltf
+models/coyote.gltf
 
 textures/palette.png
 textures/passenger_normal_n.x2.png
