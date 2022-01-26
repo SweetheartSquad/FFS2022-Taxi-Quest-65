@@ -355,17 +355,17 @@ How much do I owe you?
 // ███████  ██████ ███████ ██   ████ ██   ██ ██   ██ ██  ██████  ███████
 
 ::scenario-busy
-Been a busy night?
+:) - Been a busy night?
 >Yeah|Nah
 Guess a lot of people have been trying to leave the city.
 >
 My mom's been nagging me for the past year.
 >
-Going on about how dangerous it's gotten.
+-_- - Going on about how dangerous it's gotten.
 >
 Thought she was just being annoying but it's gotten outta hand lately...
 >
-I uh, saw your rifle in the back...
+o_o - I uh, saw your rifle in the back...
 >
 Is that for hunting out here?
 [[Yeah>busy-yes]]
@@ -383,19 +383,19 @@ Have you ever had to use it on the job?
 ::busy-no-no
 ...Hm.
 >
-Well, probably for the best.
+:( - Well, probably for the best.
 [[>main]]
 
 ::busy-no-yes
 Oh.
 >
-Well, I won't ask.
+:( - Well, I won't ask.
 [[>main]]
 
 ::busy-yes
 Cool! I've never been hunting before.
 >
-So do you like, catch desert hares or something?
+:) - So do you like, catch desert hares or something?
 [[Yeah>hares]]
 [[Nah>no-hares]]
 [[...>Bigger game]]
@@ -408,13 +408,13 @@ Apparently they're having a hard time finding truckers to make the journey out. 
 >
 Never seen the stores so empty...
 >
-Wonder how long all this will last for.
+-_- - Wonder how long all this will last for.
 [[>main]]
 
 ::no-hares
 No? I thought they were common out here...
 >
-Though... come to think of it, I guess I haven't seen any.
+-_- - Though... come to think of it, I guess I haven't seen any.
 >
 Wonder where they all went...
 [[>main]]
@@ -422,7 +422,7 @@ Wonder where they all went...
 ::Bigger game
 Deer, then?
 >
-I hear there are some deer in this desert.
+-_- - I hear there are some deer in this desert.
 >
 Never seen one, though.
 >
@@ -430,15 +430,15 @@ Never seen one, though.
 >
 I don't think I could shoot a deer.
 >
-Probably not a hare either, heh.
+:) - Probably not a hare either, heh.
 >
-In fact, I think continuing to live my life in a way that does not involve me shooting things would be best.
+:( - In fact, I think continuing to live my life in a way that does not involve me shooting things would be best.
 >
 Just in general.
 [[>main]]
 
 ::scenario-two-seater
-So... a two seater huh?
+:) - So... a two seater huh?
 >
 Haven't seen many taxis like that, ha ha.
 >
@@ -453,7 +453,7 @@ It is kinda cozy.
 [[>two-seater-yeah]]
 
 ::two-seater-yeah
-Must be a pain if you get flagged down by a family of four.
+o_o - Must be a pain if you get flagged down by a family of four.
 >
 Guess you could stick the kids in the trunk, ha ha.
 [[Yeah>two-seater-2]]
@@ -468,38 +468,40 @@ TODO
 ::Not many families around
 Oh...
 >
-Guess that makes things simpler then.
+:( - Guess that makes things simpler then.
 [[>main]]
 
 
 ::scenario-out-of-town
 Guessing most people from the city have been going out of town recently huh?
 >Yeah|Nah
-Must be nice, lot less hectic out here.
+:) - Must be nice, lot less hectic out here.
 >
 ...
 >
 Does it feel weird?
 >
-I mean, when all day, you're just watching people leave?
+o_o - I mean, when all day, you're just watching people leave?
 [[Yeah>town-yeah]]
 [[Nah>town-nah]]
 [[...>town-yeah]]
 
 ::town-nah
-Hmm, s'pose it's less strange if you're always coming and going yourself.
+Hmm.
+>
+:) - S'pose it's less strange if you're always coming and going yourself.
 [[>town-yeah]]
 
 ::town-yeah
 I appreciate the late night trip by the way.
 >
-Had to leave in a bit of a hurry.
+-_- - Had to leave in a bit of a hurry.
 [[>main]]
 
 ::scenario-love
-You ever been in love?
+o_o - You ever been in love?
 >
-I mean- Sorry, that's a weird question, isn't it?
+:( - I mean- Sorry, that's a weird question, isn't it?
 [[Yeah>awkward]]
 [[Nah>okay]]
 
@@ -510,21 +512,21 @@ I just... It's a long trip, you know? It's a lot of waiting.
 >
 I don't like waiting. Especially in silence.
 >
-But you gotta have ice-breakers. Conversation starters.
+:) - But you gotta have ice-breakers. Conversation starters.
 >
-I met a guy once, and that was the first thing he asked me.
+-_- - I met a guy once, and that was the first thing he asked me.
 >
 "You ever been in love?"
 >
-He asked it like he knew the answer.
+:) - He asked it like he knew the answer.
 >
-Like he could look right past me and see it floating above my head.
+o_o - Like he could look right past me and see it floating above my head.
 >
 It was... really scary, to be honest. But also kind of cool?
 >
 ...
 >
-Sorry, I'll drop it.
+:( - Sorry, I'll drop it.
 [[>main]]
 
 ::okay
@@ -535,13 +537,13 @@ You sure? You can say if it's not, I know I kind of sprang that out of nowhere..
 ::okay2
 Okay. Yeah? Okay!
 >
-Cool.
+:) - Cool.
 >
 So...
 >
 Have you?
 >
-Ever been in love, that is?
+o_o - Ever been in love, that is?
 [[Yeah>love]]
 [[Nah>no-love]]
 
@@ -554,54 +556,54 @@ Would you recommend it?
 >Yeah|Nah
 Okay.
 >
-I'll keep that in mind.
+:) - I'll keep that in mind.
 [[>main]]
 
 ::no-love
 Oh.
 >
-That's a shame.
+:( - That's a shame.
 >
 I mean- I wouldn't know. But still...
 >
 Kinda feels like we've missed the bus on it sometimes.
 >
-...Heh.
+:) - ...Heh.
 >
 You know, when I miss a bus, I usually call a cab.
 >
-...
+:( - ...
 >
 Sorry, I'll drop it.
 [[>main]]
 
 ::scenario-speed
-We're going pretty fast, huh?
+-_- - We're going pretty fast, huh?
 >
-Guess they don't care much about speed limits out here.
+:) - Guess they don't care much about speed limits out here.
 >Yeah|Nah
 Hard to imagine a cop pulling someone over for a traffic ticket these days.
 >
-Silver linings, heh.
+-_- - Silver linings, heh.
 [[>main]]
 
 
 ::scenario-there-yet
-You know, I was just thinking...
+:) - You know, I was just thinking...
 >
 It's a good thing we're not making this trip with like, a kid, or something.
 >
-Can you imagine? Just "are we there yet" "are we there yet" all the way there.
+o_o - Can you imagine? Just "are we there yet" "are we there yet" all the way there.
 >
 Nightmare.
 >
-Can't stand kids, honestly.
+:) - Can't stand kids, honestly.
 >
 I know it's not their fault but it's just like... Grow up!
 >
 Ugh.
 >
-...You don't have kids, do you?
+o_o - ...You don't have kids, do you?
 [[I do>kids]]
 [[I don't>no-kids]]
 [[...>oof-kids]]
@@ -610,31 +612,31 @@ Ugh.
 ::kids
 Oh. Well, you know, no offense.
 >
-I'm sure yours are nice. You seem like- well, you know. I'm sure they're nice.
+:) - I'm sure yours are nice. You seem like- well, you know. I'm sure they're nice.
 >
-Still, glad they're not here right now, ha ha.
+-_- - Still, glad they're not here right now, ha ha.
 >
 ...
 >
-Again, no offense. You know, it's just- you know.
+:) - Again, no offense. You know, it's just- you know.
 >
-Kids. Ugh.
+:( - Kids. Ugh.
 [[>main]]
 
 ::no-kids
 Yeah, that's what I thought.
 >
-You don't seem like the "having kids" type.
+:) - You don't seem like the "having kids" type.
 >
 Takes one to know one, ha ha.
 >
 Who needs 'em.
 >
-"Are we there yet" "are we there yet" "are we there yet".
+-_- - "Are we there yet" "are we there yet" "are we there yet".
 >
 "No, now stow it you little brat!!"
 >
-That's what I'd say.
+:) - That's what I'd say.
 >
 Ughhh.
 [[>main]]
@@ -642,7 +644,7 @@ Ughhh.
 ::oof-kids
 ...Sorry.
 >
-I, uh... I'll shut up now.
+:( - I, uh... I'll shut up now.
 [[>main]]
 
 ::scenario-radio
@@ -651,14 +653,14 @@ I, uh... I'll shut up now.
     this.toggleRadioO = this.toggleRadio;
     this.toggleRadio = () => {};
 >>
-Hey, do you mind if I turn the radio <<print this.radioRequest ? 'off' : 'on'>>?
+:) - Hey, do you mind if I turn the radio <<print this.radioRequest ? 'off' : 'on'>>?
 [[Yeah>radio-refuse]]
 [[Nah>radio-allow]]
 
 ::radio-refuse
 Oh...
 >
-Rude.
+:( - Rude.
 [[ |this.toggleRadio = this.toggleRadioO;this.goto('main')]]
 
 ::radio-allow
@@ -676,7 +678,7 @@ Thanks.
         this.goto('radio-override');
     };
 >>
-*sigh*
+-_- - *sigh*
 >
 It's just good to have a <<print this.radioRequest ? 'bit of quiet' : 'distraction'>>, you know?
 >
@@ -688,22 +690,22 @@ Gives you a chance to really think things through.
 >
 ...Can't believe I'm really going through with this.
 >
-Thanks again. I mean it.
+:) - Thanks again. I mean it.
 [[ |this.toggleRadio = this.toggleRadioO;this.goto('main')]]
 
 
 ::radio-override
 <<do this.toggleRadio = this.toggleRadioO>>
-Seriously? That was- that was barely...
+o_o - Seriously? That was- that was barely...
 >
-Whatever. Leave it for all I care.
+:( - Whatever. Leave it for all I care.
 >
 I just... whatever.
 [[>main]]
 
 ::scenario-flood
 <<do this.EnvModel('flashfloodsign')>>
-Huh, is that a flood warning?
+-_- - Huh, is that a flood warning?
 >
 Do you get floods out here often?
 [[Yeah>flood-yes]]
@@ -712,13 +714,13 @@ Do you get floods out here often?
 ::flood-yes
 Weird. Floods in a desert?
 >
-Isn't the whole deal that it's dry out here?
+:) - Isn't the whole deal that it's dry out here?
 >
 Guess I don't really know how floods work though...
 >
-Never know when a flood's gonna get you!
+o_o - Never know when a flood's gonna get you!
 >
-Or, well- they put a sign up, so I suppose that's how you know.
+:) - Or, well- they put a sign up, so I suppose that's how you know.
 >
 Heh.
 [[>main]]
@@ -726,11 +728,11 @@ Heh.
 ::flood-no
 Can't always trust what you read, I guess.
 >
-Makes sense though, don't even remember when it last rained.
+:( - Makes sense though, don't even remember when it last rained.
 >
 Just about triggered a riot last time they raised the water tax.
 >
 ...
 >
-Least that's not my problem anymore.
+-_- - Least that's not my problem anymore.
 [[>main]]
