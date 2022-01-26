@@ -103,8 +103,8 @@ export class StrandE extends Strand {
 		return shuffle(...args);
 	}
 
-	scrim(...args: Parameters<typeof this.scene['dialogue']['scrim']>) {
-		this.scene.dialogue.scrim(...args);
+	scrim(...args: Parameters<typeof this.scene['scrim']['scrim']>) {
+		this.scene.scrim.scrim(...args);
 	}
 
 	sfx(...args: Parameters<typeof sfx>) {
@@ -182,6 +182,8 @@ export class StrandE extends Strand {
 		go.display = display;
 		// @ts-ignore
 		go.transform = transform;
+		// @ts-ignore
+		go.text = text;
 		return go;
 	}
 

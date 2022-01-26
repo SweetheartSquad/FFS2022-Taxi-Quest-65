@@ -10,6 +10,7 @@ import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { UIPrompt } from './UIPrompt';
+import { UIScrim } from './UIScrim';
 import { lerp, tex } from './utils';
 import { distance2 } from './VMath';
 
@@ -25,6 +26,8 @@ export class GameScene extends GameObject {
 	camera = new Camera();
 
 	camera3d: Camera3D;
+
+	scrim: UIScrim;
 
 	dialogue: UIDialogue;
 
@@ -94,6 +97,7 @@ export class GameScene extends GameObject {
 		this.strand.debug = DEBUG;
 		this.dialogue = new UIDialogue(this.strand);
 		this.prompt = new UIPrompt();
+		this.scrim = new UIScrim();
 
 		this.camera.display.container.addChild(this.container);
 
@@ -155,6 +159,7 @@ export class GameScene extends GameObject {
 		this.container3d.addChild(this.pointDialogue);
 
 		game.app.stage.addChild(this.container3d);
+		game.app.stage.addChild(this.scrim.display.container);
 		game.app.stage.addChild(this.dialogue.display.container);
 		game.app.stage.addChild(this.prompt.display.container);
 

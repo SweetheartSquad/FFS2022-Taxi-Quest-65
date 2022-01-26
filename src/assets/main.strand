@@ -33,7 +33,7 @@
 	this.scene.camera3d.far = camProps.zfar;
 
 	// road + sway
-	const wheel = scene.strand.car.model.getChildByName('steeringColumn');
+	const wheel = this.scene.strand.car.model.getChildByName('steeringColumn');
 	const roadSize = 60;
 	const roadSegments = Math.max(2, Math.ceil(this.scene.camera3d.far*2 / roadSize));
 	console.log(roadSegments);
@@ -72,6 +72,32 @@
 		rootRoad.model.position.y = yRoot + Math.sin(cTime/20) * 0.01;
 		pTime = cTime;
 	});
+
+	// looping speed sign
+	const sign1 = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
+	sign1.model.position.z = -roadSize*16;
+	this.Updater(() => {
+		sign1.model.position.z += roadDelta;
+		if (sign1.model.position.z > roadSize) {
+			sign1.model.position.z -= roadSize*16;
+		}
+	});
+	const sign2 = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
+	sign2.model.position.z = -roadSize*16*0.5;
+	sign2.model.position.x -= 15;
+	this.Updater(() => {
+		sign2.model.position.z += roadDelta;
+		if (sign2.model.position.z > roadSize) {
+			sign2.model.position.z -= roadSize*16;
+		}
+	});
+
+	setTimeout(() => {
+		this.EnvModel('coyoteXsign');
+	}, 1000 * 110);
+	setTimeout(() => {
+		this.EnvModel('coyote');
+	}, 1000 * 120);
 
 	// passenger
 	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
@@ -240,15 +266,19 @@ debug menu
 <<do this.goto('close');this.gotod(this.scenarios.pop(), 2000);>>
 
 ::end-scenario
-Oh, is that a sign up ahead?
->
 // TODO: spawn sign
-I think this is my exit.
+Oh, is that a sign up ahead?
 >
 <<do
 	this.scene.interactive = false;
 	this.scrim(1, 4000);
+>>
+I think this is my exit.
+>
+<<do
+	this.goto('close');
 	this.gotod('end-scenario2', 5000);
+	this.music('', { fade: 5000 });
 >>
 
 ::end-scenario2
@@ -263,22 +293,22 @@ So, uh.
 How much do I owe you?
 [[ |setTimeout(() => {
 		if (this.ended) return;
+		this.goto('close');
 		const t = this.Text('The End');
 		this.ended = true;
-		this.scrim(1, 1);
-		this.tween(this.scene.dialogue.display.container, 'alpha', 0, 1);
-		this.tween(scene.camera.display.container, 'alpha', 0, 1);
-		this.tween(scene.container3d, 'alpha', 0, 1);
-		this.music('', { fade: 5000 });
-		requestAnimationFrame(() => {
-			this.scene.destroy();
-			this.end();
+		setTimeout(() => {
+			this.chimneys.model.rotationQuaternion.setEulerAngles(0, 180, 0);
+			this.scene.interactive = true;
+			this.scrim(0, 3000);
+			this.passenger.model.visible = false;
 			setTimeout(() => {
-				t.display.container.x = game.app.renderer.width * 0.88;
-				t.display.container.y = game.app.renderer.height * 0.88;
+				t.text.anchor.x = 1.0;
+				t.text.anchor.y = 1.0;
+				t.display.container.x = game.app.renderer.width - 20;
+				t.display.container.y = game.app.renderer.height - 20;
 				window.game.app.stage.addChild(t.display.container);
-			}, 2000);
-		});
+			}, 6000);
+		}, 3000);
 	}, 3000);
 ]]
 
@@ -646,3 +676,36 @@ Whatever. Leave it for all I care.
 I just... whatever.
 [[>main]]
 
+::scenario-flood
+<<do this.EnvModel('flashfloodsign')>>
+Huh, is that a flood warning?
+>
+Do you get floods out here often?
+[[Yeah>flood-yes]]
+[[Nah>flood-no]]
+
+::flood-yes
+Weird. Floods in a desert?
+>
+Isn't the whole deal that it's dry out here?
+>
+Guess I don't really know how floods work though...
+>
+Never know when a flood's gonna get you!
+>
+Or, well- they put a sign up, so I suppose that's how you know.
+>
+Heh.
+[[>main]]
+
+::flood-no
+Can't always trust what you read, I guess.
+>
+Makes sense though, don't even remember when it last rained.
+>
+Just about triggered a riot last time they raised the water tax.
+>
+...
+>
+Least that's not my problem anymore.
+[[>main]]

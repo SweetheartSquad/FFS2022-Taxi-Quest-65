@@ -8,7 +8,6 @@ import {
 	Sprite,
 	Text,
 	TextMetrics,
-	Texture,
 } from 'pixi.js';
 import { Camera, Mesh3D, ObservablePoint3D, Vec3 } from 'pixi3d';
 import Strand from 'strand-core';
@@ -41,10 +40,6 @@ function formatLabel(str: string, idx: number, length: number) {
 }
 
 export class UIDialogue extends GameObject {
-	sprScrim: Sprite;
-
-	tweenScrim?: Tween;
-
 	tweens: Tween[] = [];
 
 	sprBg: Sprite;
@@ -117,11 +112,6 @@ export class UIDialogue extends GameObject {
 		this.scripts.push((this.display = new Display(this)));
 		this.display.container.interactiveChildren = true;
 		this.display.container.filters = [new AlphaFilter()];
-		this.sprScrim = new Sprite(Texture.WHITE);
-		this.sprScrim.tint = 0x000000;
-		this.sprScrim.width = size.x + 2;
-		this.sprScrim.height = size.y + 2;
-		this.sprScrim.alpha = 0;
 		this.sprBg = new Sprite(tex('dialogueBg'));
 		this.sprChoiceBg = new Sprite(tex('dialogueChoiceBg'));
 		this.sprChoiceBg.anchor.x = this.sprChoiceBg.anchor.y = 0.5;
@@ -174,7 +164,6 @@ export class UIDialogue extends GameObject {
 			this.sprBg.width - padding.left - padding.right;
 
 		this.graphics = new Graphics();
-		this.display.container.addChild(this.sprScrim);
 		this.display.container.addChild(this.graphics);
 		this.display.container.addChild(this.sprBg);
 		this.display.container.addChild(this.toggler.container);
@@ -188,8 +177,6 @@ export class UIDialogue extends GameObject {
 		this.display.container.filters[0].alpha = 0;
 
 		this.sprBg.x = size.x / 2;
-		this.sprScrim.x = -this.transform.x - 1;
-		this.sprScrim.y = -this.transform.y - 1;
 		this.toggler.container.x = -this.transform.x + size.x / 2;
 		this.toggler.container.y = -this.transform.y + size.y / 2;
 
@@ -536,15 +523,5 @@ export class UIDialogue extends GameObject {
 				)
 			);
 		}
-	}
-
-	scrim(amount: number, duration: number) {
-		if (this.tweenScrim) TweenManager.abort(this.tweenScrim);
-		this.tweenScrim = TweenManager.tween(
-			this.sprScrim,
-			'alpha',
-			amount,
-			duration
-		);
 	}
 }
