@@ -84,6 +84,9 @@
 	});
 
 	setTimeout(() => {
+		this.EnvModel('coyoteXsign');
+	}, 1000 * 110);
+	setTimeout(() => {
 		this.EnvModel('coyote');
 	}, 1000 * 120);
 
