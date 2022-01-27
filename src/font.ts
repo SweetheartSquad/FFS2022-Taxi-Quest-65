@@ -3,7 +3,7 @@ import type { ITextStyle } from 'pixi.js';
 export const fontDialogue: Partial<ITextStyle> = {
 	fontFamily: 'font',
 	fontSize: 18,
-	fill: 0,
+	fill: 0x262645,
 	align: 'left',
 	lineHeight: 20,
 	letterSpacing: 0,
@@ -11,14 +11,14 @@ export const fontDialogue: Partial<ITextStyle> = {
 };
 export const fontChoice: Partial<ITextStyle> = {
 	...fontDialogue,
-	fill: 0xffffff,
+	fill: 0xe0e0e8,
 };
 export const fontPrompt: Partial<ITextStyle> = {
 	...fontDialogue,
-	fill: 0xffffff,
+	fill: 0xe0e0e8,
 	dropShadow: true,
 	dropShadowDistance: 0,
-	stroke: 0,
+	stroke: 0x262645,
 	strokeThickness: 4,
 	lineJoin: 'round',
 };

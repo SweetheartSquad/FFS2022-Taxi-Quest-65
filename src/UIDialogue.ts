@@ -267,7 +267,7 @@ export class UIDialogue extends GameObject {
 		this.arrowStart.y = start.y;
 
 		this.graphics.clear();
-		this.graphics.beginFill(0xffffff);
+		this.graphics.beginFill(0xe0e0e8);
 
 		this.graphics.drawPolygon([
 			this.arrowStart.x,
