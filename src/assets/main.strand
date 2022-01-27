@@ -90,7 +90,8 @@
 	});
 	const sign2 = this.Model('speedlimitsign', 'palette', { doubleSided: true, depth: true });
 	sign2.model.position.z = -roadSize*16*0.5;
-	sign2.model.position.x -= 15;
+	sign2.model.position.x -= 10;
+	sign2.model.rotationQuaternion.setEulerAngles(0, 180, 0);
 	this.Updater(() => {
 		sign2.model.position.z += roadDelta;
 		if (sign2.model.position.z > roadSize) {
