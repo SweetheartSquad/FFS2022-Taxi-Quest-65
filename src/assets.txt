@@ -33,6 +33,21 @@ models/cactus6.gltf
 models/cactus7.gltf
 models/cactus8.gltf
 
+models/roadSeg2.gltf
+
+models/boulder1.gltf
+models/boulder2.gltf
+models/boulder3.gltf
+models/boulder4.gltf
+models/boulder5.gltf
+models/boulder6.gltf
+models/boulder7.gltf
+models/boulder8.gltf
+models/boulder9.gltf
+models/boulder10.gltf
+models/boulder11.gltf
+models/boulder12.gltf
+
 textures/palette.png
 textures/passenger_normal_n.x2.png
 textures/passenger_normal_o.x2.png
