@@ -1016,7 +1016,7 @@ Back in a sec.
 >
 <<do
 	// TODO: door sound
-	// TODO: open door
+	this.car.model.getChildByName('taxiDoor').rotationQuaternion.setEulerAngles(0,50,0);
 	this.sfx('click');
 	this.passenger.model.visible = false;
 	this.goto('close');
@@ -1026,7 +1026,7 @@ Back in a sec.
 ::hit-stop3
 <<do
 	// TODO: door sound
-	// TODO: close door
+	this.car.model.getChildByName('taxiDoor').rotationQuaternion.setEulerAngles(0,0,0);
 	this.sfx('click');
 	this.passenger.model.visible = true;
 	this.goto('close');
