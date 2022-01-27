@@ -21,7 +21,7 @@
 
 	this.car = this.Model('taxi', 'palette', { doubleSided: true, depth: true });
 	this.passengerProps = this.Model('passengerProps', 'palette', { doubleSided: true, depth: true });
-	this.aloneProps = this.Model('passengerProps', 'palette', { doubleSided: true, depth: true });
+	this.aloneProps = this.Model('aloneProps', 'palette', { doubleSided: true, depth: true });
 	this.aloneProps.model.visible = false;
 	this.clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
