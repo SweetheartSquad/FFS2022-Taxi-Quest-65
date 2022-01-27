@@ -24,6 +24,15 @@ models/longhornskull.gltf
 models/aloneProps.gltf
 models/passengerProps.gltf
 
+models/cactus1.gltf
+models/cactus2.gltf
+models/cactus3.gltf
+models/cactus4.gltf
+models/cactus5.gltf
+models/cactus6.gltf
+models/cactus7.gltf
+models/cactus8.gltf
+
 textures/palette.png
 textures/passenger_normal_n.x2.png
 textures/passenger_normal_o.x2.png
