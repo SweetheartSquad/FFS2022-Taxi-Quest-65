@@ -352,7 +352,7 @@ How much do I owe you?
 			setTimeout(() => {
 				t.text.anchor.x = 1.0;
 				t.text.anchor.y = 1.0;
-				t.display.container.x = game.app.renderer.width - 20;
+				t.display.container.x = game.app.renderer.width - 30;
 				t.display.container.y = game.app.renderer.height - 20;
 				window.game.app.stage.addChild(t.display.container);
 			}, 6000);
