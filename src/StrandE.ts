@@ -14,7 +14,7 @@ import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { Updater } from './Scripts/Updater';
 import { TweenManager } from './Tweens';
-import { chunks, removeFromArray, shuffle } from './utils';
+import { chunks, delay, removeFromArray, shuffle } from './utils';
 
 let autolink = 0;
 const promptDefault = ' ';
@@ -28,6 +28,8 @@ export class StrandE extends Strand {
 	public voice?: string;
 
 	ease = ease;
+
+	delay = delay;
 
 	setSource(src: string) {
 		autolink = 0;

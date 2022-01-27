@@ -337,27 +337,29 @@ This is it, huh?
 So, uh.
 >
 How much do I owe you?
-[[ |setTimeout(() => {
+[[ |((async () => {
 		if (this.ended) return;
+
+		await this.delay(3000);
 		this.goto('close');
 		const t = this.Text('The End');
 		this.ended = true;
-		setTimeout(() => {
-			this.chimneys.model.rotationQuaternion.setEulerAngles(0, 180, 0);
-			this.scene.interactive = true;
-			this.scrim(0, 3000);
-			this.passenger.model.visible = false;
-			this.passengerProps.model.visible = false;
-			this.aloneProps.model.visible = true;
-			setTimeout(() => {
-				t.text.anchor.x = 1.0;
-				t.text.anchor.y = 1.0;
-				t.display.container.x = game.app.renderer.width - 30;
-				t.display.container.y = game.app.renderer.height - 20;
-				window.game.app.stage.addChild(t.display.container);
-			}, 6000);
-		}, 3000);
-	}, 3000);
+
+		await this.delay(3000);
+		this.chimneys.model.rotationQuaternion.setEulerAngles(0, 180, 0);
+		this.scene.interactive = true;
+		this.scrim(0, 3000);
+		this.passenger.model.visible = false;
+		this.passengerProps.model.visible = false;
+		this.aloneProps.model.visible = true;
+
+		await this.delay(6000);
+		t.text.anchor.x = 1.0;
+		t.text.anchor.y = 1.0;
+		t.display.container.x = game.app.renderer.width - 30;
+		t.display.container.y = game.app.renderer.height - 20;
+		window.game.app.stage.addChild(t.display.container);
+	})());
 ]]
 
 
