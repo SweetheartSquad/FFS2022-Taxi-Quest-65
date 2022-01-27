@@ -290,8 +290,7 @@ debug menu
 [[back|this.back()]]
 
 ::main
-// <<do this.goto('close');this.gotod(this.scenarios.pop(), (Math.random()*10+12)*1000);>>
-<<do this.goto('close');this.gotod(this.scenarios.pop(), 2000);>>
+<<do this.goto('close');this.gotod(this.scenarios.pop(), this.debug ? 2000 : (Math.random()*10+12)*1000);>>
 
 ::end-scenario
 // TODO: spawn sign
