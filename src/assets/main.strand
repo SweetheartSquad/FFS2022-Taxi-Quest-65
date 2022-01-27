@@ -164,6 +164,25 @@
 		},
 	});
 
+	let honks = 0;
+	let honklimit = false;
+	this.InteractionRegion({
+		x: 1,
+		y: 25,
+		range: 5,
+		label: 'honk',
+		action: () => {
+			// TODO: honk sfk
+			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
+			if (honklimit) return;
+			++honks;
+			if (honks % 5 === 0 && this.passenger.model.visible && !this.scene.dialogue.isOpen && this.roadSpeed > 0) {
+				honklimit = true;
+				this.goto('honk-limit');
+			}
+		},
+	});
+
 
 	this.EnvModel = (model) => {
 		const m = this.Model(model, 'palette', { doubleSided: true, depth: true });
@@ -348,6 +367,17 @@ How much do I owe you?
 
 
 
+::honk-limit
+o_o - Is that REALLY necessary?
+>Yeah|Nah
+:) - We haven't passed another car in hours!
+>
+And it's the middle of the night.
+>
+I should be asleep right now!
+>
+-_- - ...Hmph.
+[[>main]]
 
 
 
