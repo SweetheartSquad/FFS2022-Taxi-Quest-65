@@ -209,10 +209,16 @@
 	const props = [
 		'roadsideTrash1',
 		'roadsideTrash1',
-		'roadsideTrash1',
 		'roadsideTrash2',
 		'roadsideTrash2',
-		'roadsideTrash2',
+		'cactus1',
+		'cactus2',
+		'cactus3',
+		'cactus4',
+		'cactus5',
+		'cactus6',
+		'cactus7',
+		'cactus8',
 		'longhornskull',
 	];
 	let lastprop;
