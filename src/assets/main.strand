@@ -45,7 +45,7 @@
 	let rootRoad;
 	for(let i = 0; i < roadSegments; ++i) {
 		const pos = i-roadSegments/2;
-		const road = this.Model('roadSeg1', 'palette', { doubleSided: true, depth: true });
+		const road = this.Model('roadSeg2', 'palette', { doubleSided: true, depth: true });
 		if (i === 0) {
 			rootRoad = road;
 		} else {
@@ -239,6 +239,28 @@
 		setTimeout(rndprop2, Math.random()*25000+Math.random()*25000+5000);
 	};
 	rndprop2();
+
+	const boulders = [
+		'boulder1',
+		'boulder2',
+		'boulder3',
+		'boulder4',
+		'boulder5',
+		'boulder6',
+		'boulder7',
+		'boulder8',
+		'boulder9',
+		'boulder10',
+		'boulder11',
+		'boulder12',
+	];
+	const rndprop3 = () => {
+		const prop = this.shuffle(boulders)[0];
+		const model = this.EnvModel(prop);
+		model.model.position.y -= 1.36;
+		setTimeout(rndprop3, Math.random()*3000+Math.random()*1000+100);
+	};
+	rndprop3();
 
 	// pose helper
 	const poses = {
