@@ -22,6 +22,8 @@ models/flashfloodsign.gltf
 models/roadsideTrash1.gltf
 models/roadsideTrash2.gltf
 models/longhornskull.gltf
+models/aloneProps.gltf
+models/passengerProps.gltf
 
 textures/palette.png
 textures/passenger_normal_n.x2.png
