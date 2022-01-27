@@ -922,7 +922,7 @@ You think that's funny?
 I'm too much of a real one to RIP it in the middle of nowhere with a joker for a driver.
 [[>main]]
 
-::met-stall
+::met-main-met-stall
 <<do this.print(this.shuffle([
 	'Hm... I can get this...',
 	'Is it- no, that can\'t be it.',
