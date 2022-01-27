@@ -23,6 +23,8 @@ models/roadsideTrash2.gltf
 models/longhornskull.gltf
 models/aloneProps.gltf
 models/passengerProps.gltf
+models/exitSign.gltf
+models/pothole1.gltf
 
 models/cactus1.gltf
 models/cactus2.gltf
