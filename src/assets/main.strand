@@ -290,8 +290,37 @@
 
 	// start
 	this.started=true;
-	requestAnimationFrame(() => {
+	this.goto('close');
+	requestAnimationFrame(async () => {
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
+
+		await this.delay(3000);
+		this.sfx('click'); // TODO: intro sound
+		const t = scene.strand.Text('TAXI');
+		game.app.stage.addChild(t.display.container);
+		t.text.style.fontSize = 50;
+		t.text.style.fill = 0x406885;
+		t.text.x = 30;
+		t.text.y = 30;
+
+		await this.delay(500);
+		this.sfx('click'); // TODO: intro sound
+		t.text.text = 'TAXI QUEST';
+
+
+		await this.delay(1000);
+		this.sfx('click'); // TODO: intro sound
+		const t2 = scene.strand.Text('65');
+		game.app.stage.addChild(t2.display.container);
+		t2.text.style.fontSize = 240;
+		t2.text.style.fill = 0x406885;
+		t2.text.x = 30;
+		t2.text.y = 10;
+
+		await this.delay(4000);
+		this.sfx('click'); // TODO: intro sound
+		t.destroy();
+		t2.destroy();
 		this.goto('main');
 	});
 >>
