@@ -295,7 +295,7 @@ debug menu
 
 ::end-scenario
 // TODO: spawn sign
-Oh, is that a sign up ahead?
+:) - Oh, is that a sign up ahead?
 >
 <<do
 	this.scene.interactive = false;
