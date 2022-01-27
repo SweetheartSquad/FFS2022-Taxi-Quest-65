@@ -740,3 +740,175 @@ Just about triggered a riot last time they raised the water tax.
 >
 -_- - Least that's not my problem anymore.
 [[>main]]
+
+
+::scenario-met
+o_o - Say...
+>
+Have... have we met before?
+[[Yeah>met]]
+[[Nah>no-met]]
+
+::met
+Wait, don't tell me!
+>
+I can guess:
+[[>met-main]]
+
+::no-met
+Hmm, no, I'm sure we have...
+[[>met-main]]
+
+::met-main
+<<do
+	this.guesses = this.guesses || this.shuffle([
+		'couch',
+		'stash',
+		'cookout',
+		'pastlife',
+		'cousin',
+		'froyo',
+		'killer',
+		'met-stall',
+		'met-stall',
+	]);
+	const guess = this.guesses.pop();
+	this.goto(`met-main-${guess || 'done'}`);
+>>
+
+::met-main-couch
+You used to do haul jobs, in a big van, helped my mom offload that awful green couch of hers?
+[[Yeah>met-couch]]
+[[Nah>met-main]]
+
+::met-couch
+God that thing reeked.
+>
+:) - Comfy as hell though, RIP to a real one.
+[[>main]]
+
+::met-main-stash
+Did you sit in front of me during last month's stash game?
+[[Yeah>met-stash]]
+[[Nah>met-main]]
+
+::met-stash
+Of course!
+>
+:) - Can't believe I didn't realize it earlier.
+>
+You must've had a great view of the foul in the second half.
+>
+:( - Kinda glad I didn't. RIP to a real one.
+[[>main]]
+
+::met-main-cookout
+Were you at Dave's cookout thing?
+[[Yeah>met-cookout]]
+[[Nah>met-main]]
+
+::met-cookout
+I knew it!
+>
+:) - What a party...
+>
+-_- - Wonder what Dave would think of me now.
+>
+:( - Probably would say I'm slinking away like a coward.
+>
+I probably wouldn't even disagree.
+>
+Still, RIP to a real one.
+[[>main]]
+
+::met-main-pastlife
+We... met in a past life?
+[[Yeah>met-pastlife]]
+[[Nah>met-main]]
+
+::met-pastlife
+:) - C'mon, I was kidding.
+>
+-_- - I don't go in for all that reincarnation jazz.
+>
+Real ones gotta RIP, right?
+[[>main]]
+
+::met-main-cousin
+Did you try to date my cousin?
+[[Yeah>met-cousin]]
+[[Nah>met-main]]
+
+::met-cousin
+Riiiiiiiight.
+>
+:) - You know, that explains a lot.
+>
+:( - You heard already, yeah?
+>
+Yeah, you must have.
+>
+RIP to a real one.
+[[>main]]
+
+::met-main-froyo
+You broke the froyo machine on Bakers' Street?
+[[Yeah>met-froyo]]
+[[Nah>met-main]]
+
+::met-froyo
+Wow, it really is you.
+>
+:) - Never managed to get that thing working again...
+>
+RIP to a real one.
+[[>main]]
+
+::met-main-killer
+Wait... You aren't with that killer, are you?!
+[[Yeah>met-killer]]
+[[Nah>met-main]]
+
+::met-killer
+Oh god.
+>
+:) - Oh GOD.
+>
+-_- - This can't be happening.
+>
+:) - But- wait.
+>
+o_o - If that's true, why would you tell me?
+>
+:( - You're just messing with me.
+>
+You think that's funny?
+>
+:) - Well I wasn't even really scared.
+>
+I'm too much of a real one to RIP it in the middle of nowhere with a joker for a driver.
+[[>main]]
+
+::met-stall
+<<do this.print(this.shuffle([
+	'Hm... I can get this...',
+	'Is it- no, that can\'t be it.',
+	'Hold on, hold on, I\'ll get it...',
+	'No, that\'s not it...',
+])[0])>>
+[[>met-main]]
+
+::met-main-done
+...Okay, but we've definitely met.
+>
+Absolutely, one hundred percent certain.
+>
+:) - I've got an eye for these things, you know?
+>
+Never forget a face.
+>
+o_o - ...
+>
+This is gonna bug me all night...
+[[>main]]
+
