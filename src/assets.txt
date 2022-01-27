@@ -12,7 +12,7 @@ audio/click.mp3
 
 models/taxi.gltf
 models/clock.gltf
-models/roadSeg1.gltf
+models/roadSeg.gltf
 models/chimneys.gltf
 models/coyote.gltf
 models/speedlimitsign.gltf
@@ -32,8 +32,6 @@ models/cactus5.gltf
 models/cactus6.gltf
 models/cactus7.gltf
 models/cactus8.gltf
-
-models/roadSeg2.gltf
 
 models/boulder1.gltf
 models/boulder2.gltf

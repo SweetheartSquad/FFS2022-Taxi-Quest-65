@@ -45,7 +45,7 @@
 	let rootRoad;
 	for(let i = 0; i < roadSegments; ++i) {
 		const pos = i-roadSegments/2;
-		const road = this.Model('roadSeg2', 'palette', { doubleSided: true, depth: true });
+		const road = this.Model('roadSeg', 'palette', { doubleSided: true, depth: true });
 		if (i === 0) {
 			rootRoad = road;
 		} else {
