@@ -272,7 +272,6 @@
 	this.started=true;
 	requestAnimationFrame(() => {
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
-		this.scenarios.unshift('end-scenario');
 		this.goto('main');
 	});
 >>
@@ -290,7 +289,7 @@ debug menu
 [[back|this.back()]]
 
 ::main
-<<do this.goto('close');this.gotod(this.scenarios.pop(), this.debug ? 2000 : (Math.random()*10+12)*1000);>>
+<<do this.goto('close');this.gotod(this.scenarios.pop() || 'end-scenario', this.debug ? 2000 : (Math.random()*10+12)*1000);>>
 
 ::end-scenario
 // TODO: spawn sign
