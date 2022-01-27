@@ -209,10 +209,16 @@
 	const props = [
 		'roadsideTrash1',
 		'roadsideTrash1',
-		'roadsideTrash1',
 		'roadsideTrash2',
 		'roadsideTrash2',
-		'roadsideTrash2',
+		'cactus1',
+		'cactus2',
+		'cactus3',
+		'cactus4',
+		'cactus5',
+		'cactus6',
+		'cactus7',
+		'cactus8',
 		'longhornskull',
 	];
 	let lastprop;
@@ -221,9 +227,18 @@
 			const prop = this.shuffle(props)[0];
 			lastprop = this.EnvModel(prop);
 		}
-		setTimeout(rndprop, Math.random()*25000+Math.random()*25000+10000);
+		setTimeout(rndprop, Math.random()*25000+Math.random()*25000+5000);
 	};
 	rndprop();
+	let lastprop2;
+	const rndprop2 = () => {
+		if (!lastprop2 || lastprop2.model.destroyed) {
+			const prop = this.shuffle(props)[0];
+			lastprop2 = this.EnvModel(prop);
+		}
+		setTimeout(rndprop2, Math.random()*25000+Math.random()*25000+5000);
+	};
+	rndprop2();
 
 	// pose helper
 	const poses = {
