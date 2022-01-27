@@ -912,3 +912,111 @@ o_o - ...
 This is gonna bug me all night...
 [[>main]]
 
+
+::scenario-hit-something
+:) - Woah! Did you feel that?
+>Yeah|Nah
+That was a big bump!
+>
+-_- - What even was that?
+>
+Did... did we hit something?
+[[Yeah>hit]]
+[[Nah>hit-no]]
+
+::hit-no
+Are you sure?
+>
+:) - Maybe we should pull over just in case.
+>
+o_o - We could go check.
+[[Yeah>hit-stop]]
+[[Nah>hit-ignore]]
+[[...>hit-ignore]]
+[[No point>hit-reject]]
+
+::hit
+What was that?
+>
+:) - I barely got a look... Hope it wasn't a coyote or something.
+>
+o_o - Maybe we should pull over. We could go check on it.
+[[Yeah>hit-stop]]
+[[Nah>hit-ignore]]
+[[...>hit-ignore]]
+[[No point>hit-reject]]
+
+::hit-ignore
+...
+>
+:) - We're just... going to ignore it?
+>
+-_- - ...
+>
+It was probably nothing, but... I don't know.
+>
+:( - Bad omen.
+[[>main]]
+
+::hit-reject
+...
+>
+:( - I guess.
+>
+...
+>
+-_- - Maybe we should-
+>
+No, nevermind. You're right.
+[[>main]]
+
+
+::hit-stop
+<<do
+	this.oldSpeed = this.roadSpeed;
+	this.tween(this, 'roadSpeed', 0, 4000);
+	this.goto('close');
+	this.gotod('hit-stop2', 5000);
+	this.setPose(':)', 'n');
+>>
+
+::hit-stop2
+Okay.
+>
+Back in a sec.
+>
+<<do
+	// TODO: door sound
+	// TODO: open door
+	this.sfx('click');
+	this.passenger.model.visible = false;
+	this.goto('close');
+	this.gotod('hit-stop3', 10000);
+>>
+
+::hit-stop3
+<<do
+	// TODO: door sound
+	// TODO: close door
+	this.sfx('click');
+	this.passenger.model.visible = true;
+	this.goto('close');
+	this.gotod('hit-stop4', 1000);
+>>
+
+::hit-stop4
+:) - It's, uh...
+>
+:( - It's really dark out there.
+>
+...
+>
+I'm sure it's fine. We should go.
+>
+Thanks for stopping, though.
+<<do
+	setTimeout(() => {
+		this.tween(this, 'roadSpeed', this.oldSpeed, 4000);
+	}, 1500);
+>>
+[[>main]]
