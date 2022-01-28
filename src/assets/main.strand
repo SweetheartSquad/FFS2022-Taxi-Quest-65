@@ -406,10 +406,14 @@ I think this is my exit.
 <<do
 	this.goto('close');
 	this.gotod('end-scenario2', 5000);
-	this.music('', { fade: 5000 });
 >>
 
 ::end-scenario2
+<<do
+	if (this.radio) {
+		this.toggleRadio();
+	}
+>>
 This is it, huh?
 >
 <<do this.sfx('door_open')>>
