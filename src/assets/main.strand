@@ -102,6 +102,7 @@
 	// passenger
 	this.passenger = this.Model('taxi', 'passenger_normal', { transparent: true });
 	this.passenger.model.children.forEach(i => i.visible = false);
+	this.passenger.model.parent.setChildIndex(this.passenger.model, this.passenger.model.parent.children.length-1);
 	const passengerRef = this.passenger.model.getChildByName('passengerRef');
 	passengerRef.visible = true;
 	this.scene.pointDialogue.position.x = passengerRef.position.x;
