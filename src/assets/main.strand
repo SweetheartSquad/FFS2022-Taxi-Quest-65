@@ -116,7 +116,7 @@
 			this.music('bgm');
 			this.clock.model.visible = true;
 		} else {
-			this.music('');
+			this.music('bgm_ambient');
 			this.clock.model.visible = false;
 		}
 	};
@@ -335,7 +335,10 @@
 
 	if (this.radio) {
 		this.music('bgm');
+	} else {
+		this.music('bgm_ambient');
 	}
+
 	this.clock.model.visible = this.radio;
 
 	// start
