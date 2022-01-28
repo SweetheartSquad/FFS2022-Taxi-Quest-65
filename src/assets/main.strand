@@ -345,6 +345,7 @@
 	this.started=true;
 	this.goto('close');
 	requestAnimationFrame(async () => {
+		this.scene.container3d.visible = true;
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 
 		await this.delay(3000);

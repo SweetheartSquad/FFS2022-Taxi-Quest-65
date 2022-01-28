@@ -163,6 +163,7 @@ export class GameScene extends GameObject {
 		game.app.stage.addChild(this.prompt.display.container);
 
 		this.strand.history.push('close');
+		this.container3d.visible = false;
 		this.strand.goto('start');
 	}
 
