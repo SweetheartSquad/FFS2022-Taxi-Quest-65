@@ -388,7 +388,7 @@ debug menu
 <<do this.goto('close');this.gotod(this.scenarios.pop() || 'end-scenario', this.debug ? 2000 : (Math.random()*10+12)*1000);>>
 
 ::end-scenario
-// TODO: spawn sign
+<<do this.EnvModel('exitSign')>>
 :) - Oh, is that a sign up ahead?
 >
 <<do
@@ -418,10 +418,13 @@ How much do I owe you?
 
 		await this.delay(3000);
 		this.goto('close');
-		const t = this.Text('The End');
 		this.ended = true;
+		const t = this.Text('The End');
 
 		await this.delay(3000);
+		const e = this.EnvModel('exitSign');
+		e.model.rotationQuaternion.setEulerAngles(0, 180, 0);
+		e.model.position.x -= 7;
 		this.chimneys.model.rotationQuaternion.setEulerAngles(0, 180, 0);
 		this.scene.interactive = true;
 		this.scrim(0, 3000);
