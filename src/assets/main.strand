@@ -503,13 +503,19 @@ Oh...
 Have you ever had to use it on the job?
 [[Yeah>busy-no-yes]]
 [[Nah>busy-no-no]]
-[[...>busy-no-yes]]
+[[...>busy-no-ignore]]
 [[Once>busy-no-yes]]
 
 ::busy-no-no
 ...Hm.
 >
 :( - Well, probably for the best.
+[[>main]]
+
+::busy-no-ignore
+...
+>
+:( - Yeah, probably better you don't answer that.
 [[>main]]
 
 ::busy-no-yes
@@ -582,17 +588,23 @@ It is kinda cozy.
 o_o - Must be a pain if you get flagged down by a family of four.
 >
 Guess you could stick the kids in the trunk, ha ha.
-[[Yeah>two-seater-2]]
-[[Nah>two-seater-2]]
-[[...>two-seater-2]]
+[[Yeah>two-seater-yeah-yeah]]
+[[Nah>two-seater-yeah-nah]]
+[[...>two-seater-yeah-nah]]
 [[Not many families around]]
 
-::two-seater-2
+::two-seater-yeah-yeah
 :) - Heh.
 >
 ...
 >
 o_o - You are joking, right?
+[[>main]]
+
+::two-seater-yeah-nah
+:) - Heh.
+>
+...
 [[>main]]
 
 ::Not many families around
