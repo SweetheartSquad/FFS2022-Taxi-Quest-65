@@ -345,7 +345,7 @@
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 
 		await this.delay(3000);
-		this.sfx('click'); // TODO: intro sound
+		this.sfx('door_close', { rate: 1.25 });
 		const t = scene.strand.Text('TAXI');
 		game.app.stage.addChild(t.display.container);
 		t.text.style.fontSize = 50;
@@ -353,13 +353,13 @@
 		t.text.x = 30;
 		t.text.y = 30;
 
-		await this.delay(500);
-		this.sfx('click'); // TODO: intro sound
+		await this.delay(400);
+		this.sfx('door_close', { rate: 1.5 });
 		t.text.text = 'TAXI QUEST';
 
 
 		await this.delay(1000);
-		this.sfx('click'); // TODO: intro sound
+		this.sfx('door_open', { rate: 0.75, volume: 1.5 });
 		const t2 = scene.strand.Text('65');
 		game.app.stage.addChild(t2.display.container);
 		t2.text.style.fontSize = 240;
@@ -368,7 +368,7 @@
 		t2.text.y = 10;
 
 		await this.delay(4000);
-		this.sfx('click'); // TODO: intro sound
+		this.sfx('door_open', { rate: 2.0 });
 		t.destroy();
 		t2.destroy();
 		this.goto('main');
@@ -409,8 +409,7 @@ I think this is my exit.
 ::end-scenario2
 This is it, huh?
 >
-// TODO: getting out of car noise
-<<do this.sfx('click')>>
+<<do this.sfx('door_open')>>
 ...
 >
 So, uh.
@@ -420,9 +419,9 @@ How much do I owe you?
 		if (this.ended) return;
 
 		await this.delay(3000);
+		this.sfx('door_close');
 		this.goto('close');
 		this.ended = true;
-		const t = this.Text('The End');
 
 		await this.delay(3000);
 		const e = this.EnvModel('exitSign');
@@ -436,10 +435,12 @@ How much do I owe you?
 		this.aloneProps.model.visible = true;
 
 		await this.delay(6000);
+		const t = this.Text('The End');
 		t.text.anchor.x = 1.0;
 		t.text.anchor.y = 1.0;
 		t.display.container.x = game.app.renderer.width - 30;
 		t.display.container.y = game.app.renderer.height - 20;
+		this.sfx('door_open', { rate: 2.0 });
 		window.game.app.stage.addChild(t.display.container);
 	})());
 ]]
@@ -1108,9 +1109,8 @@ Okay.
 Back in a sec.
 >
 <<do
-	// TODO: door sound
 	this.car.model.getChildByName('taxiDoor').rotationQuaternion.setEulerAngles(0,50,0);
-	this.sfx('click');
+	this.sfx('door_open');
 	this.passenger.model.visible = false;
 	this.goto('close');
 	this.gotod('hit-stop3', 10000);
@@ -1118,9 +1118,8 @@ Back in a sec.
 
 ::hit-stop3
 <<do
-	// TODO: door sound
 	this.car.model.getChildByName('taxiDoor').rotationQuaternion.setEulerAngles(0,0,0);
-	this.sfx('click');
+	this.sfx('door_close');
 	this.passenger.model.visible = true;
 	this.goto('close');
 	this.gotod('hit-stop4', 1000);
