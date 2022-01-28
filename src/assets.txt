@@ -12,6 +12,7 @@ audio/click.mp3
 audio/door_open.mp3
 audio/door_close.mp3
 audio/bgm_ambient.mp3
+audio/honk.mp3
 
 models/taxi.gltf
 models/clock.gltf

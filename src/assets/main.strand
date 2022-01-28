@@ -174,8 +174,7 @@
 		range: 5,
 		label: 'honk',
 		action: () => {
-			// TODO: honk sfk
-			this.sfx('click', { rate: Math.random()*0.2 + 0.9 });
+			this.sfx('honk', { rate: Math.random()*0.04 + 0.98 });
 			if (honklimit) return;
 			++honks;
 			if (honks % 5 === 0 && this.passenger.model.visible && !this.scene.dialogue.isOpen && this.roadSpeed > 0) {
