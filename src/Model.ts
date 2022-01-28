@@ -67,6 +67,10 @@ class CustomMaterial extends Material {
 	}
 }
 
+const materialCache: {
+	[key: string]: Material;
+} = {};
+
 export class Model extends GameObject {
 	model: Pixi3dModel;
 
@@ -98,10 +102,13 @@ export class Model extends GameObject {
 		}
 		const matTex = tex(texture);
 		let mat: CustomMaterial | StandardMaterial;
+		const matKey = `${matTex}_${depth}_${transparent}_${smooth}_${doubleSided}`;
 		if (depth) {
-			mat = new CustomMaterial();
+			mat = materialCache[matKey] =
+				(materialCache[matKey] as CustomMaterial) || new CustomMaterial();
 		} else {
-			mat = new StandardMaterial();
+			mat = materialCache[matKey] =
+				(materialCache[matKey] as StandardMaterial) || new StandardMaterial();
 			if (transparent) {
 				mat.alphaMode = StandardMaterialAlphaMode.blend;
 			}
