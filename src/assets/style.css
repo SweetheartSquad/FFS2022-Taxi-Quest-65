@@ -69,8 +69,6 @@ html {
 /* game */
 canvas {
 	cursor: none;
-	/* pixelated */
-	image-rendering: pixelated;
 }
 
 @font-face {
