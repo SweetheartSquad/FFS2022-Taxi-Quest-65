@@ -1013,12 +1013,12 @@ I'm too much of a real one to RIP it in the middle of nowhere with a joker for a
 [[>main]]
 
 ::met-main-met-stall
-<<do this.print(this.shuffle([
+<<print this.shuffle([
 	'Hm... I can get this...',
 	'Is it- no, that can\'t be it.',
 	'Hold on, hold on, I\'ll get it...',
 	'No, that\'s not it...',
-])[0])>>
+])[0]>>
 [[>met-main]]
 
 ::met-main-done
