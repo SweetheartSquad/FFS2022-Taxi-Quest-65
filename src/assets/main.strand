@@ -424,11 +424,11 @@ So, uh.
 How much do I owe you?
 [[ |((async () => {
 		if (this.ended) return;
+		this.ended = true;
 
 		await this.delay(3000);
 		this.sfx('door_close');
 		this.goto('close');
-		this.ended = true;
 
 		await this.delay(3000);
 		const e = this.EnvModel('exitSign');
