@@ -354,8 +354,7 @@
 		this.scene.container3d.visible = true;
 		this.scenarios = this.shuffle(Object.keys(this.passages).filter(i => i.startsWith('scenario-')));
 
-		await this.delay(3000);
-		this.sfx('door_close', { rate: 1.25 });
+		await this.delay(556*8);
 		const t = scene.strand.Text('TAXI');
 		game.app.stage.addChild(t.display.container);
 		t.text.style.fontSize = 50;
@@ -363,13 +362,11 @@
 		t.text.x = 30;
 		t.text.y = 30;
 
-		await this.delay(400);
-		this.sfx('door_close', { rate: 1.5 });
+		await this.delay(556*2);
 		t.text.text = 'TAXI QUEST';
 
 
-		await this.delay(1000);
-		this.sfx('door_open', { rate: 0.75, volume: 1.5 });
+		await this.delay(556*2);
 		const t2 = scene.strand.Text('65');
 		game.app.stage.addChild(t2.display.container);
 		t2.text.style.fontSize = 240;
@@ -377,8 +374,7 @@
 		t2.text.x = 30;
 		t2.text.y = 10;
 
-		await this.delay(4000);
-		this.sfx('door_open', { rate: 2.0 });
+		await this.delay(556*6);
 		t.destroy();
 		t2.destroy();
 		this.goto('main');
