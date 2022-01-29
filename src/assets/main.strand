@@ -25,6 +25,13 @@
 	this.aloneProps.model.visible = false;
 	this.clock = this.Model('clock', 'palette', { doubleSided: true, depth: true });
 	this.car.model.getChildByName('passengerRef').visible = false;
+
+	const gasNeedle = this.car.model.getChildByName('gasMeterNeedle');
+	this.gas = 1;
+	this.tween(this, 'gas', 0, 1000 * 60 * 20);
+	this.Updater(() => {
+		gasNeedle.rotationQuaternion.setEulerAngles(0,0,40-this.gas*80);
+	});
 	
 	this.chimneys = this.Model('chimneys', 'palette', { doubleSided: true, depth: true });
 
